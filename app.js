@@ -2,12 +2,13 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express();
+const login = require('./routes/login');
 const admin = require('./routes/admin');
 const solicitantes = require('./routes/solicitantes');
 const path = require('path')
 const session = require('express-session')
 const flash = require('connect-flash')
-const passport = require('passport-local')
+const passport = require('passport')
 require('./config/auth')(passport)
 require('./database')
 
@@ -16,13 +17,15 @@ require('./database')
 // Configurações
     // Sessão
         app.use(session({
-            secret: 'erguilh',
+            secret: 'helpdeskinfosaude',
             resave: true,
-            saveUninitialized: true
+            saveUnitialized: true
         })) 
+
         app.use(passport.initialize())
         app.use(passport.session())
         app.use(flash())
+
     // Middleware
         app.use((req, res, next) =>{
             res.locals.success_msg = req.flash('success_msg')
@@ -54,7 +57,7 @@ require('./database')
         res.send('Rota principal')
     })
 
-    app.use('/login', admin)
+    app.use('/login', login)
     app.use('/admin', admin)
     app.use('/solicitante', solicitantes)
 
