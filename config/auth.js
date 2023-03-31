@@ -11,7 +11,7 @@ module.exports = function(passport){
                 return done(null, false, {message: 'Usuário não encontrado'})
             }
 
-            bcrypt.compare(password, usuario.password, (erro, resposta) => {
+            const res = bcrypt.compare(password, usuario.password, (erro, resposta) => {
                 if(resposta){
                     return done(null, usuario)
                 }else{
@@ -20,14 +20,18 @@ module.exports = function(passport){
             })
         })
     }))
+
     passport.serializeUser((usuario, done) =>{
         done(null, usuario.id)
     })
 
     passport.deserializeUser((id, done) =>{
-        Usuario.findByPk(id, (err, usuario) => {
-            done(err, usuario)
+        Usuario.findByPk(id).then((res) =>{
+            if(res){
+                return done(null, false, {message: 'Não encontrado!'})
+            }else{
+                done(null, res)
+            }
         })
-
     })
 }
