@@ -1,20 +1,21 @@
-const Usuario = require('../models/Usuarios')
-const bcrypt = require('bcryptjs')
 const LocalStrategy = require('passport-local').Strategy
+const bcrypt = require('bcryptjs')
+const Usuario = require('../models/Usuarios')
 
 
 module.exports = function(passport){
     passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'}, (email, password, done) => {
+        
         Usuario.findOne({where: {email: email}}).then((usuario) => {
             if(!usuario){
-                return done(null, false, {msg: 'Usuário não encontrado'})
+                return done(null, false, {message: 'Usuário não encontrado'})
             }
 
-            const res = bcrypt.compare(password, usuario.password, (err, resposta) => {
+            bcrypt.compare(password, usuario.password, (erro, resposta) => {
                 if(resposta){
                     return done(null, usuario)
                 }else{
-                    return done(null, false, {msg: 'Senha incorreta' + err})
+                    return done(null, false, {message: 'Senha incorreta'})
                 }
             })
         })
@@ -24,12 +25,9 @@ module.exports = function(passport){
     })
 
     passport.deserializeUser((id, done) =>{
-        Usuario.findOne({where: {id:id}}).then((res) =>{
-            if(res){
-                return done(null, false, {msg: "Não encontrado"})
-            }else{
-                done(null, res) 
-            }
+        Usuario.findByPk(id, (err, usuario) => {
+            done(err, usuario)
         })
+
     })
 }

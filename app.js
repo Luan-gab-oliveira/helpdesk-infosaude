@@ -2,15 +2,14 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express();
-const login = require('./routes/login');
+const usuarios = require('./routes/usuarios');
 const admin = require('./routes/admin');
-const solicitantes = require('./routes/solicitantes');
 const path = require('path')
+require('./database')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
 require('./config/auth')(passport)
-require('./database')
 
 // const mongoose = require('mongoose')
 
@@ -30,6 +29,7 @@ require('./database')
         app.use((req, res, next) =>{
             res.locals.success_msg = req.flash('success_msg')
             res.locals.error_msg = req.flash('error_msg')
+            res.locals.error = req.flash('error')
             next()
         })
 
@@ -48,18 +48,12 @@ require('./database')
         app.use(express.static(path.join(__dirname,'public')));
 
 // Rotas
-
-    app.get('/', (req,res)=>{
-        res.send('Erro 404!')
-    })
-
     app.get('/', (req, res)=>{
-        res.send('Rota principal')
+        res.render('index')
     })
 
-    app.use('/login', login)
+    app.use('/usuarios', usuarios)
     app.use('/admin', admin)
-    app.use('/solicitante', solicitantes)
 
 // Outros
 const PORT = 8088
