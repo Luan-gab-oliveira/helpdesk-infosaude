@@ -1,11 +1,8 @@
 'use strict';
 
-const { NUMBER } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    
     await queryInterface.createTable('chamados', {
       id: {
         type: Sequelize.INTEGER,
@@ -36,12 +33,12 @@ module.exports = {
         allowNull: false,
       },
       descricao:{
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       status:{
         type: Sequelize.STRING,
-        defaultValue: "Aberto",
+        defaultValue: '0',
         allowNull: false
 
       },
@@ -53,7 +50,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-    });
+    });    
   },
 
   async down (queryInterface, Sequelize) {

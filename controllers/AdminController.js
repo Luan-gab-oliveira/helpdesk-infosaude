@@ -62,13 +62,8 @@ module.exports = {
                         })
                     })
                 })
-
-                // await Usuario.create({ user, email, telefone, password })
-
-                // const list = await loadlistsolicitantes()
-                // res.status(200).render('admin/usuarios', {listsolicitantes:list})
             }
-
+            
         }catch(err){
             res.status(400)
         }

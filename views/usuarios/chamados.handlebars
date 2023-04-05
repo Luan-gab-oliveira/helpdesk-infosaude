@@ -10,26 +10,35 @@
 <hr>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
-  <div class="col">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <div class="card-header" style="background-color: #32A071;">
-          <h5 class="card-title">Chamado: <label for="">001</label></h5>
-          <h6>Status: <label for="">Aberto</label></h6>
+  {{#each listchamados}}
+    <div class="col">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          {{#if inOpen}}
+            <div class="card-header" style="background-color: #32A071;">
+          {{else if inProcess}}
+            <div class="card-header" style="background-color: #FFC145;">
+          {{else}}
+            <div class="card-header" style="background-color: #BB5067;">
+          {{/if}}
+            <h5 class="card-title">Chamado: <label>{{dataValues.id}}</label></h5>
+            <h6>Status: <label>{{dataValues.status}}</label></h6>
+          </div>
+          <h6>Ocorrência: {{dataValues.ocorrencia}}</h6>
+          <h6>Solicitante: <label>{{dataValues.nome}}</label></h6>
+          <h6>Local: <label>{{dataValues.local}}</label></h6>
+          <h6>Descrição</h6>
+          {{!-- <p class="card-text text-truncate" style="background-color: #f8f8f8;">{{dataValues.descricao}}</p> --}}
+          <textarea class="form-control" id="floatingTextarea" style="height: 4rem; resize: none; background-color: #f8f8f8; border: none;">{{dataValues.descricao}}</textarea>
+
+          <hr>
+          <button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Visualizar</button>
+          <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Excluir</button>
         </div>
-        <h6>Ocorrência: Computador</h6>
-        <h6>Descrição:</h6>
-        <p class="card-text text-truncate">Computador não liga!</label>
-        <h6>Solicitante: <label>Luan</label></h6>
-        <h6>Local: <label for="">ESF Majorca</label></h6>
-        <hr>
-        <button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Visualizar</button>
-        <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Excluir</button>
       </div>
     </div>
-  </div>
+  {{/each}}
 </div>
-
 
 <div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -39,28 +48,32 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <label for="slug">Ocorrência: </label>
-        <select class="form-select col" aria-label="Default select example">
-            <option selected>Tipo de ocorrência</option>
-            <option value="1">Computador</option>
-            <option value="2">Impressora</option>
-            <option value="3">Rede de internet</option>
-            <option value="4">Sistema</option>
-            <option value="5">Outros</option>
-        </select>
-        <label for="slug">Local: </label>
-        <input type="text" name="local" id="ocrr" placeholder="Local/unidade" class="form-control mb-2">
-        <label for="dsc">Solicitante: </label>
-        <input type="text" name="name" id="name" placeholder="Nome do solicitante" class="form-control mb-2">
-        <label for="dsc">Telefone: </label>
-        <input type="text" name="tel" id="tel" placeholder="Telefone para contato" class="form-control mb-2">
-        <label for="dsc">Descrição: </label>
-        <textarea class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn text-white mt-2" style="background-color: #4784ba;">Enviar</button>
-        <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Cancelar</button>
-      </div>
+        <form action="" method="post">
+          <label for="ocorrencia">Ocorrência: </label>
+          <select class="form-select col" aria-label="Default select example" name="ocorrencia" required>
+              <option value="" disabled selected>Tipo de ocorrência</option>
+              <option value="computador">Computador</option>
+              <option value="impressora">Impressora</option>
+              <option value="rede de internet">Rede de internet</option>
+              <option value="sistema">Sistema</option>
+              <option value="outros">Outros</option>
+          </select>
+          <label for="local">Local: </label>
+            <input type="text" name="local" placeholder="Local/unidade" class="form-control mb-2" required>
+          <label for="nome">Solicitante: </label>
+            <input type="text" name="nome" placeholder="Nome do solicitante" class="form-control mb-2" required>
+          <label for="telefone">Telefone: </label>
+            <input type="text" name="telefone" placeholder="Telefone para contato" class="form-control mb-2" required>
+          <label for="descricao">Descrição: </label>
+            <textarea name="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;" required></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn text-white mt-2" style="background-color: #4784ba;">Enviar</button>
+          <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+

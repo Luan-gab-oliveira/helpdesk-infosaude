@@ -4,14 +4,15 @@ const UsuarioController = require('../controllers/UsuarioController');
 const {authUser}= require('../helpers/authUsers')
 
 
-router.get('/chamados', authUser,(req,res)=>{
-    res.render('usuarios/chamados')
-})
 
-router.get('/login',(req,res)=>{
+router.get('/login',(req, res, next)=>{
     res.render('usuarios/login')
 })
 
-router.post('/login', UsuarioController.login)
+router.post('/login', UsuarioController.login);
+
+router.get('/chamados', UsuarioController.loadChamados);
+router.post('/chamados', UsuarioController.novoChamado);
+
 
 module.exports = router
