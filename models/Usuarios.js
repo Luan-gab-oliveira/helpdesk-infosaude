@@ -7,7 +7,7 @@ class Usuario extends Model{
             email: DataTypes.STRING,
             telefone: DataTypes.STRING,
             password: DataTypes.STRING,        
-            e_admin: DataTypes.INTEGER,        
+            acesso: DataTypes.INTEGER,        
         },{
             sequelize
         })

@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      e_admin:{
+      acesso:{
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },

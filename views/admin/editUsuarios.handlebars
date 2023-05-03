@@ -1,0 +1,40 @@
+<script src="/js/selectacesso.js" defer></script>
+
+{{#each erros}}
+    <div class="alert alert-danger">{{texto}}</div>
+{{else}}
+
+{{/each}}
+
+<h3>Editar Usuário: {{usuario.dataValues.user}}</h3>
+<hr>
+<div class="card border-0 bg-transparent">
+    <form class="text-end" action="/admin/cadastro/usuario/delete" method="post">
+        <input type="hidden" name="id" value="{{usuario.dataValues.id}}">
+        <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Excluir</button>
+    </form>
+    <form action="/admin/cadastro/usuario/edit" method="post">
+        <div class="card-body">
+            <input type="hidden" name="id" value="{{usuario.dataValues.id}}">
+            <label>Usuário:</label>
+                <input value="{{usuario.dataValues.user}}" type="text" name="user" placeholder="Usuário/solicitante" class="form-control mb-2">
+            <label>E-mail:</label>
+                <input value="{{usuario.dataValues.email}}" type="text" name="email" placeholder="E-mail do setor" class="form-control mb-2">
+            <label>Telefone:</label>
+                <input value="{{usuario.dataValues.telefone}}" type="text" id="telefone" name="telefone" placeholder="Telefone para contato" class="form-control mb-2">
+            <label>Senha:</label>
+            <input value="" type="text" name="password" placeholder="Defina uma senha" class="form-control mb-4">
+            <label for="tpaAcesso">Tipo de acesso:</label>
+            <input type="hidden" id="tpAcesso" value="{{usuario.dataValues.acesso}}">
+            <select class="form-select" name="acesso" id="acesso">
+                <option value="" disabled selected hidden>Selecione o tipo de acesso</option>
+                <option value="0" selected>Solicitante</option>
+                <option value="1">Administrador</option>
+            </select>
+        </div>
+        <div class="card-footer mt-2 border-0 bg-transparent">
+            <button type="submit" class="btn text-white" style="background-color: #236192;">Salvar</button>
+            <a href="/admin/cadastro/usuario"><button type="button" class="btn text-white" style="background-color: #8D98A7;">Cancelar</button></a>
+        </div>
+    </form>
+</div>

@@ -15,21 +15,21 @@
       <div class="card shadow-sm">
         <div class="card-body">
           {{#if inOpen}}
-            <div class="card-header" style="background-color: #32A071;">
+            <div class="card-header" style="background-color: #C23F5C;">
           {{else if inProcess}}
             <div class="card-header" style="background-color: #FFC145;">
-          {{else}}
-            <div class="card-header" style="background-color: #BB5067;">
+          {{else closed}}
+            <div class="card-header" style="background-color: #32A071;">
           {{/if}}
             <h5 class="card-title">Chamado: <label>{{dataValues.id}}</label></h5>
             <h6>Status: <label>{{dataValues.status}}</label></h6>
           </div>
-          <h6>Ocorrência: {{dataValues.ocorrencia}}</h6>
+          <h6 class="mt-2">Ocorrência: {{dataValues.ocorrencia}}</h6>
           <h6>Solicitante: <label>{{dataValues.nome}}</label></h6>
           <h6>Local: <label>{{dataValues.local}}</label></h6>
-          <h6>Descrição</h6>
-          {{!-- <p class="card-text text-truncate" style="background-color: #f8f8f8;">{{dataValues.descricao}}</p> --}}
-          <textarea class="form-control" id="floatingTextarea" style="height: 4rem; resize: none; background-color: #f8f8f8; border: none;">{{dataValues.descricao}}</textarea>
+          <h6>Descrição:</h6>
+          <p class="card-text text-truncate" style="height: 4rem; resize: none;">{{dataValues.descricao}}</p>
+          {{!-- <textarea class="form-control" id="floatingTextarea" style="height: 4rem; resize: none; background-color: #f8f8f8; border: none;">{{dataValues.descricao}}</textarea> --}}
 
           <hr>
           <button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Visualizar</button>

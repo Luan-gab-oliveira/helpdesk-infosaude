@@ -1,8 +1,8 @@
 {{#each erros}}
     <div class="alert alert-danger">{{texto}}</div>
 {{else}}
-
 {{/each}}
+
 <h2>Lista de usuários</h2>
 <button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo usuário</button>
 <hr>
@@ -23,8 +23,11 @@
                 <td>{{dataValues.email}}</td>
                 <td>{{dataValues.telefone}}</td>
                 <td class="text-center">
-                    <button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Alterar</button>
-                    <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Excluir</button>
+                    <form action="/admin/cadastro/usuario/delete" method="post">
+                        <a href="/admin/cadastro/usuario/edit/{{dataValues.id}}"><button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Alterar</button></a>
+                        <input type="hidden" name="id" value="{{dataValues.id}}">
+                        <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Excluir</button>
+                    </form>
                 </td>
             </tr>
         {{/each}}
@@ -48,15 +51,12 @@
                     <label>Telefone:</label>
                         <input type="text" name="telefone" placeholder="Telefone para contato" class="form-control mb-2">
                     <label>Senha:</label>
-                        <input type="text" name="password" placeholder="Defina uma senha" class="form-control mb-4">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0">
-                            <label class="form-check-label" for="inlineRadio1">Solicitante</label>
-                    </div>
-                    <div class="form-check form-check-inline mb-4">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1">
-                            <label class="form-check-label" for="inlineRadio2">Administrador</label>
-                    </div>
+                        <input type="text" name="password" placeholder="Defina uma senha" class="form-control mb-2">
+                    <label>Acesso:</label>
+                    <select class="form-select mb-4" name="acesso" id="acesso">
+                        <option value="0" selected>Solicitante</option>
+                        <option value="1">Administrador</option>
+                    </select>
                     <button type="submit" class="btn text-white form-control mb-2" style="background-color: #236192;">Cadastrar</button>
                 </form>
             </div>

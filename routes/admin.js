@@ -1,7 +1,6 @@
 const express = require('express');
-const AdminController = require('../controllers/AdminController');
 const router = express.Router();
-const {eAdmin}= require('../helpers/authUsers')
+const AdminController = require('../controllers/AdminController');
 
 router.get('/', (req, res) => {
     res.send('Pagina principal do painel ADM')
@@ -20,5 +19,12 @@ router.get('/atendimento', (req,res)=>{
 router.get('/cadastro/usuario', AdminController.loadSolicitantes);
 
 router.post('/cadastro/usuario', AdminController.createSolicitante);
+
+router.get('/cadastro/usuario/edit/:id', AdminController.loadSolicitante);
+
+router.post('/cadastro/usuario/edit', AdminController.editSolicitante);
+
+router.post('/cadastro/usuario/delete', AdminController.deleteSolicitante);
+
 
 module.exports = router;
