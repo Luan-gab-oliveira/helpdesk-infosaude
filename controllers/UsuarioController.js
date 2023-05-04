@@ -42,6 +42,7 @@ module.exports = {
         }
         
     },
+
     async novoChamado(req,res){    
         try{
             const { ocorrencia, local, nome, telefone, descricao } = req.body
@@ -59,5 +60,14 @@ module.exports = {
             res.status(400)
         }
 
-    }
+    },
+
+    async loadChamado(req, res){
+        Chamados.findByPk(req.params.id).then((chamado) => {
+            res.render('usuarios/editChamados', {chamado: chamado})
+        }).catch((err) =>{
+            req.flash('error_msg', 'Erro ao abrir chamado')
+            res.redirect('/usuarios/chamados')
+        })
+    },
 }

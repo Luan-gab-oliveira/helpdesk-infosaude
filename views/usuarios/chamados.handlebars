@@ -13,27 +13,27 @@
   {{#each listchamados}}
     <div class="col">
       <div class="card shadow-sm">
+        <div class="card-header border-light" style="background-color: #f6f7f9;">
+          <h5 class="card-title">Chamado: <label>{{dataValues.id}}</label></h5>
+        </div>
         <div class="card-body">
+          <span class="mt-2" style="color: #646E78;">Local</span>
+            <h6>{{dataValues.local}}</h6>
+          <span class="mt-2" style="color: #646E78;">Ocorrência</span>
+            <h6>{{dataValues.ocorrencia}}</h6>
+          <span class="mt-2" style="color: #646E78;">Solicitante</span>
+            <h6>{{dataValues.nome}}</h6>
           {{#if inOpen}}
-            <div class="card-header" style="background-color: #C23F5C;">
+            <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #C23F5C;"></div>
           {{else if inProcess}}
-            <div class="card-header" style="background-color: #FFC145;">
+            <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #FFC145;"></div>
           {{else closed}}
-            <div class="card-header" style="background-color: #32A071;">
+            <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #32A071;"></div>
           {{/if}}
-            <h5 class="card-title">Chamado: <label>{{dataValues.id}}</label></h5>
-            <h6>Status: <label>{{dataValues.status}}</label></h6>
-          </div>
-          <h6 class="mt-2">Ocorrência: {{dataValues.ocorrencia}}</h6>
-          <h6>Solicitante: <label>{{dataValues.nome}}</label></h6>
-          <h6>Local: <label>{{dataValues.local}}</label></h6>
-          <h6>Descrição:</h6>
-          <p class="card-text text-truncate" style="height: 4rem; resize: none;">{{dataValues.descricao}}</p>
-          {{!-- <textarea class="form-control" id="floatingTextarea" style="height: 4rem; resize: none; background-color: #f8f8f8; border: none;">{{dataValues.descricao}}</textarea> --}}
-
-          <hr>
-          <button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Visualizar</button>
-          <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Excluir</button>
+          <h5 class="mb-4">Status: <label>{{dataValues.status}}</label></h5>
+          
+          <a href="/usuarios/chamados/edit/{{dataValues.id}}"><button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Visualizar</button></a>
+          <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Encerrar</button>
         </div>
       </div>
     </div>
