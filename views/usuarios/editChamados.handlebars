@@ -3,41 +3,76 @@
 {{else}}
 
 {{/each}}
+
+<h3>Editar Chamado: {{chamado.dataValues.id}}</h3>
+        
+<hr>
 <div class="container p-0">
     <div class="row">
         <div class="col">
-            <h3>Editar Chamado: {{chamado.dataValues.id}}</h3>
+            <h4>Status: {{chamado.dataValues.status}}</h4>
         </div>
         <div class="col">
             <form class="text-end" action="/admin/cadastro/usuario/delete" method="post">
                 <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
+                <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Observações</button>
                 <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Encerrar Chamado</button>
             </form>
         </div>
     </div>
 </div>
-<hr>
-<div class="container p-0 mt-4">
-    <div class="row">
-        <div class="col mt-4">
-            <form action="/usuarios/chamados/edit" method="post">
-                <div class="card-body">
-                    <h4 class="mb-4">Status: {{chamado.dataValues.status}}</h4>
-                    <label for="ocorrencia">Ocorrência: </label>
-                        <input type="text" name="ocorrencia" value="{{chamado.dataValues.ocorrencia}}" class="form-control mb-2" readonly>
-                    <label for="local">Local: </label>
-                        <input type="text" name="local" value="{{chamado.dataValues.local}}" class="form-control mb-2" readonly>
-                    <label for="nome">Solicitante: </label>
-                        <input type="text" name="nome" value="{{chamado.dataValues.nome}}" class="form-control mb-2" readonly>
-                    <label for="telefone">Telefone: </label>
-                        <input type="text" name="telefone" value="{{chamado.dataValues.telefone}}" class="form-control mb-2" readonly>
-                    <label for="descricao">Descrição: </label>
-                        <textarea name="descricao" class="form-control" id="floatingTextarea" style="height: 7rem; resize: none;" readonly>{{chamado.dataValues.descricao}}</textarea>
+
+<div class="card border-0 bg-transparent mt-4">
+    <div class="card-body">
+        <form action="/usuarios/chamados/edit" method="post">
+            <label for="ocorrencia">Ocorrência: </label>
+                <input type="text" name="ocorrencia" value="{{chamado.dataValues.ocorrencia}}" class="form-control mb-2" readonly>
+            <label for="local">Local: </label>
+                <input type="text" name="local" value="{{chamado.dataValues.local}}" class="form-control mb-2" readonly>
+            <label for="nome">Solicitante: </label>
+                <input type="text" name="nome" value="{{chamado.dataValues.nome}}" class="form-control mb-2" readonly>
+            <label for="telefone">Telefone: </label>
+                <input type="text" name="telefone" value="{{chamado.dataValues.telefone}}" class="form-control mb-2" readonly>
+            <label for="descricao">Descrição: </label>
+                <textarea name="descricao" class="form-control" id="floatingTextarea" style="height: 7rem; resize: none;" readonly>{{chamado.dataValues.descricao}}</textarea>
+        </form>
+    </div>
+</div>
+    
+<div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Observações</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="post">
+                <div class="modal-body bg-0">
+                    <div class="overflow-auto p-3 bg-0" style="max-height: 20rem;">
+                        <div class="text-end">
+                            <h6>ESF Paulas</h6>
+                            <p clas>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque ex amet animi harum fugiat, excepturi nulla laborum. Natus, harum quae deserunt ut qui dicta amet est ab, tempore quod at!</p>    
+                        </div>
+                        <div class="text-start">
+                            <h6>Info</h6>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste minus modi eos eveniet. Consectetur, aliquam odit officiis natus, laudantium ex iusto corrupti recusandae sequi sint laborum rerum illum cupiditate dolores.</p>
+                        </div>
+                        <div class="text-start">
+                            <h6>Info</h6>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste minus modi eos eveniet. Consectetur, aliquam odit officiis natus, laudantium ex iusto corrupti recusandae sequi sint laborum rerum illum cupiditate dolores.</p>
+                        </div>
+                        <div class="text-end">
+                            <h6>ESF Paulas</h6>
+                            <p clas>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque ex amet animi harum fugiat, excepturi nulla laborum. Natus, harum quae deserunt ut qui dicta amet est ab, tempore quod at!</p>    
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" name="telefone" placeholder="Digite uma observação" class="form-control mb-2">
+                    <button type="submit" class="btn text-white mt-2" style="background-color: #4784ba;">Enviar</button>
+                    <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Cancelar</button>
                 </div>
             </form>
-        </div>
-        <div class="col mt-4">
-            
         </div>
     </div>
 </div>
