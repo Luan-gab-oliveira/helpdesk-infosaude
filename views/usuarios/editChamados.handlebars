@@ -13,7 +13,7 @@
             <h4>Status: {{chamado.dataValues.status}}</h4>
         </div>
         <div class="col">
-            <form class="text-end" action="/admin/cadastro/usuario/delete" method="post">
+            <form class="text-end" action="/usuarios/chamados/encerrar" method="post">
                 <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
                 <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Observações</button>
                 <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Encerrar Chamado</button>
@@ -46,31 +46,23 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Observações</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="post">
+            <form action="/usuarios/chamados/edit" method="post">
                 <div class="modal-body bg-0">
                     <div class="overflow-auto p-3 bg-0" style="max-height: 20rem;">
-                        <div class="text-end">
-                            <h6>ESF Paulas</h6>
-                            <p clas>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque ex amet animi harum fugiat, excepturi nulla laborum. Natus, harum quae deserunt ut qui dicta amet est ab, tempore quod at!</p>    
-                        </div>
-                        <div class="text-start">
-                            <h6>Info</h6>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste minus modi eos eveniet. Consectetur, aliquam odit officiis natus, laudantium ex iusto corrupti recusandae sequi sint laborum rerum illum cupiditate dolores.</p>
-                        </div>
-                        <div class="text-start">
-                            <h6>Info</h6>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste minus modi eos eveniet. Consectetur, aliquam odit officiis natus, laudantium ex iusto corrupti recusandae sequi sint laborum rerum illum cupiditate dolores.</p>
-                        </div>
-                        <div class="text-end">
-                            <h6>ESF Paulas</h6>
-                            <p clas>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque ex amet animi harum fugiat, excepturi nulla laborum. Natus, harum quae deserunt ut qui dicta amet est ab, tempore quod at!</p>    
-                        </div>
+                        {{#each obs}}
+                            <div class="bg-light p-2 mb-4 rounded">
+                                <h6>{{dataValues.user}}</h6>    
+                                <p>{{dataValues.obs}}</p>
+                            </div>
+                        {{/each}}
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="text" name="telefone" placeholder="Digite uma observação" class="form-control mb-2">
-                    <button type="submit" class="btn text-white mt-2" style="background-color: #4784ba;">Enviar</button>
-                    <button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Cancelar</button>
+                    <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
+                    <input type="hidden" name="user" value="{{chamado.user.dataValues.email}}">
+                    <input type="text" name="obs" placeholder="Digite uma observação" class="form-control mb-2" required>
+                    <button type="submit" class="btn text-white" style="background-color: #4784ba;">Enviar</button>
+                    <a href="/usuarios/chamados"><button type="button" class="btn btn-danger " style="background-color: #C23F5C;">Cancelar</button></a>
                 </div>
             </form>
         </div>

@@ -11,7 +11,10 @@ router.get('/login',(req, res, next)=>{
 router.get('/chamados', UsuarioController.loadChamados);
 router.post('/chamados', UsuarioController.novoChamado);
 
-router.get('/chamados/edit/:id', UsuarioController.loadChamado);
+router.get('/chamados/edit/:id', UsuarioController.loadChamadoedit);
+router.post('/chamados/edit', UsuarioController.novaObservacao);
+router.post('/chamados/encerrar', UsuarioController.encerrarChamado);
+
 
 
 module.exports = router
