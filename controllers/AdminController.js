@@ -1,5 +1,9 @@
 const Usuario = require('../models/Usuarios')
+const Chamados = require('../models/Chamados');
 const bcrypt = require('bcryptjs')
+const { Op } = require("sequelize");
+
+
 
 async function loadlistsolicitantes(){
     const list = await Usuario.findAll({order: [['user', 'ASC']]})
@@ -8,6 +12,49 @@ async function loadlistsolicitantes(){
 
 
 module.exports = {
+
+    async loadChamados(req, res){
+        await Chamados.findAll({where: {status: {[Op.ne]: 'encerrado'}},order: [['updated_at', 'ASC']], include: {model: Usuario, as: 'user'}}).then((chamados) =>{
+            var list = chamados
+            console.log(list)
+            for(var i = 0; i < list.length; i++){
+                var data = list[i].createdAt
+                Object.defineProperty(list[i], 'dataAbertura',{
+                    value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
+                    writable: false,
+                });
+
+                // TODO:Inserir email dos chamados no card
+                console.log(list[i].user.email)
+
+                switch (list[i].status){
+                    case 'pendente':
+                        Object.defineProperty(list[i], 'inOpen',{
+                            value: true,
+                            writable: false,
+                        });
+                    
+                    case 'processando':
+                        Object.defineProperty(list[i], 'inProcess',{
+                            value: true,
+                            writable: false,
+                        });
+
+                    case 'encerrado':
+                        Object.defineProperty(list[i], 'closed',{
+                            value: true,
+                            writable: false,
+                        });
+                }
+            }
+
+            res.render('admin/chamados', {listchamados: list, chamados:chamados})
+        }).catch((err) =>{
+            req.flash('error_msg','Desculpe, houve um erro ao carregar chamados, tente novamente!')
+            res.redirect('/admin')
+        })
+    },
+
     async loadSolicitantes(req, res){
         try{
             const list = await loadlistsolicitantes()

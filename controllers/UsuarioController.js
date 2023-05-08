@@ -1,13 +1,15 @@
 const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Usuario = require('../models/Usuarios')
-
+const { Op } = require("sequelize");
 
 var user_id = 1
 async function loadlistchamados(){
     const list = await Chamados.findAll({
-        where: {user_id: user_id},
-        order: [['id', 'ASC']]})
+        where: {user_id: user_id, status: {[Op.ne]: 'encerrado'}},
+        order: [['id', 'ASC']],
+        include: {model: Usuario, as: 'user'}
+    })
     return list
 }
 

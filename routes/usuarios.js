@@ -15,6 +15,4 @@ router.get('/chamados/edit/:id', UsuarioController.loadChamadoedit);
 router.post('/chamados/edit', UsuarioController.novaObservacao);
 router.post('/chamados/encerrar', UsuarioController.encerrarChamado);
 
-
-
 module.exports = router
