@@ -8,10 +8,7 @@ router.get('/', (req, res) => {
 
 router.get('/chamados', AdminController.loadChamados);
 
-router.get('/atendimento', (req,res)=>{
-    res.render('admin/atendimento')
-
-})
+router.get('/chamado/atendimento/:id', AdminController.loadChamado);
 
 router.get('/cadastro/usuario', AdminController.loadSolicitantes);
 router.post('/cadastro/usuario', AdminController.createSolicitante);

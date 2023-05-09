@@ -1,0 +1,53 @@
+<div class="container p-0 mt-2">
+    <div class="row">
+        <div class="col">
+            <h2>Chamado: {{chamado.dataValues.id}}</h2>
+        </div>
+        <div class="col text-end">
+            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #4784ba;">Trânsferir</button>
+            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Observações</button>
+            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #C23F5C;">Encerrar chamado</button>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="card border-0 bg-transparent mt-4">
+    <div class="card'-body">
+        <h4>Status: {{chamado.dataValues.status}}</h4>
+        <div class="container p-0">
+            <div class="row">
+                <div class="col">
+                    <label class="mt-2">Unidade:</label>
+                        <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.user.dataValues.user}}">
+                </div>
+                <div class="col">
+                    <label class="mt-2">Email:</label>
+                        <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.user.dataValues.email}}">
+                </div>
+            </div>
+        </div>
+        <label class="mt-2">Local:</label>
+            <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.local}}">
+        <label class="mt-2">Ocorrência:</label>
+            <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.ocorrencia}}">
+        <label for="dsc">Descrição: </label>
+            <textarea class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
+        <hr>
+        <h4 class="mb-4"><label>Atualizar chamado</label></h4>
+        <div class="container text-center">
+            <div class="row mb-4">
+                <select class="form-select col" aria-label="Default select example">
+                    <option selected>Status do chamado</option>
+                    <option value="1">Aberto</option>
+                    <option value="2">Processando</option>
+                    <option value="3">Finalizado</option>
+                    <option value="4">Cancelado</option>
+                </select>
+                <button class="btn text-white col-xl-2 btn-success" type="button" id="button-addon2" style="margin-left: 1rem; background-color: #4784ba;">Salvar</button>
+            </div>
+        </div>
+        <label for="dsc">Observações: </label>
+            <textarea class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;"></textarea>
+    </div>
+</div>

@@ -16,7 +16,6 @@ module.exports = {
     async loadChamados(req, res){
         await Chamados.findAll({where: {status: {[Op.ne]: 'encerrado'}},order: [['updated_at', 'ASC']], include: {model: Usuario, as: 'user'}}).then((chamados) =>{
             var list = chamados
-            console.log(list)
             for(var i = 0; i < list.length; i++){
                 var data = list[i].createdAt
                 Object.defineProperty(list[i], 'dataAbertura',{
@@ -24,8 +23,7 @@ module.exports = {
                     writable: false,
                 });
 
-                // TODO:Inserir email dos chamados no card
-                console.log(list[i].user.email)
+                console.log(list[i].user.unidade)
 
                 switch (list[i].status){
                     case 'pendente':
@@ -48,10 +46,20 @@ module.exports = {
                 }
             }
 
-            res.render('admin/chamados', {listchamados: list, chamados:chamados})
+            res.render('admin/chamados', {listchamados: list})
         }).catch((err) =>{
             req.flash('error_msg','Desculpe, houve um erro ao carregar chamados, tente novamente!')
             res.redirect('/admin')
+        })
+    },
+
+    async loadChamado(req, res){
+        Chamados.findByPk(req.params.id, {include: {model: Usuario, as: 'user'}}).then((chamado) => {
+            console.log(chamado)
+            res.render('admin/updateChamado', {chamado: chamado})
+        }).catch((err) =>{
+            req.flash('error_msg', 'Erro ao carregar chamado')
+            res.redirect('/admin/cadastro/usuario')
         })
     },
 

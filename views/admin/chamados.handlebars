@@ -1,16 +1,8 @@
 <h2>Chamados em aberto informática saúde</h2>
-<button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #236192;">Novo chamado</button>
-<button class="btn text-white dropdown-toggle mt-4" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #8C9DA9;">Filtrar</button>
-<ul class="dropdown-menu">
-  <li><a class="dropdown-item" href="#">Limpar filtros</a></li>
-  <li><a class="dropdown-item" href="#">Aberto</a></li>
-  <li><a class="dropdown-item" href="#">Processando</a></li>
-  <li><a class="dropdown-item" href="#">Trânsferido</a></li>
-</ul>
 
 <hr>
 
-<div class="row row-cols-1 row-cols-md-4 g-4">
+<div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
   {{#each listchamados}}
     <div class="col">
       <div class="card shadow-sm">
@@ -18,10 +10,8 @@
           <h5 class="card-title">Chamado: <label>{{dataValues.id}}</label></h5>
         </div>
         <div class="card-body">
-          <span class="mt-2" style="color: #646E78;">Usuário</span>
-            <h6>{{listchamados.user.dataValues.email}}</h6>
-          <span class="mt-2" style="color: #646E78;">Local</span>
-            <h6>{{dataValues.local}}</h6>
+          <span class="mt-2" style="color: #646E78;">Unidade</span>
+            <h6>{{user.dataValues.user}}</h6>
           <span class="mt-2" style="color: #646E78;">Ocorrência</span>
             <h6>{{dataValues.ocorrencia}}</h6>
           <span class="mt-2" style="color: #646E78;">Solicitante</span>
@@ -39,7 +29,7 @@
           <h5 class="mb-4">Status: <label>{{dataValues.status}}</label></h5>
           <form action="" method="post">
             <input type="hidden" name="id" value="{{dataValues.id}}">
-            <a href="/usuarios/chamados/edit/{{dataValues.id}}"><button type="button" class="btn text-white" style="background-color: #4784ba;">Visualizar</button></a>
+            <a href="/admin/chamado/atendimento/{{dataValues.id}}"><button type="button" class="btn text-white" style="background-color: #4784ba;">Visualizar</button></a>
             <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Encerrar</button>
           </form>
         </div>
