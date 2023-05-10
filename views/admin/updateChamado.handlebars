@@ -4,9 +4,10 @@
             <h2>Chamado: {{chamado.dataValues.id}}</h2>
         </div>
         <div class="col text-end">
-            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #4784ba;">Trânsferir</button>
-            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Observações</button>
-            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #C23F5C;">Encerrar chamado</button>
+            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #4784ba;"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button>
+            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
+            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
+            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #C23F5C;"><i class="fa-solid fa-xmark"></i> Encerrar chamado</button>
         </div>
     </div>
 </div>
@@ -34,11 +35,11 @@
         <label for="dsc">Descrição: </label>
             <textarea class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
         <hr>
-        <h4 class="mb-4"><label>Atualizar chamado</label></h4>
+        <h4 class="mb-4"><label>Classificação final</label></h4>
         <div class="container text-center">
             <div class="row mb-4">
                 <select class="form-select col" aria-label="Default select example">
-                    <option selected>Status do chamado</option>
+                    <option selected>Situação</option>
                     <option value="1">Aberto</option>
                     <option value="2">Processando</option>
                     <option value="3">Finalizado</option>
@@ -47,7 +48,55 @@
                 <button class="btn text-white col-xl-2 btn-success" type="button" id="button-addon2" style="margin-left: 1rem; background-color: #4784ba;">Salvar</button>
             </div>
         </div>
-        <label for="dsc">Observações: </label>
-            <textarea class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;"></textarea>
+        <label for="dsc">Observações técnicas: </label>
+            <textarea class="form-control" placeholder="Descrição" id="floatingTextarea" style="height: 7rem; resize: none;"></textarea>
+    </div>
+</div>
+
+<div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content" style="height: 50rem;">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Observações</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <span class="mt-4" style="color: #646E78;">Local</span>
+                                <input type="text" name="" id="">
+                        </div>
+
+                        <div class="col">
+                            <div class="overflow-auto p-3 bg-0">
+                                {{#each obs}}
+                                    <div class="bg-light p-2 mb-4 rounded">
+                                        <h6>{{dataValues.user}}</h6>
+                                        <p>{{dataValues.obs}}</p>
+                                    </div>
+                                {{/each}}
+                            </div>
+                            <form action="/usuarios/chamados/edit" method="post">
+                                <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
+                                <input type="hidden" name="user" value="{{chamado.user.dataValues.email}}">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" name="obs" placeholder="Digite uma observação" class="form-control mb-2" required>
+                                        </div>
+                                        <div class="col">
+                                            <button type="submit" class="btn text-white" style="background-color: #4784ba;">Enviar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
 </div>
