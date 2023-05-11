@@ -1,5 +1,6 @@
 const Usuario = require('../models/Usuarios')
 const Chamados = require('../models/Chamados');
+const Observacoes = require('../models/Observacoes');
 const bcrypt = require('bcryptjs')
 const { Op } = require("sequelize");
 
@@ -10,7 +11,7 @@ async function loadlistsolicitantes(){
     return list
 }
 
-
+var user_id = 2
 module.exports = {
 
     async loadChamados(req, res){
@@ -22,8 +23,6 @@ module.exports = {
                     value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
                     writable: false,
                 });
-
-                console.log(list[i].user.unidade)
 
                 switch (list[i].status){
                     case 'pendente':
@@ -53,14 +52,42 @@ module.exports = {
         })
     },
 
-    async loadChamado(req, res){
-        Chamados.findByPk(req.params.id, {include: {model: Usuario, as: 'user'}}).then((chamado) => {
-            console.log(chamado)
-            res.render('admin/updateChamado', {chamado: chamado})
+    async loadUpdateChamado(req, res){
+        await Chamados.findByPk(req.params.id, {include: {model: Usuario, as: 'user'}}).then((chamado) => {
+            Observacoes.findAll({where: {chamado_id: req.params.id}}).then((obs) => {
+                res.render('admin/updateChamado', {chamado: chamado, obs: obs})
+            }).catch((err) =>{
+                res.render('admin/updateChamado', {chamado: chamado})
+            })
         }).catch((err) =>{
             req.flash('error_msg', 'Erro ao carregar chamado')
             res.redirect('/admin/cadastro/usuario')
         })
+    },
+
+    async novaObservacao(req, res){
+        try{
+            const { chamado_id, obs} = req.body
+            await Usuario.findByPk(user_id).then((usuario) =>{
+                const user = usuario.email
+                const newObs = ({chamado_id, obs, user})
+                Observacoes.create(newObs).then(() => {
+                    req.flash('success_msg','Observação enviada com sucesso!')
+                    res.redirect('/admin/chamado/atendimento/' + chamado_id)
+                }).catch((err) =>{
+                    req.flash('error_msg','Desculpe, houve um erro ao enviar a observação, tente novamente!')
+                    res.redirect('/admin/chamado/atendimento/' + chamado_id)
+                })
+            }).catch((err) =>{
+                req.flash('error_msg', 'Desculpe, houve um erro ao enviar a observação, tente novamente!')
+                res.redirect('/admin/chamado/atendimento/' + chamado_id)
+            })
+            
+            
+
+        }catch(err){
+            res.status(400)
+        }
     },
 
     async loadSolicitantes(req, res){

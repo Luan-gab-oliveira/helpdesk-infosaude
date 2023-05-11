@@ -5,7 +5,7 @@
         </div>
         <div class="col text-end">
             <button class="btn text-white" type="button" id="button-addon2" style="background-color: #4784ba;"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button>
-            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
+            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
             <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
             <button class="btn text-white" type="button" id="button-addon2" style="background-color: #C23F5C;"><i class="fa-solid fa-xmark"></i> Encerrar chamado</button>
         </div>
@@ -54,49 +54,71 @@
 </div>
 
 <div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content" style="height: 50rem;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Observações</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body bg-0">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <span class="mt-4" style="color: #646E78;">Local</span>
-                                <input type="text" name="" id="">
-                        </div>
-
-                        <div class="col">
-                            <div class="overflow-auto p-3 bg-0">
-                                {{#each obs}}
-                                    <div class="bg-light p-2 mb-4 rounded">
-                                        <h6>{{dataValues.user}}</h6>
-                                        <p>{{dataValues.obs}}</p>
-                                    </div>
-                                {{/each}}
+            <form action="/admin/chamado/atendimento" method="post">
+                <div class="modal-body bg-0">
+                    <div class="overflow-auto p-3 bg-0" style="max-height: 22rem; height: 22rem;">
+                        {{#each obs}}
+                            <div class="bg-light p-2 mb-4 rounded">
+                                <h6>{{dataValues.user}}</h6>    
+                                <p>{{dataValues.obs}}</p>
                             </div>
-                            <form action="/usuarios/chamados/edit" method="post">
-                                <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
-                                <input type="hidden" name="user" value="{{chamado.user.dataValues.email}}">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text" name="obs" placeholder="Digite uma observação" class="form-control mb-2" required>
-                                        </div>
-                                        <div class="col">
-                                            <button type="submit" class="btn text-white" style="background-color: #4784ba;">Enviar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 3.5rem; resize: none"></textarea>
+                            </div>
+                            <div class="col-2 text-end">
+                                <button type="submit" class="btn text-white rounded-circle" style="background-color: #4784ba;"><i class="fa-solid fa-paper-plane"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-centerd" id="materiasModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Materiais</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-footer">
-            </div>
+            <form action="/admin/chamado/atendimento" method="post">
+                <div class="modal-body bg-0">
+                    <div class="overflow-auto p-3 bg-0" style="max-height: 22rem; height: 22rem;">
+                        {{#each obs}}
+                            <div class="bg-light p-2 mb-4 rounded">
+                                <h6>{{dataValues.user}}</h6>    
+                                <p>{{dataValues.obs}}</p>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Selecione um material</option>
+                            {{#each obs}}
+                                <option value=''></option>
+                            {{/each}}
+                        </select>
+                    <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 3.5rem; resize: none"></textarea>
+                    <button type="submit" class="btn text-white rounded-circle" style="background-color: #4784ba;"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

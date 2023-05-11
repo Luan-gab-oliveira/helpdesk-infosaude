@@ -1,0 +1,53 @@
+{{#each erros}}
+    <div class="alert alert-danger">{{texto}}</div>
+{{else}}
+{{/each}}
+
+<div class="container p-0">
+    <div class="row">
+        <div class="col">
+            <h2>Materiais</h2>
+        </div>
+        <div class="col text-end">
+            <form action="">
+                <div class="container p-0">
+                    <div class="row">
+                        <div class="col text-end">
+                            <input class="form-control" type="text" placeholder="Novo item" name="material">
+                        </div>
+                        <div class="col-3 text-end" style="min-width: 10rem;">
+                            <button type="submit" class="btn text-white" style="background-color: #4784ba;"><i class="fa-solid fa-plus"></i> Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Item</th>
+            <th scope="col">Utilizados</th>
+            <th scope="col" class="text-center">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each listsolicitantes}}
+            <tr class="align-middle">
+                <td>{{dataValues.email}}</td>
+                <td>{{dataValues.telefone}}</td>
+                <td class="text-center">
+                    <form action="/admin/cadastro/usuario/delete" method="post">
+                        <a href="/admin/cadastro/usuario/edit/{{dataValues.id}}"><button type="button" class="btn text-white mt-2" style="background-color: #4784ba;"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                        <input type="hidden" name="id" value="{{dataValues.id}}">
+                        <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
