@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AdminController = require('../controllers/AdminController');
+const MateriaisController = require('../controllers/MateriaisController')
 
 router.get('/', (req, res) => {
     res.send('Pagina principal do painel ADM')
@@ -17,9 +18,8 @@ router.get('/cadastro/usuario/edit/:id', AdminController.loadSolicitante);
 router.post('/cadastro/usuario/edit', AdminController.editSolicitante);
 router.post('/cadastro/usuario/delete', AdminController.deleteSolicitante);
 
-router.get('/materiais', (req,res) =>{
-    res.render('admin/materiais')
-});
+router.get('/materiais', MateriaisController.loadMateriais);
+router.post('/materiais', MateriaisController.novoItem);
 
 
 module.exports = router;

@@ -90,7 +90,7 @@
 </div>
 
 <div class="modal fade modal-centerd" id="materiasModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Materiais</h1>
@@ -108,15 +108,22 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Selecione um material</option>
-                            {{#each obs}}
-                                <option value=''></option>
-                            {{/each}}
-                        </select>
-                    <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 3.5rem; resize: none"></textarea>
-                    <button type="submit" class="btn text-white rounded-circle" style="background-color: #4784ba;"><i class="fa-solid fa-paper-plane"></i></button>
+                    <div class="container p-0">
+                        <div class="row">
+                            <div class="col">
+                                <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Selecione um material</option>
+                                        {{#each obs}}
+                                            <option value=''></option>
+                                        {{/each}}
+                                    </select>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn text-white" style="background-color: #4784ba;">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

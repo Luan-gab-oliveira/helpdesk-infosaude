@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 
-class MateriaisUtilizados extends Model{
+class Saidas extends Model{
     static init(sequelize){
-        super.init({        
-            quantidade: DataTypes.INTEGER,        
+        super.init({
+            quantidade: DataTypes.INTEGER,          
         },{
             sequelize
         })
@@ -11,8 +11,8 @@ class MateriaisUtilizados extends Model{
 
     static associate(models){
         this.belongsTo(models.Chamados, { foreignKey: 'chamado_id', as: 'chamado' });
-        this.belongsTo(models.Estoque, { foreignKey: 'estoque_id', as: 'estoque' });
+        this.belongsTo(models.Materiais, { foreignKey: 'materiais_id', as: 'item' });
     }
 }
 
-module.exports = MateriaisUtilizados;
+module.exports = Saidas;
