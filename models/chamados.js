@@ -16,6 +16,8 @@ class Chamados extends Model{
 
     static associate(models){
         this.belongsTo(models.Usuario, { foreignKey: 'user_id', as: 'user' });
+        this.hasMany(models.Saidas, { foreignKey: 'item_id', as: 'saidas' });
+        this.hasMany(models.Observacoes, {foreignKey: 'chamado_id', as: 'observacoes'})
     }
 }
 

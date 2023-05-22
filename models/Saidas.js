@@ -11,7 +11,7 @@ class Saidas extends Model{
 
     static associate(models){
         this.belongsTo(models.Chamados, { foreignKey: 'chamado_id', as: 'chamado' });
-        this.belongsTo(models.Materiais, { foreignKey: 'materiais_id', as: 'item' });
+        this.belongsTo(models.Materiais, { foreignKey: 'item_id', as: 'item' });
     }
 }
 

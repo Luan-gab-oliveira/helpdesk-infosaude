@@ -54,13 +54,13 @@
 </div>
 
 <div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Observações</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/admin/chamado/atendimento" method="post">
+            <form action="/admin/chamado/atendimento/observacao" method="post">
                 <div class="modal-body bg-0">
                     <div class="overflow-auto p-3 bg-0" style="max-height: 22rem; height: 22rem;">
                         {{#each obs}}
@@ -78,7 +78,7 @@
                             <div class="col">
                                 <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 3.5rem; resize: none"></textarea>
                             </div>
-                            <div class="col-2 text-end">
+                            <div class="col-2 text-center">
                                 <button type="submit" class="btn text-white rounded-circle" style="background-color: #4784ba;"><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         </div>
@@ -89,6 +89,7 @@
     </div>
 </div>
 
+{{!-- MOdal Materiais --}}
 <div class="modal fade modal-centerd" id="materiasModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -96,36 +97,33 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Materiais</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/admin/chamado/atendimento" method="post">
-                <div class="modal-body bg-0">
-                    <div class="overflow-auto p-3 bg-0" style="max-height: 22rem; height: 22rem;">
-                        {{#each obs}}
-                            <div class="bg-light p-2 mb-4 rounded">
-                                <h6>{{dataValues.user}}</h6>    
-                                <p>{{dataValues.obs}}</p>
-                            </div>
+            <div class="modal-body bg-0">
+                <form action="/admin/chamado/atendimento/material" method="post">
+                    <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
+                    <select class="form-select mb-2" aria-label="Default select example" name="item_id">
+                        <option selected>Selecione um material</option>
+                        {{#each materiais}}
+                            <option value={{dataValues.id}}>{{dataValues.item}}</option>
                         {{/each}}
-                    </div>
-                </div>
-                <div class="modal-footer">
+                    </select>
                     <div class="container p-0">
                         <div class="row">
                             <div class="col">
-                                <input type="hidden" name="chamado_id" value="{{chamado.dataValues.id}}">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Selecione um material</option>
-                                        {{#each obs}}
-                                            <option value=''></option>
-                                        {{/each}}
-                                    </select>
+                                <input class="form-control" type="number" name="quantidade" placeholder="Quantidade">
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 text-end">
                                 <button type="submit" class="btn text-white" style="background-color: #4784ba;">Adicionar</button>
                             </div>
                         </div>
                     </div>
+                </form>
+                <hr>
+                <div class="overflow-auto p-3 bg-0" style="max-height: 22rem; height: 22rem;">
+                    {{#each saidas}}
+                        <h6>Item: {{dataValues.id}} - Quantidade: {{dataValues.quantidade}}</h6>
+                    {{/each}}
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

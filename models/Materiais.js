@@ -10,9 +10,8 @@ class Materiais extends Model{
     }
 
     static associate(models){
-        this.hasMany(models.Saidas, { foreignKey: 'materiais_id', as: 'saidas' });
+        this.hasMany(models.Saidas, { foreignKey: 'item_id', as: 'saidas' });
     }
 }
-
 
 module.exports = Materiais;

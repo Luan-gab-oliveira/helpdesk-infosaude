@@ -1,8 +1,10 @@
 const Usuario = require('../models/Usuarios')
 const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
+const Materiais = require('../models/Materiais');
 const bcrypt = require('bcryptjs')
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
+const Saidas = require('../models/Saidas');
 
 
 
@@ -53,16 +55,17 @@ module.exports = {
     },
 
     async loadUpdateChamado(req, res){
-        await Chamados.findByPk(req.params.id, {include: {model: Usuario, as: 'user'}}).then((chamado) => {
-            Observacoes.findAll({where: {chamado_id: req.params.id}}).then((obs) => {
-                res.render('admin/updateChamado', {chamado: chamado, obs: obs})
-            }).catch((err) =>{
-                res.render('admin/updateChamado', {chamado: chamado})
-            })
-        }).catch((err) =>{
+        try{ 
+            const materiais = await Materiais.findAll()
+            const chamados = await Chamados.findByPk(req.params.id,{include: {model: Usuario, as: 'user'}})
+            const obs = await Observacoes.findAll({where: {chamado_id: req.params.id}})
+
+            res.render('admin/updateChamado', {chamado: chamados, obs: obs, materiais: materiais})
+        }catch(err){
+            console.log('Error: ' + err)
             req.flash('error_msg', 'Erro ao carregar chamado')
-            res.redirect('/admin/cadastro/usuario')
-        })
+            res.redirect('/admin/chamados')
+        }
     },
 
     async novaObservacao(req, res){
@@ -80,6 +83,25 @@ module.exports = {
                 })
             }).catch((err) =>{
                 req.flash('error_msg', 'Desculpe, houve um erro ao enviar a observação, tente novamente!')
+                res.redirect('/admin/chamado/atendimento/' + chamado_id)
+            })
+            
+            
+
+        }catch(err){
+            res.status(400)
+        }
+    },
+
+    async saidaMaterial(req, res){
+        try{
+            const { chamado_id, item_id, quantidade} = req.body
+            const newSaida = ({chamado_id, item_id, quantidade})
+            await Saidas.create(newSaida).then(() => {
+                req.flash('success_msg','Material registrado com sucesso!')
+                res.redirect('/admin/chamado/atendimento/' + chamado_id)
+            }).catch((err) =>{
+                req.flash('error_msg','Desculpe, houve um erro ao registrar este item, tente novamente!')
                 res.redirect('/admin/chamado/atendimento/' + chamado_id)
             })
             
@@ -155,7 +177,7 @@ module.exports = {
         }
     },
 
-    async loadSolicitante(req, res){
+    async loadEditSolicitante(req, res){
         Usuario.findByPk(req.params.id).then((usuario) => {
             res.render('admin/editUsuarios', {usuario: usuario})
         }).catch((err) =>{

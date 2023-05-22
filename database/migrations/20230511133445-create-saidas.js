@@ -16,7 +16,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
-      materiais_id:{
+      item_id:{
         type: Sequelize.INTEGER,
         references: { model: 'materiais', key: 'id' },
         onUpdate: 'CASCADE',

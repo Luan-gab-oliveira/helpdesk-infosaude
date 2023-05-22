@@ -4,7 +4,7 @@
 {{/each}}
 
 <h2>Lista de usuários</h2>
-<button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo usuário</button>
+<button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-user"></i> Novo usuário</button>
 <hr>
 
 <table class="table">
@@ -24,9 +24,9 @@
                 <td>{{dataValues.telefone}}</td>
                 <td class="text-center">
                     <form action="/admin/cadastro/usuario/delete" method="post">
-                        <a href="/admin/cadastro/usuario/edit/{{dataValues.id}}"><button type="button" class="btn text-white mt-2" style="background-color: #4784ba;">Alterar</button></a>
+                        <a href="/admin/cadastro/usuario/edit/{{dataValues.id}}"><button type="button" class="btn text-white mt-2" style="background-color: #4784ba;"><i class="fa-solid fa-pen-to-square"></i></button></a>
                         <input type="hidden" name="id" value="{{dataValues.id}}">
-                        <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Excluir</button>
+                        <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
                     </form>
                 </td>
             </tr>

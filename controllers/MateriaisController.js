@@ -5,11 +5,16 @@ const Chamados = require('../models/Chamados');
 
 module.exports = {
     async loadMateriais(req, res){
-        await Materiais.findAll({include: {association:'saidas'}}).then((materiais) =>{
+        await Materiais.findAll({
+            include: {association:'saidas'},
+            attributes: ['id','item', [Saidas.sequelize.fn('sum', Saidas.sequelize.col('quantidade')), 'quantidade']],
+            group:['id']
+        }).then((materiais) =>{
+            // console.log(materiais)
             res.render('admin/materiais', {materiais: materiais})
         }).catch((err) =>{
+            console.log('# Error: ' + err)
             req.flash('error_msg', 'Houve um erro ao carregar a pagina!')
-            console.log(err)
             res.redirect('/')
         })
 
@@ -39,5 +44,17 @@ module.exports = {
             req.flash('error_msg', 'Houve um erro ao cadastrar novo item')
             res.redirect('/admin/materiais')
         }
+    },
+
+    async deleteItem(req, res){
+        Materiais.findByPk(req.body.id).then((item) => {
+            item.destroy().then(() => {
+                req.flash('success_msg', 'Item deletado com sucesso!')
+                res.redirect('/admin/materiais')
+            })
+        }).catch((err) =>{
+            req.flash('error_msg', 'Houve um erro ao deletar este item!')
+            req.redirect('/admin/materiais')
+        })
     }
 }
