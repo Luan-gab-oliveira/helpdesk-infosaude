@@ -3,7 +3,7 @@ const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Materiais = require('../models/Materiais');
 const bcrypt = require('bcryptjs')
-const { Op, where } = require("sequelize");
+const { Op, where, and } = require("sequelize");
 const Saidas = require('../models/Saidas');
 
 
@@ -60,12 +60,41 @@ module.exports = {
             const chamados = await Chamados.findByPk(req.params.id,{include: {model: Usuario, as: 'user'}})
             const obs = await Observacoes.findAll({where: {chamado_id: req.params.id}})
 
-            res.render('admin/updateChamado', {chamado: chamados, obs: obs, materiais: materiais})
+            const saidaMateriais = await Saidas.findAll({
+                where: {chamado_id: req.params.id},
+                include: {model: Materiais, as: 'item'}
+            })
+            // console.log(saidaMateriais)
+            res.render('admin/updateChamado', {chamado: chamados, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais})
         }catch(err){
             console.log('Error: ' + err)
             req.flash('error_msg', 'Erro ao carregar chamado')
             res.redirect('/admin/chamados')
         }
+    },
+
+    async updateChamado(){
+
+    },
+    
+    async encerrarChamado(){
+
+    },
+
+
+    async deleteMateriaisChamado(req, res){
+        const { chamado_id, item_id} = req.body
+        console.log('##### - ' + chamado_id,item_id)
+        await Saidas.findOne({where: {chamado_id: chamado_id, item_id: item_id}}).then((item) => {
+            item.destroy().then(() => {
+                req.flash('success_msg', 'Item deletado com sucesso!')
+                res.redirect('/admin/chamado/atendimento/' + chamado_id)
+            })
+        }).catch((err) =>{
+            console.log('#### - Erro: ' + err)
+            req.flash('error_msg', 'Houve um erro ao deletar este item!')
+            res.redirect('/admin/chamado/atendimento/' + chamado_id)
+        })
     },
 
     async novaObservacao(req, res){

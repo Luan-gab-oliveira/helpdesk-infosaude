@@ -7,7 +7,6 @@
             <button class="btn text-white" type="button" id="button-addon2" style="background-color: #4784ba;"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button>
             <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
             <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
-            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #C23F5C;"><i class="fa-solid fa-xmark"></i> Encerrar chamado</button>
         </div>
     </div>
 </div>
@@ -39,7 +38,7 @@
         <div class="container text-center">
             <div class="row mb-4">
                 <select class="form-select col" aria-label="Default select example">
-                    <option selected>Situação</option>
+                    <option value="1"disabled selected>Situação</option>
                     <option value="1">Aberto</option>
                     <option value="2">Processando</option>
                     <option value="3">Finalizado</option>
@@ -48,11 +47,10 @@
                 <button class="btn text-white col-xl-2 btn-success" type="button" id="button-addon2" style="margin-left: 1rem; background-color: #4784ba;">Salvar</button>
             </div>
         </div>
-        <label for="dsc">Observações técnicas: </label>
-            <textarea class="form-control" placeholder="Descrição" id="floatingTextarea" style="height: 7rem; resize: none;"></textarea>
     </div>
 </div>
 
+{{!-- Model Observações --}}
 <div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -78,7 +76,7 @@
                             <div class="col">
                                 <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 3.5rem; resize: none"></textarea>
                             </div>
-                            <div class="col-2 text-center">
+                            <div class="col-1">
                                 <button type="submit" class="btn text-white rounded-circle" style="background-color: #4784ba;"><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         </div>
@@ -91,10 +89,10 @@
 
 {{!-- MOdal Materiais --}}
 <div class="modal fade modal-centerd" id="materiasModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Materiais</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Materiais Utilizados</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bg-0">
@@ -119,9 +117,32 @@
                 </form>
                 <hr>
                 <div class="overflow-auto p-3 bg-0" style="max-height: 22rem; height: 22rem;">
-                    {{#each saidas}}
-                        <h6>Item: {{dataValues.id}} - Quantidade: {{dataValues.quantidade}}</h6>
-                    {{/each}}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Item</th>
+                                <th scope="col" class="text-center">quantidade</th>
+                                <th scope="col" class="text-center">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each saidaMateriais}}
+                                <tr class="align-middle">
+                                    <td>{{dataValues.id}}</td>
+                                    <td>{{item.dataValues.item}}</td>
+                                    <td class="text-center">{{dataValues.quantidade}}</td>
+                                    <td class="text-center">
+                                        <form action="/admin/chamado/atendimento/material/delete" method="post">
+                                            <input type="hidden" name="chamado_id" value="{{dataValues.chamado_id}}">
+                                            <input type="hidden" name="item_id" value="{{dataValues.item_id}}">
+                                            <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

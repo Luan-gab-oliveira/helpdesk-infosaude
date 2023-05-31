@@ -47,7 +47,7 @@ module.exports = {
     },
 
     async deleteItem(req, res){
-        Materiais.findByPk(req.body.id).then((item) => {
+        await Materiais.findByPk(req.body.id).then((item) => {
             item.destroy().then(() => {
                 req.flash('success_msg', 'Item deletado com sucesso!')
                 res.redirect('/admin/materiais')

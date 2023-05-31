@@ -15,7 +15,7 @@
         <div class="col">
             <form class="text-end" action="/usuarios/chamados/encerrar" method="post">
                 <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
-                <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Observações</button>
+                <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
                 <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Encerrar Chamado</button>
             </form>
         </div>
@@ -47,7 +47,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="/usuarios/chamados/edit" method="post">
-                <div class="modal-body bg-0">
+                <div class="modal-body bg-0" style="min-height: 20rem;">
                     <div class="overflow-auto p-3 bg-0" style="max-height: 20rem;">
                         {{#each obs}}
                             <div class="bg-light p-2 mb-4 rounded">
@@ -62,7 +62,7 @@
                     <input type="hidden" name="user" value="{{chamado.user.dataValues.email}}">
                     <input type="text" name="obs" placeholder="Digite uma observação" class="form-control mb-2" required>
                     <button type="submit" class="btn text-white" style="background-color: #4784ba;">Enviar</button>
-                    <a href="/usuarios/chamados"><button type="button" class="btn btn-danger " style="background-color: #C23F5C;">Cancelar</button></a>
+                    <button type="button" class="btn btn-danger " style="background-color: #C23F5C;" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </form>
         </div>

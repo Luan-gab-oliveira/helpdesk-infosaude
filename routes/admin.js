@@ -11,6 +11,7 @@ router.get('/chamados', AdminController.loadChamados);
 router.get('/chamado/atendimento/:id', AdminController.loadUpdateChamado);
 router.post('/chamado/atendimento/observacao', AdminController.novaObservacao);
 router.post('/chamado/atendimento/material', AdminController.saidaMaterial);
+router.post('/chamado/atendimento/material/delete', AdminController.deleteMateriaisChamado);
 
 router.get('/cadastro/usuario', AdminController.loadSolicitantes);
 router.post('/cadastro/usuario', AdminController.createSolicitante);
