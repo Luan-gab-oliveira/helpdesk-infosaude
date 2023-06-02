@@ -73,14 +73,21 @@ module.exports = {
         }
     },
 
-    async updateChamado(){
-
+    async updateChamado(req, res){
+        const { id, status} = req.body
+        console.log('##### - ' + id,status)
+        await Chamados.findByPk(id).then((chamado) => {
+            chamado.status = status;
+            chamado.save().then(() =>{
+                req.flash('success_msg', 'Chamado atualizado com sucesso!')
+                res.redirect('/admin/chamados')
+            })
+        }).catch((err) =>{
+            console.log('#### Erro: '+err)
+            req.flash('error_msg', 'Houve um erro ao atualizar este chamado!')
+            res.redirect('/admin/chamado/atendimento/' + id)
+        })
     },
-    
-    async encerrarChamado(){
-
-    },
-
 
     async deleteMateriaisChamado(req, res){
         const { chamado_id, item_id} = req.body

@@ -35,18 +35,20 @@
             <textarea class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
         <hr>
         <h4 class="mb-4"><label>Classificação final</label></h4>
-        <div class="container text-center">
-            <div class="row mb-4">
-                <select class="form-select col" aria-label="Default select example">
-                    <option value="1"disabled selected>Situação</option>
-                    <option value="1">Aberto</option>
-                    <option value="2">Processando</option>
-                    <option value="3">Finalizado</option>
-                    <option value="4">Cancelado</option>
-                </select>
-                <button class="btn text-white col-xl-2 btn-success" type="button" id="button-addon2" style="margin-left: 1rem; background-color: #4784ba;">Salvar</button>
+        <form action="/admin/chamado/update" method="post">
+            <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
+            <div class="container text-center">
+                <div class="row mb-4">
+                    <select class="form-select col" aria-label="Default select example" name="status">
+                        <option value=""disabled selected>Situação</option>
+                        <option value="pendente">Aberto</option>
+                        <option value="processando">Processando</option>
+                        <option value="encerrado">Finalizado</option>
+                    </select>
+                    <button type="submit" class="btn text-white col-xl-2" style="margin-left: 1rem; background-color: #4784ba;">Salvar</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
