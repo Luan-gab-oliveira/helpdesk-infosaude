@@ -1,10 +1,12 @@
+<script src="/js/updatechamado.js"></script>
+
 <div class="container p-0 mt-2">
     <div class="row">
         <div class="col">
             <h2>Chamado: {{chamado.dataValues.id}}</h2>
         </div>
         <div class="col text-end">
-            <button class="btn text-white" type="button" id="button-addon2" style="background-color: #4784ba;"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button>
+            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" style="background-color: #4784ba;" onclick="trasnferChamado()"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button>
             <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
             <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
         </div>
@@ -19,20 +21,23 @@
             <div class="row">
                 <div class="col">
                     <label class="mt-2">Unidade:</label>
-                        <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.user.dataValues.user}}">
+                        <input type="text" id="unidade" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.user.dataValues.user}}">
                 </div>
                 <div class="col">
                     <label class="mt-2">Email:</label>
-                        <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.user.dataValues.email}}">
+                        <input type="text" id="email" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.user.dataValues.email}}">
                 </div>
             </div>
         </div>
+        <input type="hidden" id="idChamado" value="{{chamado.dataValues.id}}">
+        <label class="mt-2">Solicitante:</label>
+            <input type="text" id="solicitante" placeholder="Solicitante" class="form-control mb-2" value="{{chamado.dataValues.nome}}">
         <label class="mt-2">Local:</label>
-            <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.local}}">
+            <input type="text" id="local" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.local}}">
         <label class="mt-2">Ocorrência:</label>
-            <input type="text" name="ocorrencia" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.ocorrencia}}">
+            <input type="text" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.ocorrencia}}">
         <label for="dsc">Descrição: </label>
-            <textarea class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
+            <textarea id="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
         <hr>
         <h4 class="mb-4"><label>Classificação final</label></h4>
         <form action="/admin/chamado/update" method="post">
@@ -150,3 +155,32 @@
         </div>
     </div>
 </div>
+
+{{!-- MOdal Transferir --}}
+<div class="modal fade modal-centerd" id="transferirModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Transferir chamado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-0">
+                <form action="" method="post">
+                    <label>E-mail</label>
+                        <input type="text" class="form-control mb-4" id='emailTransfer'disabled>
+
+                    <label>Corpo do e-mail</label>
+                        <textarea class="form-control mb-4" id="corpoemail" style="height: 16rem; resize: none" disabled></textarea>
+
+                    <label>Observações técnicas</label>
+                        <textarea class="form-control mb-4" name="obs" required placeholder="Observações" style="height: 6rem; resize: none"></textarea>
+
+                    <button type="submit" class="btn text-white" style="background-color: #4784ba;">enviar</button>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -17,7 +17,7 @@ var user_id = 2
 module.exports = {
 
     async loadChamados(req, res){
-        await Chamados.findAll({where: {status: {[Op.ne]: 'encerrado'}},order: [['updated_at', 'ASC']], include: {model: Usuario, as: 'user'}}).then((chamados) =>{
+        await Chamados.findAll({where: {status: {[Op.ne]: 'encerrado'}},order: [['status', 'DESC']], include: {model: Usuario, as: 'user'}}).then((chamados) =>{
             var list = chamados
             for(var i = 0; i < list.length; i++){
                 var data = list[i].createdAt
@@ -75,7 +75,6 @@ module.exports = {
 
     async updateChamado(req, res){
         const { id, status} = req.body
-        console.log('##### - ' + id,status)
         await Chamados.findByPk(id).then((chamado) => {
             chamado.status = status;
             chamado.save().then(() =>{
