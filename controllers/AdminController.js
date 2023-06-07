@@ -38,6 +38,12 @@ module.exports = {
                             value: true,
                             writable: false,
                         });
+                    
+                    case 'transferido':
+                        Object.defineProperty(list[i], 'transfer',{
+                            value: true,
+                            writable: false,
+                        });
 
                     case 'encerrado':
                         Object.defineProperty(list[i], 'closed',{
