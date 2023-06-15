@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const AdminController = require('../controllers/AdminController');
 const MateriaisController = require('../controllers/MateriaisController')
+const ConfigController = require('../controllers/ConfigController')
+const RelatoriosController = require('../controllers/RelatoriosController')
+
 
 router.get('/', (req, res) => {
     res.send('Pagina principal do painel ADM')
@@ -27,6 +30,12 @@ router.post('/cadastro/usuario/delete', AdminController.deleteSolicitante);
 router.get('/materiais', MateriaisController.loadMateriais);
 router.post('/materiais', MateriaisController.novoItem);
 router.post('/materiais/delete', MateriaisController.deleteItem);
+
+// Relatorios
+router.get('/relatorios', RelatoriosController.loadRelatorios);
+
+// Configurações
+router.get('/configuracoes', ConfigController.loadConfig);
 
 
 

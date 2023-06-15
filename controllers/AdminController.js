@@ -94,6 +94,10 @@ module.exports = {
         })
     },
 
+    async tranferirChamado(req,res) {
+
+    },
+
     async deleteMateriaisChamado(req, res){
         const { chamado_id, item_id} = req.body
         console.log('##### - ' + chamado_id,item_id)
