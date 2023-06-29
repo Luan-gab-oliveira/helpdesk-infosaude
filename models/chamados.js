@@ -9,6 +9,7 @@ class Chamados extends Model{
             ocorrencia: DataTypes.STRING,        
             descricao: DataTypes.STRING,        
             status: DataTypes.STRING,        
+            // classificacao: DataTypes.STRING,        
         },{
             sequelize
         })

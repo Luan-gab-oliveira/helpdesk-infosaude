@@ -6,9 +6,21 @@
             <h2>Chamado: {{chamado.dataValues.id}}</h2>
         </div>
         <div class="col text-end">
-            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" style="background-color: #4784ba;" onclick="trasnferChamado()"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button>
-            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
-            <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
+            <div class="mobile">
+                <div class="dropdown">
+                    <button class="btn text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #4784ba;">Ferramentas</button>
+                    <ul class="dropdown-menu">
+                        <li><button class="btn bg-transparent border-0" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button></li>
+                        <li><button class="btn bg-transparent border-0" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" onclick="trasnferChamado()"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button></li>
+                        <li><button class="btn bg-transparent border-0" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-comment"></i> Observações</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="web">
+                <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" style="background-color: #4784ba;" onclick="trasnferChamado()"><i class="fa-solid fa-share-from-square"></i> Trânsferir</button>
+                <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
+                <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
+            </div>
         </div>
     </div>
 </div>
@@ -53,7 +65,7 @@
                     <button type="submit" class="btn text-white col-xl-2" style="margin-left: 1rem; background-color: #4784ba;">Salvar</button>
                 </div>
             </div>
-        </form[]
+        </form>
     </div>
 </div>
 

@@ -11780,4 +11780,18 @@ textarea.form-control-lg {
   }
 }
 
+/*=============== Minhas alterações ================*/
+
+@media (min-width: 1000px) {
+  .mobile{
+    display: none;
+  }
+}
+
+@media (max-width: 1000px){
+  .web{
+    display: none;   
+  }
+}
+
 /*# sourceMappingURL=bootstrap.css.map */

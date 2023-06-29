@@ -5,9 +5,11 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.addColumn(
       'chamados',
-      'classificacao',
+      'atendimento',
       {
         type: Sequelize.STRING,
+        defaultValue: 'local',
+        allowNull: false,
         after:'status'
       },
     ); 
@@ -16,7 +18,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.removeColumn(
       'chamados',
-      'classificacao',
+      'atendimento',
       );
   }
 };

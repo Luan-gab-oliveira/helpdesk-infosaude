@@ -15,8 +15,19 @@
         <div class="col">
             <form class="text-end" action="/usuarios/chamados/encerrar" method="post">
                 <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
-                <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
-                <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Encerrar Chamado</button>
+                <div class="web">
+                    <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
+                    <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Encerrar Chamado</button>
+                </div>
+                <div class="mobile">
+                    <div class="dropdown">
+                        <button class="btn text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #4784ba;">Atualizar</button>
+                        <ul class="dropdown-menu">
+                            <li><button class="btn bg-transparent border-0" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Observações</button></li>
+                            <li><button type="submit" class="btn bg-transparent border-0" style="background-color: #C23F5C;">Encerrar Chamado</button></li>
+                        </ul>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
