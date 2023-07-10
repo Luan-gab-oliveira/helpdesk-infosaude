@@ -4,38 +4,40 @@ const AdminController = require('../controllers/AdminController');
 const MateriaisController = require('../controllers/MateriaisController')
 const ConfigController = require('../controllers/ConfigController')
 const RelatoriosController = require('../controllers/RelatoriosController')
+const {authAdmin} = require('../middleware/userAuthenticated')
 
 
-router.get('/', (req, res) => {
+
+router.get('/', authAdmin, (req, res) => {
     res.send('Pagina principal do painel ADM')
 })
 
 // Chamados
-router.get('/chamados', AdminController.loadChamados);
-router.get('/chamado/atendimento/:id', AdminController.loadUpdateChamado);
-router.post('/chamado/atendimento/observacao', AdminController.novaObservacao);
-router.post('/chamado/atendimento/material', AdminController.saidaMaterial);
-router.post('/chamado/atendimento/material/delete', AdminController.deleteMateriaisChamado);
-router.post('/chamado/update', AdminController.updateChamado);
+router.get('/chamados',authAdmin, AdminController.loadChamados);
+router.get('/chamado/atendimento/:id', authAdmin, AdminController.loadUpdateChamado);
+router.post('/chamado/atendimento/observacao', authAdmin, AdminController.novaObservacao);
+router.post('/chamado/atendimento/material', authAdmin, AdminController.saidaMaterial);
+router.post('/chamado/atendimento/material/delete', authAdmin, AdminController.deleteMateriaisChamado);
+router.post('/chamado/update', authAdmin, AdminController.updateChamado);
 
 
 // Usuarios
-router.get('/cadastro/usuario', AdminController.loadSolicitantes);
-router.post('/cadastro/usuario', AdminController.createSolicitante);
-router.get('/cadastro/usuario/edit/:id', AdminController.loadEditSolicitante);
-router.post('/cadastro/usuario/edit', AdminController.editSolicitante);
-router.post('/cadastro/usuario/delete', AdminController.deleteSolicitante);
+router.get('/cadastro/usuario', authAdmin, AdminController.loadSolicitantes);
+router.post('/cadastro/usuario', authAdmin, AdminController.createSolicitante);
+router.get('/cadastro/usuario/edit/:id', authAdmin, AdminController.loadEditSolicitante);
+router.post('/cadastro/usuario/edit', authAdmin, AdminController.editSolicitante);
+router.post('/cadastro/usuario/delete', authAdmin, AdminController.deleteSolicitante);
 
 // Materiais
-router.get('/materiais', MateriaisController.loadMateriais);
-router.post('/materiais', MateriaisController.novoItem);
-router.post('/materiais/delete', MateriaisController.deleteItem);
+router.get('/materiais', authAdmin, MateriaisController.loadMateriais);
+router.post('/materiais', authAdmin, MateriaisController.novoItem);
+router.post('/materiais/delete', authAdmin, MateriaisController.deleteItem);
 
 // Relatorios
-router.get('/relatorios', RelatoriosController.loadRelatorios);
+router.get('/relatorios', authAdmin, RelatoriosController.loadRelatorios);
 
 // Configurações
-router.get('/configuracoes', ConfigController.loadConfig);
+router.get('/configuracoes', authAdmin, ConfigController.loadConfig);
 
 
 

@@ -7,7 +7,9 @@ const admin = require('./routes/admin');
 const path = require('path')
 require('./database')
 const session = require('express-session')
-const flash = require('connect-flash')
+const flash = require('connect-flash');
+const passport = require('passport');
+require('./config/auth')(passport)
 
 
 
@@ -18,6 +20,8 @@ const flash = require('connect-flash')
             resave: true,
             saveUninitialized: true,
         }));
+        app.use(passport.initialize())
+        app.use(passport.session())
         app.use(flash());
 
     // Middleware
@@ -25,7 +29,7 @@ const flash = require('connect-flash')
             res.locals.success_msg = req.flash('success_msg');
             res.locals.error_msg = req.flash('error_msg');
             res.locals.error = req.flash('error');
-            res.locals.User = req.User || null;
+            res.locals.user = req.user || null;
             next()
         })
 
