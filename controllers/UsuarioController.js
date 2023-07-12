@@ -1,3 +1,4 @@
+const passport = require('passport');
 const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Usuario = require('../models/Usuarios')
@@ -14,6 +15,26 @@ async function loadlistchamados(){
 }
 
 module.exports = {
+    // Login 
+    async loadLogin(req, res){
+        res.render('usuarios/login')
+    },
+    async login(req, res, next){
+        passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/usuarios/login',
+            failureFlash: true
+        })(req, res, next)
+    },
+
+    // Logout
+    async logOut(req, res, next){
+        req.logout(function(err){
+            if(err){return next(err)}
+        res.redirect('/usuarios/login')
+        })
+    },
+
     async loadChamados(req, res, next){
         try{
             const listChamados = await loadlistchamados()
@@ -32,6 +53,12 @@ module.exports = {
                             value: true,
                             writable: false,
                         });
+                    
+                    case 'transferido':
+                    Object.defineProperty(list[i], 'transfer',{
+                        value: true,
+                        writable: false,
+                    });
 
                     case 'encerrado':
                         Object.defineProperty(list[i], 'closed',{

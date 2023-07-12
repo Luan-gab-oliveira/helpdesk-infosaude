@@ -1,5 +1,5 @@
 module.exports = {
     async loadRelatorios(req, res){
-        res.render('admin/relatorios')
+        res.render('admin/admin')
     }
 }

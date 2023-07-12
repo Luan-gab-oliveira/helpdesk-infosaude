@@ -1,5 +1,18 @@
-<h2>Chamados:</h2>
-<button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo chamado</button>
+<div class="web" class="container p-0">
+  <div class="row align-bottom">
+    <div class="col-8 align-self-end">
+      <h3 class="m-0">Chamados: {{user.dataValues.email}}</h3>
+    </div>
+    <div class="col text-end">
+      <button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo chamado</button>
+    </div>
+  </div>
+</div>
+
+<div class="mobile">
+  <h3 class="m-0">Chamados: {{user.dataValues.email}}</h3>
+  <button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo chamado</button>
+</div>
 
 <hr>
 
@@ -17,10 +30,13 @@
             <h6>{{dataValues.ocorrencia}}</h6>
           <span class="mt-2" style="color: #646E78;">Solicitante</span>
             <h6>{{dataValues.nome}}</h6>
+
           {{#if inOpen}}
             <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #C23F5C;"></div>
           {{else if inProcess}}
             <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #FFC145;"></div>
+          {{else if transfer}}
+            <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #fb8500;"></div>
           {{else closed}}
             <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #32A071;"></div>
           {{/if}}

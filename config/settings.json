@@ -1,0 +1,15 @@
+{
+    "nodemailer": {
+        "config":{
+            "host": "smtp.saofranciscodosul.sc.gov.br",
+            "port": "587",
+            "authUser": "infosaude@saofranciscodosul.sc.gov.br",
+            "authPass": "pmsfs@2021"
+        },
+        "send":{
+            "from":"info saude <infosaude@saofranciscodosul.sc.gov.br>",
+            "to": "infosmssfs@gmail.com",
+            "subject": "Suporte técnico"
+        }
+    }
+}

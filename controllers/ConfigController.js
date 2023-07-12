@@ -1,5 +1,9 @@
+const config = require('../config/settings.json')
+
 module.exports = {
     async loadConfig(req,res){
-        res.render('admin/config')
+        
+        const transfer = config.nodemailer.send
+        res.render('admin/config', {transfer: transfer})
     },
 }

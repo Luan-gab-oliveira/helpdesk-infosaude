@@ -9,27 +9,34 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {{#if user}}
-          <li class="nav-item">
-            <a class="nav-link" href="/usuarios/chamados">Chamados</a>
-          </li>
-        {{else}}
-          <li class="nav-item">
-          <a class="nav-link" href="/usuarios/login">Login</a>
-        </li>
-        {{/if}}
+        {{#if user.dataValues.acesso}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administrador</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/admin/cadastro/usuario">Usuários</a></li>
             <li><a class="dropdown-item" href="/admin/materiais">Materiais</a></li>
-            <li><a class="dropdown-item" href="/admin/relatorios">Relatórios</a></li>
+            <li><a class="dropdown-item" href="/admin">Relatórios</a></li>
             <li><a class="dropdown-item" href="/admin/configuracoes">Configurações</a></li>
           </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/admin/chamados">Chamados</a>
         </li>
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-link" href="/usuarios/chamados">Chamados</a>
+        </li>
+        {{/if}}
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-link" href="/usuarios/login">Login</a>
+        </li>
+        {{/if}}
       </ul>
+      {{#if user}}
+      <a href="/usuarios/logout" style="color: white; text-decoration: none;"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+      {{else}}
+      {{/if}}
     </div>
   </div>
 </nav>

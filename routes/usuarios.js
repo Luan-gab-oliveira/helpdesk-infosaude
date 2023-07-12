@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const UsuarioController = require('../controllers/UsuarioController');
-const LoginController = require('../controllers/LoginController');
 const {authUser} = require('../middleware/userAuthenticated')
 
+// Login
+router.get('/login', UsuarioController.loadLogin)
+router.post('/login', UsuarioController.login);
 
-router.get('/login', LoginController.loadLogin)
-router.post('/login', LoginController.login);
+// Logout
+router.get('/logout', authUser,UsuarioController.logOut)
 
+// Chamados
 router.get('/chamados', authUser, UsuarioController.loadChamados);
 router.post('/chamados', authUser, UsuarioController.novoChamado);
 

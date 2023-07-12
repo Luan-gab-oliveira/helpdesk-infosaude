@@ -15,9 +15,8 @@ async function loadlistsolicitantes(){
 
 var user_id = 2
 module.exports = {
-
     async loadChamados(req, res){
-        await Chamados.findAll({where: {status: {[Op.ne]: 'encerrado'}},order: [['status', 'DESC']], include: {model: Usuario, as: 'user'}}).then((chamados) =>{
+        await Chamados.findAll({where: {status: {[Op.ne]: 'encerrado'}},order: [['status', 'ASC']], include: {model: Usuario, as: 'user'}}).then((chamados) =>{
             var list = chamados
             for(var i = 0; i < list.length; i++){
                 var data = list[i].createdAt
@@ -93,11 +92,7 @@ module.exports = {
             res.redirect('/admin/chamado/atendimento/' + id)
         })
     },
-
-    async tranferirChamado(req,res) {
-
-    },
-
+    
     async deleteMateriaisChamado(req, res){
         const { chamado_id, item_id} = req.body
         console.log('##### - ' + chamado_id,item_id)
