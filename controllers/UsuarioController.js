@@ -4,8 +4,7 @@ const Observacoes = require('../models/Observacoes');
 const Usuario = require('../models/Usuarios')
 const { Op } = require("sequelize");
 
-var user_id = 1
-async function loadlistchamados(){
+async function loadlistchamados(user_id){
     const list = await Chamados.findAll({
         where: {user_id: user_id, status: {[Op.ne]: 'encerrado'}},
         order: [['id', 'ASC']],
@@ -37,7 +36,11 @@ module.exports = {
 
     async loadChamados(req, res, next){
         try{
-            const listChamados = await loadlistchamados()
+
+            const user_id =  req.user.id
+            console.log('####### UserID:', user_id)
+
+            const listChamados = await loadlistchamados(user_id)
             var list = listChamados
             // console.log(list)
             for(var i = 0; i < list.length; i++){
@@ -77,6 +80,7 @@ module.exports = {
 
     async novoChamado(req,res){    
         try{
+            const user_id =  req.user.id
             const { ocorrencia, local, nome, telefone, descricao } = req.body
             const newChamado = ({user_id, ocorrencia, local, nome, telefone, descricao})
             await Chamados.create(newChamado).then(() => {

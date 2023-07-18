@@ -1,15 +1,15 @@
 <div class="row mx-lg-n5 py-5 mt-5">
     <div class="col py-3 px-lg-5 border-0 align-items-center align-self-center text-center">
+        <img src="/img/logo-sfs.png" class="w-65">
+    </div>
+    <div class="col py-3 px-lg-5 border-0 align-items-center align-self-center text-center">
         <h1 class="mb-4">Helpdesk informática</h1>
         <h5>Secretaria Municipal de Saúde</h5>
         <h5 class="mb-4">São Francisco do Sul</h5>
     {{#if user.dataValues.acesso}}
-        <a href="admin/"><button type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #236192;">Painel Administrativo</button></a>
+        <a href="admin/chamados"><button type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #236192;">Chamados</button></a>
     {{else}}
         <a href="usuarios/chamados"><button type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #236192;">Abrir chamado</button></a>
     {{/if}}
-    </div>
-    <div class="col py-3 px-lg-5 border-0 align-items-center align-self-center">
-        <img src="/img/logo-sfs.png" class="w-65">
     </div>
 </div>
