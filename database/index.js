@@ -5,6 +5,7 @@ const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Materiais = require('../models/Materiais');
 const Saidas = require('../models/Saidas');
+const Categorias = require('../models/Categorias');
 const connection = new Sequelize(dbConfig);
 
 // Conexões
@@ -13,6 +14,7 @@ Chamados.init(connection);
 Observacoes.init(connection);
 Materiais.init(connection);
 Saidas.init(connection)
+Categorias.init(connection)
 
 // Relacionamentos
 Chamados.associate(connection.models);

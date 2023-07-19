@@ -16,7 +16,13 @@ async function loadlistsolicitantes(){
 var user_id = 2
 module.exports = {
     async loadChamados(req, res){
-        await Chamados.findAll({where: {status: {[Op.ne]: 'encerrado'}},order: [['status', 'ASC']], include: {model: Usuario, as: 'user'}}).then((chamados) =>{
+        await Chamados.findAll({
+            where: {
+                ocorrencia: {[Op.ne]: 'sistema'}, 
+                status: {[Op.ne]: 'encerrado'}},
+            order: [['status', 'ASC']],
+            include: {model: Usuario, as: 'user'}
+        }).then((chamados) =>{
             var list = chamados
             for(var i = 0; i < list.length; i++){
                 var data = list[i].createdAt

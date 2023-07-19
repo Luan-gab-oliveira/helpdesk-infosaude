@@ -6,6 +6,7 @@ const ConfigController = require('../controllers/ConfigController')
 const RelatoriosController = require('../controllers/RelatoriosController')
 const {authAdmin} = require('../middleware/userAuthenticated');
 const TrasnferirChamadoController = require('../controllers/TrasnferirChamadoController');
+const ChamadosSistemaController = require('../controllers/ChamadosSistemaController');
 
 
 
@@ -13,7 +14,7 @@ const TrasnferirChamadoController = require('../controllers/TrasnferirChamadoCon
 router.get('/', authAdmin, RelatoriosController.loadRelatorios);
 
 
-// Chamados
+// Chamados informática
 router.get('/chamados',authAdmin, AdminController.loadChamados);
 router.get('/chamado/atendimento/:id', authAdmin, AdminController.loadUpdateChamado);
 router.post('/chamado/atendimento/observacao', authAdmin, AdminController.novaObservacao);
@@ -21,6 +22,9 @@ router.post('/chamado/atendimento/material', authAdmin, AdminController.saidaMat
 router.post('/chamado/atendimento/material/delete', authAdmin, AdminController.deleteMateriaisChamado);
 router.post('/chamado/atendimento/transferir', authAdmin,TrasnferirChamadoController.sendEmail)
 router.post('/chamado/update', authAdmin, AdminController.updateChamado);
+
+// Chamados sistema
+router.get('/chamados/sistema', authAdmin, ChamadosSistemaController.loadChamados);
 
 
 // Usuarios
