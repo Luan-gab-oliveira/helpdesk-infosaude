@@ -75,8 +75,13 @@ module.exports = {
                 where: {chamado_id: req.params.id},
                 include: {model: Materiais, as: 'item'}
             })
-            // console.log(saidaMateriais)
-            res.render('admin/updateChamado', {chamado: chamados, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais})
+            
+            var chamSis = false
+            if(chamados.ocorrencia == 'sistema'){
+                chamSis = true
+            }
+
+            res.render('admin/updateChamado', {chamado: chamados, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, chamSis:chamSis})
         }catch(err){
             console.log('Error: ' + err)
             req.flash('error_msg', 'Erro ao carregar chamado')

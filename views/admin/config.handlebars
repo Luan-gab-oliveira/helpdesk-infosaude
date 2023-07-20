@@ -1,28 +1,55 @@
-<h4>Transferir chamado</h4>
+
+<a href="#transferir" class="btn text-white rounded-4" style="background-color: #4784ba;">Transferir</a>
+<a href="#categorias" class="btn text-white rounded-4" style="background-color: #4784ba;">Categorias</a>
 <hr>
-<div style="max-width: 20rem; margin-bottom: 2rem;">
+<section id="transferir" class="mt-4">
+    <h4>Transferir</h4>
     <form action="" method="post">
         <label>Email:</label>
             <input type="text" name="email" class="form-control mb-2" value="{{transfer.to}}">
-    
+
         <label>Asssunto:</label>
             <input type="text" name="subject" class="form-control mb-2" value={{transfer.subject}}>
+        
+        <button type="submit" class="btn text-white text mt-2 mb-4" style="background-color: #4784ba;">Salvar</button>
     </form>
-</div>
+</section>
 
-<h4>Categorias</h4>
-<hr>
-<div style="max-width: 50rem; margin-bottom: 2rem;">
-    <form action="" method="post">
+<section id="categorias" class="mt-4">
+    <h4 class="mb-4">Categorias</h4>
+    <form action="" method="post" class="mb-4">
         <div class="container p-0">
             <div class="row">
                 <div class="col text-end" style="max-width: 25rem;">
-                    <input class="form-control" type="text" placeholder="Categorias" name="item" required>
+                    <input class="form-control" type="text" placeholder="Nova categoria" name="item" required>
                 </div>
                 <div class="col-3 text " style="min-width: 10rem;">
-                    <button type="submit" class="btn text-white" style="background-color: #4784ba;"><i class="fa-solid fa-plus"></i> Nova categoria</button>
+                    <button type="submit" class="btn text-white" style="background-color: #4784ba;"><i class="fa-solid fa-plus"></i> Cadastrar</button>
                 </div>
             </div>
         </div>
     </form>
-</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Categoria</th>
+                <th scope="col" class="text-center">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each categorias}}
+                <tr class="align-middle">
+                    <td>{{dataValues.id}}</td>
+                    <td>{{dataValues.categoria}}</td>
+                    <td class="text-center">
+                        <form action="" method="">
+                            <input type="hidden" name="id" value="{{dataValues.id}}">
+                            <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</section>

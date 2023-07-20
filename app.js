@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const app = express();
 const usuarios = require('./routes/usuarios');
 const admin = require('./routes/admin');
+const {authAdmin} = require('./middleware/userAuthenticated');
 const path = require('path')
 require('./database')
 const session = require('express-session')
@@ -53,7 +54,7 @@ require('./config/auth')(passport)
     })
 
     app.use('/usuarios', usuarios)
-    app.use('/admin', admin)
+    app.use('/admin', authAdmin,admin)
 
 // Outros
 const PORT = 8088

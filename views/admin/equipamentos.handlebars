@@ -1,0 +1,46 @@
+{{#each erros}}
+    <div class="alert alert-danger">{{texto}}</div>
+{{else}}
+{{/each}}
+
+<h2 class="mb-4">Equipamentos</h2>
+<form action="" method="post">
+    <div class="container p-0">
+        <div class="row">
+            <div class="col text-end" style="max-width: 25rem;">
+                <input class="form-control" type="text" placeholder="Novo item" name="item" required>
+            </div>
+            <div class="col-3 text " style="min-width: 10rem;">
+                <button type="submit" class="btn text-white" style="background-color: #4784ba;"><i class="fa-solid fa-plus"></i> Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</form>
+<hr>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Equipamento</th>
+            <th scope="col">local</th>
+            <th scope="col">Atibuido</th>
+            <th scope="col" class="text-center">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each materiais}}
+            <tr class="align-middle">
+                <td>{{dataValues.id}}</td>
+                <td>{{dataValues.item}}</td>
+                <td >{{dataValues.quantidade}}</td>
+                <td class="text-center">
+                    <form action="/admin/materiais/delete" method="post">
+                        <input type="hidden" name="id" value="{{dataValues.id}}">
+                        <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
