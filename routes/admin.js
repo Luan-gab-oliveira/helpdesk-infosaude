@@ -6,11 +6,35 @@ const ConfigController = require('../controllers/ConfigController')
 const RelatoriosController = require('../controllers/RelatoriosController')
 const TrasnferirChamadoController = require('../controllers/TrasnferirChamadoController');
 const ChamadosSistemaController = require('../controllers/ChamadosSistemaController');
+const EquipamentosController = require('../controllers/EquipamentosController');
+const ImpressorasController = require('../controllers/ImpressorasController');
 
 
 
 // Pagina principal admin
 router.get('/', RelatoriosController.loadRelatorios);
+
+// Cadastro Usuarios
+router.get('/cadastro/usuario', AdminController.loadSolicitantes);
+router.post('/cadastro/usuario', AdminController.createSolicitante);
+router.get('/cadastro/usuario/edit/:id',  AdminController.loadEditSolicitante);
+router.post('/cadastro/usuario/edit',  AdminController.editSolicitante);
+router.post('/cadastro/usuario/delete',  AdminController.deleteSolicitante);
+
+// Configurações
+router.get('/configuracoes',  ConfigController.loadConfig);
+
+// Equipamentos
+router.get('/equipamentos', EquipamentosController.loadEquipamentos);
+
+// Impressoras
+router.get('/equipamentos', ImpressorasController.loadImpressoras);
+
+
+// Materiais
+router.get('/materiais',  MateriaisController.loadMateriais);
+router.post('/materiais',  MateriaisController.novoItem);
+router.post('/materiais/delete',  MateriaisController.deleteItem);
 
 
 // Chamados informática
@@ -24,23 +48,6 @@ router.post('/chamado/update', AdminController.updateChamado);
 
 // Chamados sistema
 router.get('/chamados/sistema',  ChamadosSistemaController.loadChamados);
-
-
-// Usuarios
-router.get('/cadastro/usuario', AdminController.loadSolicitantes);
-router.post('/cadastro/usuario', AdminController.createSolicitante);
-router.get('/cadastro/usuario/edit/:id',  AdminController.loadEditSolicitante);
-router.post('/cadastro/usuario/edit',  AdminController.editSolicitante);
-router.post('/cadastro/usuario/delete',  AdminController.deleteSolicitante);
-
-// Materiais
-router.get('/materiais',  MateriaisController.loadMateriais);
-router.post('/materiais',  MateriaisController.novoItem);
-router.post('/materiais/delete',  MateriaisController.deleteItem);
-
-// Configurações
-router.get('/configuracoes',  ConfigController.loadConfig);
-
 
 
 
