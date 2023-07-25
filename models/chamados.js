@@ -9,7 +9,7 @@ class Chamados extends Model{
             ocorrencia: DataTypes.STRING,        
             descricao: DataTypes.STRING,        
             status: DataTypes.STRING,        
-            // classificacao: DataTypes.STRING,        
+            atendimento: DataTypes.STRING,        
         },{
             sequelize
         })
@@ -17,6 +17,7 @@ class Chamados extends Model{
 
     static associate(models){
         this.belongsTo(models.Usuario, { foreignKey: 'user_id', as: 'user' });
+        this.belongsTo(models.Equipamentos, { foreignKey: 'eqp_id', as: 'equipamentos' });
         this.hasMany(models.Saidas, { foreignKey: 'item_id', as: 'saidas' });
         this.hasMany(models.Observacoes, {foreignKey: 'chamado_id', as: 'observacoes'})
     }

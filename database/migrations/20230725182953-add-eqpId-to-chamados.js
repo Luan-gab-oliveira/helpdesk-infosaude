@@ -5,20 +5,21 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.addColumn(
       'chamados',
-      'atendimento',
+      'eqp_id',
       {
-        type: Sequelize.STRING,
-        defaultValue: 'local',
-        allowNull: false,
-        after:'status'
+        type: Sequelize.INTEGER,
+        references: { model: 'equipamentos', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        after: 'user_id'
       },
-    ); 
+    );
   },
 
   async down (queryInterface, Sequelize) {
     await queryInterface.removeColumn(
       'chamados',
-      'atendimento',
-      );
+      'eqp_id',
+    );
   }
 };

@@ -5,16 +5,16 @@ const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Materiais = require('../models/Materiais');
 const Saidas = require('../models/Saidas');
-const Categorias = require('../models/Categorias');
+const Equipamentos = require('../models/Equipamentos');
 const connection = new Sequelize(dbConfig);
 
 // Conexões
 Usuario.init(connection);
+Equipamentos.init(connection)
 Chamados.init(connection);
 Observacoes.init(connection);
 Materiais.init(connection);
 Saidas.init(connection)
-Categorias.init(connection)
 
 // Relacionamentos
 Chamados.associate(connection.models);

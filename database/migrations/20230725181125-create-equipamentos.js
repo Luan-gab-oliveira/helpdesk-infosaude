@@ -1,18 +1,33 @@
 'use strict';
 
+const { NUMBER } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('categorias', {
+    
+    await queryInterface.createTable('equipamentos', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      categoria:{
+      equipamento:{
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+      },
+      patrimonio:{
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      unidade:{
+        type: Sequelize.STRING,
+        allowNull:true,
+      },
+      local:{
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       created_at:{
         type: Sequelize.DATE,
@@ -22,10 +37,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-    });    
+    });
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('categorias');
+    await queryInterface.dropTable('equipamentos');
   }
 };

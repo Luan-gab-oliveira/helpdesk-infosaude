@@ -42,6 +42,11 @@ module.exports = {
         allowNull: false
 
       },
+      atendimento:{
+        type: Sequelize.STRING,
+        defaultValue: 'local',
+        allowNull: false
+      },
       created_at:{
         type: Sequelize.DATE,
         allowNull: false,

@@ -28,7 +28,7 @@ router.get('/configuracoes',  ConfigController.loadConfig);
 router.get('/equipamentos', EquipamentosController.loadEquipamentos);
 
 // Impressoras
-router.get('/equipamentos', ImpressorasController.loadImpressoras);
+router.get('/impressoras', ImpressorasController.loadImpressoras);
 
 
 // Materiais
