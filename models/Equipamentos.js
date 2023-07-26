@@ -5,11 +5,14 @@ class Equipamentos extends Model{
         super.init({
             equipamento: DataTypes.STRING,
             patrimonio: DataTypes.STRING,
-            unidade: DataTypes.STRING,
             local: DataTypes.STRING,          
         },{
             sequelize
         })
+    }
+
+    static associate(models){
+        this.belongsTo(models.Usuario, { foreignKey: 'user_id', as: 'user' });
     }
 }
 

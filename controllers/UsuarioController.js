@@ -1,7 +1,8 @@
 const passport = require('passport');
 const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
-const Usuario = require('../models/Usuarios')
+const Usuario = require('../models/Usuarios');
+const Equipamentos = require('../models/Equipamentos')
 const { Op } = require("sequelize");
 
 async function loadlistchamados(user_id){
@@ -34,44 +35,47 @@ module.exports = {
         })
     },
 
-    async loadChamados(req, res, next){
+    async loadChamados(req, res){
         try{
-
             const user_id =  req.user.id
-            console.log('####### UserID:', user_id)
+            await Chamados.findAll({
+                where: {user_id: user_id, status: {[Op.ne]: 'encerrado'}},
+                order: [['id', 'ASC']],
+                include: {model: Usuario, as: 'user'}
+            }).then((chamados) =>{
+                Equipamentos.findAll({where: {user_id: user_id}}).then((equipamentos) =>{
+                    var list = chamados
+                    for(var i = 0; i < list.length; i++){
+                        switch (list[i].status){
+                            case 'pendente':
+                                Object.defineProperty(list[i], 'inOpen',{
+                                    value: true,
+                                    writable: false,
+                                });
+                            
+                            case 'processando':
+                                Object.defineProperty(list[i], 'inProcess',{
+                                    value: true,
+                                    writable: false,
+                                });
+                            
+                            case 'transferido':
+                            Object.defineProperty(list[i], 'transfer',{
+                                value: true,
+                                writable: false,
+                            });
 
-            const listChamados = await loadlistchamados(user_id)
-            var list = listChamados
-            // console.log(list)
-            for(var i = 0; i < list.length; i++){
-                switch (list[i].status){
-                    case 'pendente':
-                        Object.defineProperty(list[i], 'inOpen',{
-                            value: true,
-                            writable: false,
-                        });
-                    
-                    case 'processando':
-                        Object.defineProperty(list[i], 'inProcess',{
-                            value: true,
-                            writable: false,
-                        });
-                    
-                    case 'transferido':
-                    Object.defineProperty(list[i], 'transfer',{
-                        value: true,
-                        writable: false,
-                    });
-
-                    case 'encerrado':
-                        Object.defineProperty(list[i], 'closed',{
-                            value: true,
-                            writable: false,
-                        });
-                }
-                
-            }
-            res.render('usuarios/chamados', {listchamados:list})
+                            case 'encerrado':
+                                Object.defineProperty(list[i], 'closed',{
+                                    value: true,
+                                    writable: false,
+                                });
+                        }
+                        
+                    }
+                    res.render('usuarios/chamados', {listchamados:list, equipamentos:equipamentos})
+                })
+            })
         }catch{
             res.status(400)
         }
@@ -81,17 +85,24 @@ module.exports = {
     async novoChamado(req,res){    
         try{
             const user_id =  req.user.id
-            const { ocorrencia, local, nome, telefone, descricao } = req.body
-            const newChamado = ({user_id, ocorrencia, local, nome, telefone, descricao})
+            const { ocorrencia, local, nome, telefone, descricao} = req.body
+            var {eqp_id} = req.body
+            if(eqp_id == '0'){
+                eqp_id = null
+            }
+            console.log('########## ID: ',eqp_id)
+            const newChamado = ({user_id, ocorrencia, local, nome, telefone, descricao, eqp_id})
             await Chamados.create(newChamado).then(() => {
                 req.flash('success_msg','Chamado gerado com sucesso!')
                 res.redirect('/usuarios/chamados')
             }).catch((err) =>{
+                console.log('##### Erro:',err)
                 req.flash('error_msg','Desculpe, houve um erro ao gerar o chamado, tente novamente!')
                 res.redirect('/usuarios/chamados')
             })
 
         }catch(err){
+            console.log('##### Erro:',err)
             res.status(400)
         }
 

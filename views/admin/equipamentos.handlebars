@@ -13,9 +13,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Identificação</th>
+            <th scope="col">Id</th>
             <th scope="col">Equipamento</th>
-            <th scope="col">Patrimônio</th>
+            <th scope="col">Patrimônio/Selb</th>
             <th scope="col">Unidade</th>
             <th scope="col">local</th>
             <th scope="col" class="text-center">Ação</th>
@@ -27,10 +27,10 @@
                 <td>{{dataValues.id}}</td>
                 <td>{{dataValues.equipamento}}</td>
                 <td>{{dataValues.patrimonio}}</td>
-                <td>{{dataValues.unidade}}</td>
+                <td>{{user.dataValues.user}}</td>
                 <td >{{dataValues.local}}</td>
                 <td class="text-center">
-                    <form action="/admin/materiais/delete" method="post">
+                    <form action="/admin/equipamentos/delete" method="post">
                         <input type="hidden" name="id" value="{{dataValues.id}}">
                         <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
                     </form>
@@ -39,3 +39,32 @@
         {{/each}}
     </tbody>
 </table>
+
+<div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastro de equipamentos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <label class="mt-2">Equipamento</label>
+                        <input type="text" name="equipamento" placeholder="Equipamento" class="form-control mb-2">
+                    <label>Patrimonio/Selb</label>
+                        <input type="text" name="patrimonio" placeholder="Patrimônio ou selb" class="form-control mb-2">
+                    <label>Unidade</label>
+                        <select class="form-select mb-2" name="user_id" required>
+                            <option value="0" selected>Selecione uma unidade</option>
+                            {{#each usuarios}}
+                            <option value={{dataValues.id}}>{{dataValues.user}}</option>
+                            {{/each}}
+                        </select>
+                    <label>Local</label>
+                        <input type="text" name="local" placeholder="Local/Setor/Sala" class="form-control mb-4">
+                    <button type="submit" class="btn text-white form-control mb-2" style="background-color: #236192;">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

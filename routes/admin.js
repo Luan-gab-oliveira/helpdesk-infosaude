@@ -7,7 +7,6 @@ const RelatoriosController = require('../controllers/RelatoriosController')
 const TrasnferirChamadoController = require('../controllers/TrasnferirChamadoController');
 const ChamadosSistemaController = require('../controllers/ChamadosSistemaController');
 const EquipamentosController = require('../controllers/EquipamentosController');
-const ImpressorasController = require('../controllers/ImpressorasController');
 
 
 
@@ -26,9 +25,8 @@ router.get('/configuracoes',  ConfigController.loadConfig);
 
 // Equipamentos
 router.get('/equipamentos', EquipamentosController.loadEquipamentos);
-
-// Impressoras
-router.get('/impressoras', ImpressorasController.loadImpressoras);
+router.post('/equipamentos',  EquipamentosController.novoEqp);
+router.post('/equipamentos/delete',  EquipamentosController.deleteEqp);
 
 
 // Materiais

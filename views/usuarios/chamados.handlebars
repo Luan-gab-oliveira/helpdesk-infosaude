@@ -61,17 +61,32 @@
       </div>
       <div class="modal-body">
         <form action="" method="post">
-          <label for="ocorrencia">Ocorrência: </label>
-          <select class="form-select col" aria-label="Default select example" name="ocorrencia" required>
-              <option value="" disabled selected>Tipo de ocorrência</option>
-              <option value="computador">Computador</option>
-              <option value="impressora">Impressora</option>
-              <option value="rede de internet">Rede de internet</option>
-              <option value="sistema">Sistema</option>
-              <option value="outros">Outros</option>
-          </select>
+          <div class="container p-0">
+            <div class="row p-0">
+              <div class="col">
+                <label for="ocorrencia">Ocorrência: </label>
+                  <select class="form-select mb-2" aria-label="Default select example" name="ocorrencia" id="ocrr" required onchange="mostrarSelect(this);">
+                      <option value="0" disabled selected>Tipo de ocorrência</option>
+                      <option value="computador">Computador</option>
+                      <option value="impressora">Impressora</option>
+                      <option value="rede de internet">Rede de internet</option>
+                      <option value="sistema">Sistema</option>
+                      <option value="outros">Outros</option>
+                  </select>
+              </div>
+              <div class="col" id="selectEqp" style="display: none;">
+                <label>Patrimônio/Selb</label>
+                  <select class="form-select mb-2" name="eqp_id" required>
+                      <option value="0" selected>Patrimônio ou Selb</option>
+                      {{#each equipamentos}}
+                      <option value={{dataValues.id}}>{{dataValues.patrimonio}}</option>
+                      {{/each}}
+                  </select>
+              </div>
+            </div>
+          </div>
           <label for="local">Local: </label>
-            <input type="text" name="local" placeholder="Local/unidade" class="form-control mb-2" required>
+            <input type="text" name="local" placeholder="Local/setor/sala" class="form-control mb-2" required>
           <label for="nome">Solicitante: </label>
             <input type="text" name="nome" placeholder="Nome do solicitante" class="form-control mb-2" required>
           <label for="telefone">Telefone: </label>
@@ -87,3 +102,14 @@
     </div>
   </div>
 </div>
+
+<script>
+  function mostrarSelect(ocrr){
+    if(ocrr.value == 'impressora' || ocrr.value == 'computador'){
+      document.getElementById('selectEqp').style.display = 'block'
+    }else{
+      document.getElementById('selectEqp').style.display = 'none'
+    }
+  }
+</script>
+

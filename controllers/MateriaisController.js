@@ -10,10 +10,8 @@ module.exports = {
             attributes: ['id','item', [Saidas.sequelize.fn('sum', Saidas.sequelize.col('quantidade')), 'quantidade']],
             group:['id']
         }).then((materiais) =>{
-            // console.log(materiais)
             res.render('admin/materiais', {materiais: materiais})
         }).catch((err) =>{
-            console.log('# Error: ' + err)
             req.flash('error_msg', 'Houve um erro ao carregar a pagina!')
             res.redirect('/')
         })
@@ -54,7 +52,7 @@ module.exports = {
             })
         }).catch((err) =>{
             req.flash('error_msg', 'Houve um erro ao deletar este item!')
-            req.redirect('/admin/materiais')
+            res.redirect('/admin/materiais')
         })
     }
 }

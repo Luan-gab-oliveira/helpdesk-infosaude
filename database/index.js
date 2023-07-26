@@ -21,5 +21,6 @@ Chamados.associate(connection.models);
 Observacoes.associate(connection.models);
 Materiais.associate(connection.models);
 Saidas.associate(connection.models);
+Equipamentos.associate(connection.models)
 
 module.exports = connection;
