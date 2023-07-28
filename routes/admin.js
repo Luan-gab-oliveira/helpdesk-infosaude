@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const AdminController = require('../controllers/AdminController');
-const MateriaisController = require('../controllers/MateriaisController')
-const ConfigController = require('../controllers/ConfigController')
-const RelatoriosController = require('../controllers/RelatoriosController')
-const TrasnferirChamadoController = require('../controllers/TrasnferirChamadoController');
-const ChamadosSistemaController = require('../controllers/ChamadosSistemaController');
+const MateriaisController = require('../controllers/MateriaisController');
+const ConfigController = require('../controllers/ConfigController');
+const RelatoriosController = require('../controllers/RelatoriosController');
 const EquipamentosController = require('../controllers/EquipamentosController');
+const ChamadosController = require('../controllers/ChamadosController');
 
 
 
@@ -36,16 +35,16 @@ router.post('/materiais/delete',  MateriaisController.deleteItem);
 
 
 // Chamados informática
-router.get('/chamados', AdminController.loadChamados);
-router.get('/chamado/atendimento/:id', AdminController.loadUpdateChamado);
-router.post('/chamado/atendimento/observacao', AdminController.novaObservacao);
-router.post('/chamado/atendimento/material', AdminController.saidaMaterial);
-router.post('/chamado/atendimento/material/delete', AdminController.deleteMateriaisChamado);
-router.post('/chamado/atendimento/transferir',TrasnferirChamadoController.sendEmail)
-router.post('/chamado/update', AdminController.updateChamado);
+router.get('/chamados', ChamadosController.loadChamados);
+router.get('/chamado/atendimento/:id', ChamadosController.loadUpdateChamado);
+router.post('/chamado/atendimento/observacao', ChamadosController.novaObservacao);
+router.post('/chamado/atendimento/material', ChamadosController.saidaMaterial);
+router.post('/chamado/atendimento/material/delete', ChamadosController.deleteMateriaisChamado);
+router.post('/chamado/atendimento/transferir',ChamadosController.sendEmail)
+router.post('/chamado/atendimento', ChamadosController.updateChamado);
 
 // Chamados sistema
-router.get('/chamados/sistema',  ChamadosSistemaController.loadChamados);
+router.get('/chamados/sistema',  ChamadosController.loadChamadosSistema);
 
 
 

@@ -5,15 +5,6 @@ const Usuario = require('../models/Usuarios');
 const Equipamentos = require('../models/Equipamentos')
 const { Op } = require("sequelize");
 
-async function loadlistchamados(user_id){
-    const list = await Chamados.findAll({
-        where: {user_id: user_id, status: {[Op.ne]: 'encerrado'}},
-        order: [['id', 'ASC']],
-        include: {model: Usuario, as: 'user'}
-    })
-    return list
-}
-
 module.exports = {
     // Login 
     async loadLogin(req, res){
@@ -105,13 +96,14 @@ module.exports = {
             console.log('##### Erro:',err)
             res.status(400)
         }
-
     },
 
     async loadChamadoedit(req, res){
-        await Chamados.findByPk(req.params.id, {include: {model: Usuario, as: 'user'}}).then((chamado) => {
+        const acesso = req.user.acesso
+        console.log('#########',acesso)
+        await Chamados.findByPk(req.params.id, {include: {model: Usuario, as: 'user',model: Equipamentos, as: 'equipamentos'}}).then((chamado) => {
             Observacoes.findAll({where: {chamado_id: req.params.id}}).then((obs) => {
-                res.render('usuarios/editChamados', {chamado: chamado, obs: obs})
+                res.render('usuarios/editChamados', {chamado: chamado, obs: obs, acesso:acesso})
             }).catch((err) =>{
                 res.render('usuarios/editChamados', {chamado: chamado})
             })
@@ -123,7 +115,8 @@ module.exports = {
 
     async novaObservacao(req, res){
         try{
-            const { chamado_id, obs, user} = req.body
+            const { chamado_id, obs} = req.body
+            const user = req.user.email
             const newObs = ({chamado_id, obs, user})
             await Observacoes.create(newObs).then(() => {
                 req.flash('success_msg','Observação enviada com sucesso!')

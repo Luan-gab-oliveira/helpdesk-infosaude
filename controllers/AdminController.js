@@ -7,166 +7,12 @@ const { Op, where, and } = require("sequelize");
 const Saidas = require('../models/Saidas');
 
 
-
-async function loadlistsolicitantes(){
-    const list = await Usuario.findAll({order: [['user', 'ASC']]})
-    return list
-}
-
-var user_id = 2
 module.exports = {
-    async loadChamados(req, res){
-        await Chamados.findAll({
-            where: {
-                ocorrencia: {[Op.ne]: 'sistema'}, 
-                status: {[Op.ne]: 'encerrado'}},
-            order: [['status', 'ASC']],
-            include: {model: Usuario, as: 'user'}
-        }).then((chamados) =>{
-            var list = chamados
-            for(var i = 0; i < list.length; i++){
-                var data = list[i].createdAt
-                Object.defineProperty(list[i], 'dataAbertura',{
-                    value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
-                    writable: false,
-                });
-
-                switch (list[i].status){
-                    case 'pendente':
-                        Object.defineProperty(list[i], 'inOpen',{
-                            value: true,
-                            writable: false,
-                        });
-                    
-                    case 'processando':
-                        Object.defineProperty(list[i], 'inProcess',{
-                            value: true,
-                            writable: false,
-                        });
-                    
-                    case 'transferido':
-                        Object.defineProperty(list[i], 'transfer',{
-                            value: true,
-                            writable: false,
-                        });
-
-                    case 'encerrado':
-                        Object.defineProperty(list[i], 'closed',{
-                            value: true,
-                            writable: false,
-                        });
-                }
-            }
-
-            res.render('admin/chamados', {listchamados: list})
-        }).catch((err) =>{
-            req.flash('error_msg','Desculpe, houve um erro ao carregar chamados, tente novamente!')
-            res.redirect('/admin')
-        })
-    },
-
-    async loadUpdateChamado(req, res){
-        try{ 
-            const materiais = await Materiais.findAll()
-            const chamados = await Chamados.findByPk(req.params.id,{include: {model: Usuario, as: 'user'}})
-            const obs = await Observacoes.findAll({where: {chamado_id: req.params.id}})
-
-            const saidaMateriais = await Saidas.findAll({
-                where: {chamado_id: req.params.id},
-                include: {model: Materiais, as: 'item'}
-            })
-            
-            var chamSis = false
-            if(chamados.ocorrencia == 'sistema'){
-                chamSis = true
-            }
-
-            res.render('admin/updateChamado', {chamado: chamados, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, chamSis:chamSis})
-        }catch(err){
-            console.log('Error: ' + err)
-            req.flash('error_msg', 'Erro ao carregar chamado')
-            res.redirect('/admin/chamados')
-        }
-    },
-
-    async updateChamado(req, res){
-        const { id, status} = req.body
-        await Chamados.findByPk(id).then((chamado) => {
-            chamado.status = status;
-            chamado.save().then(() =>{
-                req.flash('success_msg', 'Chamado atualizado com sucesso!')
-                res.redirect('/admin/chamados')
-            })
-        }).catch((err) =>{
-            console.log('#### Erro: '+err)
-            req.flash('error_msg', 'Houve um erro ao atualizar este chamado!')
-            res.redirect('/admin/chamado/atendimento/' + id)
-        })
-    },
-    
-    async deleteMateriaisChamado(req, res){
-        const { chamado_id, item_id} = req.body
-        console.log('##### - ' + chamado_id,item_id)
-        await Saidas.findOne({where: {chamado_id: chamado_id, item_id: item_id}}).then((item) => {
-            item.destroy().then(() => {
-                req.flash('success_msg', 'Item deletado com sucesso!')
-                res.redirect('/admin/chamado/atendimento/' + chamado_id)
-            })
-        }).catch((err) =>{
-            console.log('#### - Erro: ' + err)
-            req.flash('error_msg', 'Houve um erro ao deletar este item!')
-            res.redirect('/admin/chamado/atendimento/' + chamado_id)
-        })
-    },
-
-    async novaObservacao(req, res){
-        try{
-            const { chamado_id, obs} = req.body
-            await Usuario.findByPk(user_id).then((usuario) =>{
-                const user = usuario.email
-                const newObs = ({chamado_id, obs, user})
-                Observacoes.create(newObs).then(() => {
-                    req.flash('success_msg','Observação enviada com sucesso!')
-                    res.redirect('/admin/chamado/atendimento/' + chamado_id)
-                }).catch((err) =>{
-                    req.flash('error_msg','Desculpe, houve um erro ao enviar a observação, tente novamente!')
-                    res.redirect('/admin/chamado/atendimento/' + chamado_id)
-                })
-            }).catch((err) =>{
-                req.flash('error_msg', 'Desculpe, houve um erro ao enviar a observação, tente novamente!')
-                res.redirect('/admin/chamado/atendimento/' + chamado_id)
-            })
-            
-            
-
-        }catch(err){
-            res.status(400)
-        }
-    },
-
-    async saidaMaterial(req, res){
-        try{
-            const { chamado_id, item_id, quantidade} = req.body
-            const newSaida = ({chamado_id, item_id, quantidade})
-            await Saidas.create(newSaida).then(() => {
-                req.flash('success_msg','Material registrado com sucesso!')
-                res.redirect('/admin/chamado/atendimento/' + chamado_id)
-            }).catch((err) =>{
-                req.flash('error_msg','Desculpe, houve um erro ao registrar este item, tente novamente!')
-                res.redirect('/admin/chamado/atendimento/' + chamado_id)
-            })
-            
-            
-
-        }catch(err){
-            res.status(400)
-        }
-    },
-
     async loadSolicitantes(req, res){
         try{
-            const list = await loadlistsolicitantes()
-            res.render('admin/usuarios', {listsolicitantes:list})
+            await Usuario.findAll({order: [['user', 'ASC']]}).then((list) =>{
+                res.render('admin/usuarios', {listsolicitantes:list})
+            })
         }catch(err){
             res.status(400)
         }
@@ -177,31 +23,9 @@ module.exports = {
             const { user, email, telefone, password, acesso } = req.body
             const solicitantesEmail = await Usuario.findOne({where:{email}})
 
-            var erros = []
-
-            if(!user || user == undefined || user == null){
-                erros.push({texto: 'O campo nome não pode estar vazio'})
-            }
-
-            if(!email || email == undefined || email == null){
-                erros.push({texto: 'O campo e-mail não pode estar vazio'})
-            }
-
-            if(!telefone || telefone == undefined || telefone == null){
-                erros.push({texto: 'O campo telefone não pode estar vazio'})
-            }
-
-            if(!password || password == undefined || password == null){
-                erros.push({texto: 'O campo senha não pode estar vazio'})
-            }
-
             if(solicitantesEmail){
-                erros.push({texto: 'Já existe um solicitante com esse e-mail cadastrado em nosso sistema'})
-            }
-
-            if(erros.length > 0){
-                const list = await loadlistsolicitantes()
-                res.render('admin/usuarios', {erros: erros, listsolicitantes:list})
+                req.flash('error_msg', 'Já existe um solicitante com esse e-mail cadastrado em nosso sistema')
+                res.redirect('/admin/cadastro/usuario')
             }else{
                 
                 const newUser = ({ user, email, telefone, password, acesso })
@@ -224,7 +48,8 @@ module.exports = {
             }
             
         }catch(err){
-            res.status(400)
+            req.flash('error_msg','Houve um erro ao criar o usuário')
+            res.redirect('/admin/cadastro/usuario')
         }
     },
 
