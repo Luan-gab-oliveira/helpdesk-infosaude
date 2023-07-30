@@ -42,6 +42,7 @@ router.post('/chamado/atendimento/material', ChamadosController.saidaMaterial);
 router.post('/chamado/atendimento/material/delete', ChamadosController.deleteMateriaisChamado);
 router.post('/chamado/atendimento/transferir',ChamadosController.sendEmail)
 router.post('/chamado/atendimento', ChamadosController.updateChamado);
+router.get('/chamados/encerrados' ,ChamadosController.encerrados);
 
 // Chamados sistema
 router.get('/chamados/sistema',  ChamadosController.loadChamadosSistema);

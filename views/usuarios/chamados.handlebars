@@ -86,7 +86,7 @@
             </div>
           </div>
           <label for="local">Local: </label>
-            <input type="text" name="local" placeholder="Local/setor/sala" class="form-control mb-2" required>
+            <input type="text" name="local" id="local" placeholder="Local/setor/sala" class="form-control mb-2" required>
           <label for="nome">Solicitante: </label>
             <input type="text" name="nome" placeholder="Nome do solicitante" class="form-control mb-2" required>
           <label for="telefone">Telefone: </label>
@@ -107,6 +107,7 @@
   function mostrarSelect(ocrr){
     if(ocrr.value == 'impressora' || ocrr.value == 'computador'){
       document.getElementById('selectEqp').style.display = 'block'
+
     }else{
       document.getElementById('selectEqp').style.display = 'none'
     }

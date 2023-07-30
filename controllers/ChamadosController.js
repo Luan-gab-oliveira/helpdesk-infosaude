@@ -258,4 +258,15 @@ module.exports = {
             res.redirect('/admin')
         })
     },
+
+    async encerrados(req, res){
+        await Chamados.findAll({
+            where: {
+                status: 'encerrado'
+            },
+            include: {model: Usuario, as: 'user'}
+        }).then((chamados) =>{
+            res.render('admin/chamadosEncerrados', {chamados: chamados})
+        })
+    }
 };
