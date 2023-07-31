@@ -1,37 +1,11 @@
-<h3 class="m-0">Chamados Encerrados</h3>
+<h2 class="m-0">Chamados Encerrados</h2>
 <hr>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Solicitante</th>
-            <th scope="col">Unidade</th>
-            <th scope="col">Ocorrência</th>
-            <th scope="col">atendimento</th>
-            <th scope="col" class="text-center">Ação</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each chamados}}
-            <tr class="align-middle">
-                <td>{{dataValues.id}}</td>
-                <td>{{dataValues.nome}}</td>
-                <td>{{user.dataValues.user}}</td>
-                <td>{{dataValues.ocorrencia}}</td>
-                <td >{{dataValues.atendimento}}</td>
-                <td class="text-center">
-                    {{!-- <form action="#" method="post">
-                        <input type="hidden" name="id" value="{{dataValues.id}}">
-                        <button type="submit" class="btn mt-2 text-white" style="background-color: #4784ba;"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-                    </form> --}}
-                    <form action="#" method="post">
-                        <a href="#"><button type="button" class="btn mt-2 text-white" style="background-color: #4784ba;"><i class="fa-solid fa-arrow-up-right-from-square"></i></button></a>
-                        <input type="hidden" name="id" value="{{dataValues.id}}">
-                        <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
-                    </form>
-                </td>
-            </tr>
-        {{/each}}
-    </tbody>
-</table>
+{{#each chamados}}
+    <div class="bg-light rounded p-2 mb-4">    
+        <h4 style="color: #236192;"># {{dataValues.id}} - {{dataValues.ocorrencia}}/{{dataValues.atendimento}}</h4>
+        <h6>Local: {{dataValues.local}}</h6>
+        <h6>Telefone: {{dataValues.telefone}}</h6>
+        <h6>Solicitante: {{dataValues.nome}} - {{user.dataValues.email}}</h6>
+    </div>
+{{/each}}

@@ -4,6 +4,7 @@ const Usuario = require('../models/Usuarios')
 const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Materiais = require('../models/Materiais');
+const LogEmails = require('../models/LogEmails');
 const bcrypt = require('bcryptjs')
 const { Op, where, and } = require("sequelize");
 const Saidas = require('../models/Saidas');
@@ -62,20 +63,27 @@ module.exports = {
     async loadUpdateChamado(req, res){
         try{ 
             const materiais = await Materiais.findAll()
-            const chamados = await Chamados.findByPk(req.params.id,{include: {model: Usuario, as: 'user'}})
+            const chamado = await Chamados.findByPk(req.params.id,{include: {model: Usuario, as: 'user'}})
             const obs = await Observacoes.findAll({where: {chamado_id: req.params.id}})
+            const saidaMateriais = await Saidas.findAll({where: {chamado_id: req.params.id},include: {model: Materiais, as: 'item'}})
+            const sendEmail = config.nodemailer.send.to
 
-            const saidaMateriais = await Saidas.findAll({
-                where: {chamado_id: req.params.id},
-                include: {model: Materiais, as: 'item'}
-            })
+            if(chamado.status == 'pendente'){
+                chamado.status = 'processando';
+                chamado.save()
+            }
             
             var chamSis = false
-            if(chamados.ocorrencia == 'sistema'){
+            if(chamado.ocorrencia == 'sistema'){
                 chamSis = true
             }
+            
+            var transferido = false
+            if(chamado.status == 'transferido'){
+                transferido = true
+            }
 
-            res.render('admin/chamadosUpdate', {chamado: chamados, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, chamSis:chamSis})
+            res.render('admin/chamadosUpdate', {chamado: chamado, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, chamSis:chamSis, sendEmail:sendEmail, transferido:transferido})
         }catch(err){
             console.log('Error: ' + err)
             req.flash('error_msg', 'Erro ao carregar chamado')
@@ -83,18 +91,22 @@ module.exports = {
         }
     },
 
-    async updateChamado(req, res){
-        const { id, status} = req.body
+    async encerrarChamado(req, res){
+        const {id} = req.body
         await Chamados.findByPk(id).then((chamado) => {
-            chamado.status = status;
+            chamado.status = 'encerrado';
             chamado.save().then(() =>{
-                req.flash('success_msg', 'Chamado atualizado com sucesso!')
-                res.redirect('/admin/chamados')
+                const chamado_id = req.body.id, obs = 'Chamado encerrado por ' + req.user.email, user = req.user.email
+                const newObs = ({chamado_id, obs, user})
+                Observacoes.create(newObs).then(() => {
+                    req.flash('success_msg', 'Chamado encerrado!')
+                    res.redirect('/admin/chamados')
+                })
             })
         }).catch((err) =>{
             console.log('#### Erro: '+err)
-            req.flash('error_msg', 'Houve um erro ao atualizar este chamado!')
-            res.redirect('/admin/chamado/atendimento/' + id)
+            req.flash('error_msg', 'Houve um erro ao encerrar este chamado!')
+            res.redirect('/admin/chamados')
         })
     },
     
@@ -183,15 +195,24 @@ module.exports = {
                 text: `${message}\n\nObservações técnicas:\n${obsTech}`
             }).then(() => {
                 chamado.status = 'transferido';
+                chamado.atendimento = 'Prefeitura';
                 chamado.save().then(() =>{
                     const user = req.user.email
                     const obs = 'Chamado transferido para T.I. Prefeitura!'
                     const chamado_id = id
                     const newObs = ({chamado_id, obs, user})
                     Observacoes.create(newObs).then(() => {
-                        req.flash('success_msg', 'Chamado trânsferido com sucesso!')
-                        res.redirect('/admin/chamados')
+                        const from =  sendEmail.from
+                        const to = sendEmail.to
+                        const subject = sendEmail.subject
+                        const text =  `${message}\n\nObservações técnicas:\n${obsTech}`
+                        const logEmail =  ({chamado_id, from, to, subject, text})
+                        LogEmails.create(logEmail).then(() =>{
+                            req.flash('success_msg', 'Chamado trânsferido com sucesso!')
+                            res.redirect('/admin/chamados')
+                        })
                     })
+
                 })
             }).catch((err) => {
                 console.log('#### Erro: '+err)

@@ -3,49 +3,59 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('chamados', {
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     */
+  },
+
+  async down (queryInterface, Sequelize) {
+    /**
+     * Add reverting commands here.
+     *
+     * Example:
+     * await queryInterface.dropTable('users');
+     */
+  }
+};
+'use strict';
+
+const { NUMBER } = require('sequelize');
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    
+    await queryInterface.createTable('log_emails', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      user_id:{
+      chamado_id:{
         type: Sequelize.INTEGER,
-        references: { model: 'usuarios', key: 'id' },
+        references: { model: 'chamados', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
-      nome:{
+      from:{
         type: Sequelize.STRING,
         allowNull: false,
       },
-      local:{
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      telefone:{
+      to:{
         type: Sequelize.STRING,
         allowNull:true,
       },
-      ocorrencia:{
+      subject:{
         type: Sequelize.STRING,
         allowNull: false,
       },
-      descricao:{
+      text:{
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      status:{
-        type: Sequelize.STRING,
-        defaultValue: 'pendente',
-        allowNull: false
-
-      },
-      atendimento:{
-        type: Sequelize.STRING,
-        defaultValue: 'Info Saude',
-        allowNull: false
       },
       created_at:{
         type: Sequelize.DATE,
@@ -55,10 +65,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-    });    
+    });
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('chamados');
+    await queryInterface.dropTable('log_emails');
   }
 };

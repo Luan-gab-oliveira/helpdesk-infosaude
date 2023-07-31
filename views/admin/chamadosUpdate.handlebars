@@ -1,4 +1,5 @@
 <script src="/js/updatechamado.js"></script>
+<script src="/js/spinner.js"></script>
 
 <div class="container p-0 mt-2">
     <div class="row">
@@ -13,7 +14,10 @@
                         {{#if chamSis}}
                         {{else}}
                         <li><button class="btn bg-transparent border-0" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button></li>
+                        {{#if transferido}}
+                        {{else}}
                         <li><button class="btn bg-transparent border-0" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" onclick="trasnferChamado()"><i class="fa-solid fa-share-from-square"></i> Transferir</button></li>
+                        {{/if}}
                         {{/if}}
                         <li><button class="btn bg-transparent border-0" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-comment"></i> Observações</button></li>
                     </ul>
@@ -22,7 +26,10 @@
             <div class="web">
                 {{#if chamSis}}
                 {{else}}
+                {{#if transferido}}
+                {{else}}
                 <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" style="background-color: #4784ba;" onclick="trasnferChamado()"><i class="fa-solid fa-share-from-square"></i> Transferir</button>
+                {{/if}}
                 <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
                 {{/if}}
                 <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
@@ -56,24 +63,13 @@
             <input type="text" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.ocorrencia}}">
         <label for="dsc">Descrição: </label>
             <textarea id="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
-        <hr>
-        <h4 class="mb-4"><label>Classificação final</label></h4>
-        <form action="/admin/chamado/update" method="post">
+        <form action="/admin/chamado/atendimento/encerrar" method="post" class="mt-4">
             <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
-            <div class="container text-center">
-                <div class="row mb-4">
-                    <select class="form-select col" aria-label="Default select example" name="status">
-                        <option value=""disabled selected>Situação</option>
-                        <option value="pendente">Aberto</option>
-                        <option value="processando">Processando</option>
-                        <option value="encerrado">Finalizado</option>
-                    </select>
-                    <button type="submit" class="btn text-white col-xl-2" style="margin-left: 1rem; background-color: #4784ba;">Salvar</button>
-                </div>
-            </div>
+            <button type="submit" class="btn text-white" style="background-color: #C23F5C;"><i class="fa-solid fa-xmark"></i> Encerrar chamado</button>
         </form>
     </div>
 </div>
+
 
 {{!-- Modal Observações --}}
 <div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -183,10 +179,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bg-0">
-                <form action="/admin/chamado/atendimento/transferir" method="post">
+                <form action="/admin/chamado/atendimento/transferir" method="post" onsubmit="javascript:spinner()">
                     <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
                     <label>E-mail</label>
-                        <input type="text" class="form-control mb-4" id='emailTransfer'disabled>
+                        <input type="text" class="form-control mb-4" id='emailTransfer'disabled value="{{sendEmail}}">
 
                     <label>Corpo do e-mail</label>
                         <textarea class="form-control mb-4" name="message" id="corpoemail" style="height: 16rem; resize: none" readonly></textarea>
@@ -196,6 +192,19 @@
 
                     <button type="submit" class="btn text-white" style="background-color: #4784ba;">enviar</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="btnspinner" class="btn bg-transparent" type="button" data-bs-toggle="modal" data-bs-target="#spinner" hidden></button>
+<div class="modal fade modal-centerd" id="spinner" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="container text-center">
+                <div class="spinner-border" style="color: #236192;">
+                    <span  class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </div>
     </div>

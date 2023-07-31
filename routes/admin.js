@@ -21,6 +21,7 @@ router.post('/cadastro/usuario/delete',  AdminController.deleteSolicitante);
 
 // Configurações
 router.get('/configuracoes',  ConfigController.loadConfig);
+router.post('/configuracoes',  ConfigController.saveConfig);
 
 // Equipamentos
 router.get('/equipamentos', EquipamentosController.loadEquipamentos);
@@ -41,7 +42,7 @@ router.post('/chamado/atendimento/observacao', ChamadosController.novaObservacao
 router.post('/chamado/atendimento/material', ChamadosController.saidaMaterial);
 router.post('/chamado/atendimento/material/delete', ChamadosController.deleteMateriaisChamado);
 router.post('/chamado/atendimento/transferir',ChamadosController.sendEmail)
-router.post('/chamado/atendimento', ChamadosController.updateChamado);
+router.post('/chamado/atendimento/encerrar', ChamadosController.encerrarChamado);
 router.get('/chamados/encerrados' ,ChamadosController.encerrados);
 
 // Chamados sistema

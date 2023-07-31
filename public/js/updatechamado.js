@@ -1,7 +1,4 @@
 function trasnferChamado(){
-    var email = document.getElementById('emailTransfer')
-    email.value = ''
-    email.value = 'suporte.ti@saofranciscodosul.sc.gov.br'
 
     var text = document.getElementById('corpoemail')
     text.value = ''

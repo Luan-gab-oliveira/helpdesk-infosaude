@@ -1,4 +1,8 @@
-var select = document.getElementById('ocrr');
-select.onchange = function(){
-    alert(1);
-}
+function mostrarSelect(ocrr){
+    if(ocrr.value == 'impressora'){
+      document.getElementById('selectEqp').style.display = 'block'
+
+    }else{
+      document.getElementById('selectEqp').style.display = 'none'
+    }
+  }

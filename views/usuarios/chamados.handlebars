@@ -1,3 +1,5 @@
+<script src="/js/chamados.js"></script>
+
 <div class="web" class="container p-0">
   <div class="row align-bottom">
     <div class="col-8 align-self-end">
@@ -75,9 +77,9 @@
                   </select>
               </div>
               <div class="col" id="selectEqp" style="display: none;">
-                <label>Patrimônio/Selb</label>
+                <label>Selb (Etiqueta verde)</label>
                   <select class="form-select mb-2" name="eqp_id" required>
-                      <option value="0" selected>Patrimônio ou Selb</option>
+                      <option value="0" selected>Selecione o Selb</option>
                       {{#each equipamentos}}
                       <option value={{dataValues.id}}>{{dataValues.patrimonio}}</option>
                       {{/each}}
@@ -102,15 +104,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  function mostrarSelect(ocrr){
-    if(ocrr.value == 'impressora' || ocrr.value == 'computador'){
-      document.getElementById('selectEqp').style.display = 'block'
-
-    }else{
-      document.getElementById('selectEqp').style.display = 'none'
-    }
-  }
-</script>
-

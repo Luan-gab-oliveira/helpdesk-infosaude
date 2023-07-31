@@ -6,6 +6,7 @@ const Observacoes = require('../models/Observacoes');
 const Materiais = require('../models/Materiais');
 const Saidas = require('../models/Saidas');
 const Equipamentos = require('../models/Equipamentos');
+const LogEmails = require('../models/LogEmails');
 const connection = new Sequelize(dbConfig);
 
 // Conexões
@@ -15,6 +16,7 @@ Chamados.init(connection);
 Observacoes.init(connection);
 Materiais.init(connection);
 Saidas.init(connection)
+LogEmails.init(connection)
 
 // Relacionamentos
 Chamados.associate(connection.models);
@@ -22,5 +24,7 @@ Observacoes.associate(connection.models);
 Materiais.associate(connection.models);
 Saidas.associate(connection.models);
 Equipamentos.associate(connection.models)
+LogEmails.associate(connection.models)
+
 
 module.exports = connection;
