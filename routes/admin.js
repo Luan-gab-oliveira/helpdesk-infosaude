@@ -6,6 +6,7 @@ const ConfigController = require('../controllers/ConfigController');
 const RelatoriosController = require('../controllers/RelatoriosController');
 const EquipamentosController = require('../controllers/EquipamentosController');
 const ChamadosController = require('../controllers/ChamadosController');
+const ContatosController = require('../controllers/ContatosController');
 
 
 
@@ -18,6 +19,12 @@ router.post('/cadastro/usuario', AdminController.createSolicitante);
 router.get('/cadastro/usuario/edit/:id',  AdminController.loadEditSolicitante);
 router.post('/cadastro/usuario/edit',  AdminController.editSolicitante);
 router.post('/cadastro/usuario/delete',  AdminController.deleteSolicitante);
+
+// Contatos
+router.get('/contatos', ContatosController.loadContatos);
+router.post('/contatos', ContatosController.addContato);
+router.post('/contatos/delete', ContatosController.deleteContato);
+
 
 // Configurações
 router.get('/configuracoes',  ConfigController.loadConfig);

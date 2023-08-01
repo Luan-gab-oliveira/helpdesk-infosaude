@@ -1,4 +1,5 @@
 const express = require('express')
+const settings = require('./config/settings.json')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express();
@@ -42,9 +43,6 @@ require('./config/auth')(passport)
         app.engine('handlebars', handlebars.engine({defaultLayout: 'main'}));
         app.set('view engine', 'handlebars');
     
-    // Mongoose
-        // Em breve
-
     // Public
         app.use(express.static(path.join(__dirname,'public')));
 
@@ -56,8 +54,12 @@ require('./config/auth')(passport)
     app.use('/usuarios', usuarios)
     app.use('/admin', authAdmin,admin)
 
+    app.get('*', (req, res) => {
+        res.render('notfound')
+    })
+
 // Outros
-const PORT = 8088
+const PORT = settings.servidor.port
 app.listen(PORT,() =>{
     console.log('servidor rodando')
 });

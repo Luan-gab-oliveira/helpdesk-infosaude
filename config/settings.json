@@ -1,4 +1,7 @@
 {
+  "servidor": {
+    "port": 8088
+  },
   "nodemailer": {
     "config": {
       "host": "smtp.saofranciscodosul.sc.gov.br",

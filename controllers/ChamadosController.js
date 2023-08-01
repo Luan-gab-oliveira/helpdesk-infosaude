@@ -8,6 +8,7 @@ const LogEmails = require('../models/LogEmails');
 const bcrypt = require('bcryptjs')
 const { Op, where, and } = require("sequelize");
 const Saidas = require('../models/Saidas');
+const Contatos = require('../models/Contatos');
 
 module.exports = {
     async loadChamados(req, res){
@@ -63,10 +64,10 @@ module.exports = {
     async loadUpdateChamado(req, res){
         try{ 
             const materiais = await Materiais.findAll()
+            const contatos = await Contatos.findAll()
             const chamado = await Chamados.findByPk(req.params.id,{include: {model: Usuario, as: 'user'}})
             const obs = await Observacoes.findAll({where: {chamado_id: req.params.id}})
             const saidaMateriais = await Saidas.findAll({where: {chamado_id: req.params.id},include: {model: Materiais, as: 'item'}})
-            const sendEmail = config.nodemailer.send.to
 
             if(chamado.status == 'pendente'){
                 chamado.status = 'processando';
@@ -77,13 +78,8 @@ module.exports = {
             if(chamado.ocorrencia == 'sistema'){
                 chamSis = true
             }
-            
-            var transferido = false
-            if(chamado.status == 'transferido'){
-                transferido = true
-            }
 
-            res.render('admin/chamadosUpdate', {chamado: chamado, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, chamSis:chamSis, sendEmail:sendEmail, transferido:transferido})
+            res.render('admin/chamadosUpdate', {chamado: chamado, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, contatos:contatos, chamSis:chamSis})
         }catch(err){
             console.log('Error: ' + err)
             req.flash('error_msg', 'Erro ao carregar chamado')
@@ -171,7 +167,7 @@ module.exports = {
 
     // Tranferir chamado
     async sendEmail(req, res){
-        const {id, message, obsTech} = req.body
+        const {id, email, message, obsTech} = req.body
         const configEmail = config.nodemailer.config
         const transporter = nodemailer.createTransport({
             host: configEmail.host,
@@ -188,24 +184,25 @@ module.exports = {
         
         await Chamados.findByPk(id).then((chamado) => {
             const sendEmail = config.nodemailer.send
+            const from = sendEmail.from
+            const subject = sendEmail.subject
+            const text =  `${message}\n\nObservações técnicas:\n${obsTech}`
+
             transporter.sendMail({
-                from: sendEmail.from,
-                to: sendEmail.to,
-                subject: sendEmail.subject,
-                text: `${message}\n\nObservações técnicas:\n${obsTech}`
+                from: from,
+                to: email,
+                subject: subject,
+                text: text
             }).then(() => {
                 chamado.status = 'transferido';
-                chamado.atendimento = 'Prefeitura';
+                chamado.atendimento = email;
                 chamado.save().then(() =>{
                     const user = req.user.email
-                    const obs = 'Chamado transferido para T.I. Prefeitura!'
+                    const obs = `Chamado transferido para ${email}`
                     const chamado_id = id
                     const newObs = ({chamado_id, obs, user})
                     Observacoes.create(newObs).then(() => {
-                        const from =  sendEmail.from
-                        const to = sendEmail.to
-                        const subject = sendEmail.subject
-                        const text =  `${message}\n\nObservações técnicas:\n${obsTech}`
+                        const to = email
                         const logEmail =  ({chamado_id, from, to, subject, text})
                         LogEmails.create(logEmail).then(() =>{
                             req.flash('success_msg', 'Chamado trânsferido com sucesso!')
