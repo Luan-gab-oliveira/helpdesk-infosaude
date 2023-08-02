@@ -21,12 +21,14 @@ LogEmails.init(connection);
 Contatos.init(connection);
 
 // Relacionamentos
+Usuario.associate(connection.models);
 Chamados.associate(connection.models);
 Observacoes.associate(connection.models);
 Materiais.associate(connection.models);
 Saidas.associate(connection.models);
 Equipamentos.associate(connection.models)
 LogEmails.associate(connection.models)
+
 
 
 module.exports = connection;

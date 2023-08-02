@@ -9,17 +9,32 @@ const bcrypt = require('bcryptjs')
 const { Op, where, and } = require("sequelize");
 const Saidas = require('../models/Saidas');
 const Contatos = require('../models/Contatos');
+const Equipamentos = require('../models/Equipamentos');
 
 module.exports = {
     async loadChamados(req, res){
-        
-        await Chamados.findAll({
-            where: {
-                ocorrencia: {[Op.ne]: 'sistema'}, 
-                status: {[Op.ne]: 'encerrado'}},
-            order: [['status', 'ASC']],
-            include: {model: Usuario, as: 'user'}
-        }).then((chamados) =>{
+        try{
+            const adminCtg = req.user.categoria
+            let chamados;
+            if(adminCtg == 1){
+                chamados = await Chamados.findAll({
+                    where: {
+                        ocorrencia: {[Op.ne]: 'sistema'}, 
+                        status: {[Op.ne]: 'encerrado'}},
+                    order: [['status', 'ASC']],
+                    include: {model: Usuario, as: 'user'}
+                })
+            }if(adminCtg == 2){
+                chamados = await Chamados.findAll({
+                    where: {
+                        ocorrencia: {[Op.eq]: 'sistema'}, 
+                        status: {[Op.ne]: 'encerrado'}},
+                    order: [['status', 'ASC']],
+                    include: {model: Usuario, as: 'user'}
+                })
+            }
+            
+
             var list = chamados
             for(var i = 0; i < list.length; i++){
                 var data = list[i].createdAt
@@ -56,10 +71,10 @@ module.exports = {
             }
 
             res.render('admin/chamados', {listchamados: list})
-        }).catch((err) =>{
-            req.flash('error_msg','Desculpe, houve um erro ao carregar chamados, tente novamente!')
-            res.redirect('/admin')
-        })
+        }catch(err){
+            req.flash('error_msg', 'Erro ao carregar chamados')
+            res.redirect('/')
+        }
     },
 
     async loadUpdateChamado(req, res){

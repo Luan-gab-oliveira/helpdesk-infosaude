@@ -64,7 +64,7 @@ module.exports = {
 
     async editSolicitante(req, res){
         try {
-            const { id, user, email, telefone, password, acesso} = req.body
+            const { id, user, email, telefone, password, acesso, categoria} = req.body
             
             await Usuario.findByPk(id).then((usuario) => {
                 
@@ -105,6 +105,8 @@ module.exports = {
                             usuario.telefone = telefone
                             usuario.password = editUser.password
                             usuario.acesso = acesso
+                            usuario.categoria = categoria
+                            
 
                             usuario.save().then(() => {
                                 req.flash('success_msg', 'Cadastro alterado com sucesso!')

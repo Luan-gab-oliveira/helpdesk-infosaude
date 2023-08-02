@@ -55,7 +55,7 @@
 </div>
 
 <div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Novo chamado</h1>
@@ -64,6 +64,13 @@
       <div class="modal-body">
         <form action="/usuarios/chamados" method="post">
           <div class="container p-0">
+            <label for="ocorrencia">Unidade: </label>
+              <select class="form-select mb-2" name="email" id="ocrr" required onchange="">
+                  <option value="0" disabled selected>Selecione uma unidade</option>
+                  {{#each usuarios}}
+                  <option value={{dataValues.id}}>{{dataValues.user}}</option>
+                  {{/each}}
+              </select>
             <div class="row p-0">
               <div class="col">
                 <label for="ocorrencia">Ocorrência: </label>
@@ -77,12 +84,12 @@
                   </select>
               </div>
               <div class="col" id="selectEqp" style="display: none;">
-                <label>Selb (Etiqueta verde)</label>
+                <label>Selb</label>
                   <select class="form-select mb-2" name="eqp_id" required>
                       <option value="0" selected>Selecione o Selb</option>
-                      {{#each equipamentos}}
-                      <option value={{dataValues.id}}>{{dataValues.patrimonio}}</option>
-                      {{/each}}
+                      {{!-- {{#each usuarios}}
+                      <option value={{dataValues.id}}>{{equipamntodataValues.equipamento}}</option>
+                      {{/each}} --}}
                   </select>
               </div>
             </div>
@@ -97,8 +104,8 @@
             <textarea name="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;" required></textarea>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn text-white mt-2" style="background-color: #4784ba;">Enviar</button>
-          <a href="/usuarios/chamados"><button type="button" class="btn btn-danger mt-2" style="background-color: #C23F5C;">Cancelar</button></a>
+          <button type="submit" class="btn text-white" style="background-color: #4784ba;">Enviar</button>
+          <a href="/usuarios/chamados" ><button type="button" class="btn text-white" style="background-color: #C23F5C;">Cancelar</button></a>
         </div>
       </form>
     </div>
