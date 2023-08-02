@@ -1,4 +1,4 @@
-<h2 class="m-0">Chamados Encerrados</h2>
+{{!-- <h2 class="m-0">Chamados Encerrados</h2>
 <hr>
 
 {{#each chamados}}
@@ -8,4 +8,26 @@
         <h6>Telefone: {{dataValues.telefone}}</h6>
         <h6>Solicitante: {{dataValues.nome}} - {{user.dataValues.email}}</h6>
     </div>
-{{/each}}
+{{/each}} --}}
+
+
+<h3>Chamados Encerrados</h3>
+<hr>
+<div class="container">
+    {{#each chamados}}
+    <div class="row bg-light rounded mt-2">
+        <a href="#" style="text-decoration: none;">
+            <div class="row align-items-center">
+                <div class="col-1 text-center" style="min-width: 60px;">
+                    <h1 class="text-secondary"><i class="fa-solid fa-ticket"></i></h1>
+                </div>
+                <div class="col text-truncate">
+                    <h5 class="mt-2 text truncate" style="color: #236192;">Chamado: {{dataValues.id}} - {{dataValues.ocorrencia}}/{{user.dataValues.user}}</h5>
+                    <h6 class="text-secondary text-truncate">Solicitante: {{dataValues.nome}} / Local: {{dataValues.local}}</h6>
+                    <h6 class="text-secondary text-truncate">Atendimento: {{dataValues.atendimento}}</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+    {{/each}}
+</div>

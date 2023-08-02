@@ -12,6 +12,7 @@ const Contatos = require('../models/Contatos');
 
 module.exports = {
     async loadChamados(req, res){
+        
         await Chamados.findAll({
             where: {
                 ocorrencia: {[Op.ne]: 'sistema'}, 

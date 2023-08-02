@@ -1,0 +1,19 @@
+<h3> Caixa de saída {{user.dataValues.email}}</h3>
+<hr>
+<div class="container">
+    {{#each emails}}
+    <div class="row bg-light rounded mt-2">
+        <a href="" style="text-decoration: none;">
+            <div class="row align-items-center">
+                <div class="col-1 text-center" style="min-width: 60px;">
+                    <h1 class="text-secondary"><i class="fa-solid fa-envelope-circle-check"></i></h1>
+                </div>
+                <div class='col text-truncate'>
+                    <h5 class="mt-2" style="color: #236192;">Chamado: {{dataValues.chamado_id}} - {{dataValues.to}}</h5>
+                    <p class="text-secondary text-truncate">{{dataValues.text}}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    {{/each}}
+</div>

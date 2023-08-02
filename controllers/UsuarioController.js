@@ -81,6 +81,8 @@ module.exports = {
             if(eqp_id == '0'){
                 eqp_id = null
             }
+
+
             console.log('########## ID: ',eqp_id)
             const newChamado = ({user_id, ocorrencia, local, nome, telefone, descricao, eqp_id})
             await Chamados.create(newChamado).then(() => {

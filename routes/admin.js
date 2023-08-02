@@ -6,9 +6,7 @@ const ConfigController = require('../controllers/ConfigController');
 const RelatoriosController = require('../controllers/RelatoriosController');
 const EquipamentosController = require('../controllers/EquipamentosController');
 const ChamadosController = require('../controllers/ChamadosController');
-const ContatosController = require('../controllers/ContatosController');
-
-
+const EmailController = require('../controllers/EmailController');
 
 // Pagina principal admin
 router.get('/', RelatoriosController.loadRelatorios);
@@ -21,26 +19,26 @@ router.post('/cadastro/usuario/edit',  AdminController.editSolicitante);
 router.post('/cadastro/usuario/delete',  AdminController.deleteSolicitante);
 
 // Contatos
-router.get('/contatos', ContatosController.loadContatos);
-router.post('/contatos', ContatosController.addContato);
-router.post('/contatos/delete', ContatosController.deleteContato);
-
+router.get('/contatos', EmailController.loadContatos);
+router.post('/contatos', EmailController.addContato);
+router.post('/contatos/delete', EmailController.deleteContato);
 
 // Configurações
 router.get('/configuracoes',  ConfigController.loadConfig);
 router.post('/configuracoes',  ConfigController.saveConfig);
+
+// Caixa de saída
+router.get('/caixadesaida', EmailController.caixadesaida);
 
 // Equipamentos
 router.get('/equipamentos', EquipamentosController.loadEquipamentos);
 router.post('/equipamentos',  EquipamentosController.novoEqp);
 router.post('/equipamentos/delete',  EquipamentosController.deleteEqp);
 
-
 // Materiais
 router.get('/materiais',  MateriaisController.loadMateriais);
 router.post('/materiais',  MateriaisController.novoItem);
 router.post('/materiais/delete',  MateriaisController.deleteItem);
-
 
 // Chamados informática
 router.get('/chamados', ChamadosController.loadChamados);

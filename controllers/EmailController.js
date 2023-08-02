@@ -1,4 +1,5 @@
 const Contatos = require('../models/Contatos')
+const LogEmails = require('../models/LogEmails')
 module.exports = {
     async loadContatos(req, res){
         await Contatos.findAll().then((contatos) =>{
@@ -30,6 +31,11 @@ module.exports = {
         }).catch((err) =>{
             req.flash('error_msg', 'Houve um erro ao deletar este contato!')
             res.redirect('/admin/contatos')
+        })
+    },
+    async caixadesaida(req, res){
+        await LogEmails.findAll().then((emails) => {
+            res.render('admin/caixadesaida', {emails: emails})
         })
     }
 }
