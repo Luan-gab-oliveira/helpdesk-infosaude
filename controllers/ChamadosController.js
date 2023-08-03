@@ -14,6 +14,8 @@ const Equipamentos = require('../models/Equipamentos');
 module.exports = {
     async loadChamados(req, res){
         try{
+            const usuarios = await Usuario.findAll()
+            const equipamentos = await Equipamentos.findAll()
             const adminCtg = req.user.categoria
             let chamados;
             if(adminCtg == 1){
@@ -32,8 +34,7 @@ module.exports = {
                     order: [['status', 'ASC']],
                     include: {model: Usuario, as: 'user'}
                 })
-            }
-            
+            }            
 
             var list = chamados
             for(var i = 0; i < list.length; i++){
@@ -70,11 +71,35 @@ module.exports = {
                 }
             }
 
-            res.render('admin/chamados', {listchamados: list})
+            res.render('admin/chamados', {listchamados: list, usuarios: usuarios, equipamentos:equipamentos})
         }catch(err){
             req.flash('error_msg', 'Erro ao carregar chamados')
             res.redirect('/')
         }
+    },
+    
+    async novoChamado(req, res){   
+        try{
+            const { user_id, ocorrencia, local, nome, telefone, descricao} = req.body
+            var {eqp_id} = req.body
+            if(eqp_id == '0'){
+                eqp_id = null
+            }
+
+            const newChamado = ({user_id, ocorrencia, eqp_id, local, nome, telefone, descricao})
+            await Chamados.create(newChamado).then(() => {
+                req.flash('success_msg','Chamado gerado com sucesso!')
+                res.redirect('/admin/chamados')
+            }).catch((err) =>{
+                req.flash('error_msg','Desculpe, houve um erro ao gerar o chamado, tente novamente!')
+                res.redirect('/admin/chamados')
+            })
+
+        }catch(err){
+            console.log('##### Erro:',err)
+            res.status(400)
+        }
+
     },
 
     async loadUpdateChamado(req, res){
@@ -238,58 +263,6 @@ module.exports = {
             req.flash('error_msg', 'Erro ao acessar db')
             res.redirect('/admin/chamado/atendimento/' + id)
 
-        })
-    },
-
-    // Chamados Sistemas
-    async loadChamadosSistema(req, res){
-        await Chamados.findAll({
-            where: {
-                ocorrencia: {[Op.eq]: 'sistema'}, 
-                status: {[Op.ne]: 'encerrado'
-            }},
-            order: [['status', 'ASC']],
-            include: {model: Usuario, as: 'user'}
-        }).then((chamados) =>{
-            var list = chamados
-            for(var i = 0; i < list.length; i++){
-                var data = list[i].createdAt
-                Object.defineProperty(list[i], 'dataAbertura',{
-                    value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
-                    writable: false,
-                });
-
-                switch (list[i].status){
-                    case 'pendente':
-                        Object.defineProperty(list[i], 'inOpen',{
-                            value: true,
-                            writable: false,
-                        });
-                    
-                    case 'processando':
-                        Object.defineProperty(list[i], 'inProcess',{
-                            value: true,
-                            writable: false,
-                        });
-                    
-                    case 'transferido':
-                        Object.defineProperty(list[i], 'transfer',{
-                            value: true,
-                            writable: false,
-                        });
-
-                    case 'encerrado':
-                        Object.defineProperty(list[i], 'closed',{
-                            value: true,
-                            writable: false,
-                        });
-                }
-            }
-
-            res.render('admin/chamadosSistema', {listchamados: list})
-        }).catch((err) =>{
-            req.flash('error_msg','Desculpe, houve um erro ao carregar chamados, tente novamente!')
-            res.redirect('/admin')
         })
     },
 

@@ -62,10 +62,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="/usuarios/chamados" method="post">
+        <form action="/admin/chamados" method="post">
           <div class="container p-0">
-            <label for="ocorrencia">Unidade: </label>
-              <select class="form-select mb-2" name="email" id="ocrr" required onchange="">
+            <label for="user_id">Unidade: </label>
+              <select class="form-select mb-2" name="user_id" id="user_id" required onchange="">
                   <option value="0" disabled selected>Selecione uma unidade</option>
                   {{#each usuarios}}
                   <option value={{dataValues.id}}>{{dataValues.user}}</option>
@@ -87,19 +87,19 @@
                 <label>Selb</label>
                   <select class="form-select mb-2" name="eqp_id" required>
                       <option value="0" selected>Selecione o Selb</option>
-                      {{!-- {{#each usuarios}}
-                      <option value={{dataValues.id}}>{{equipamntodataValues.equipamento}}</option>
-                      {{/each}} --}}
+                      {{#each equipamentos}}
+                      <option value={{dataValues.id}}>{{dataValues.patrimonio}}</option>
+                      {{/each}}
                   </select>
               </div>
             </div>
           </div>
           <label for="local">Local: </label>
-            <input type="text" name="local" placeholder="Local/unidade" class="form-control mb-2" required>
+            <input type="text" name="local" placeholder="Local/Sala/Consultório" class="form-control mb-2" required>
           <label for="nome">Solicitante: </label>
             <input type="text" name="nome" placeholder="Nome do solicitante" class="form-control mb-2" required>
           <label for="telefone">Telefone: </label>
-            <input type="text" name="telefone" placeholder="Telefone para contato" class="form-control mb-2" required>
+            <input type="text" name="telefone" placeholder="Telefone para contato" class="form-control mb-2">
           <label for="descricao">Descrição: </label>
             <textarea name="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;" required></textarea>
         </div>

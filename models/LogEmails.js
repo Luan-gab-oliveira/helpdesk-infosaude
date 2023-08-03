@@ -6,7 +6,7 @@ class LogEmails extends Model{
             from: DataTypes.STRING,
             to: DataTypes.STRING,
             subject: DataTypes.STRING,
-            text: DataTypes.STRING,           
+            text: DataTypes.STRING(16777215),           
         },{
             sequelize
         })

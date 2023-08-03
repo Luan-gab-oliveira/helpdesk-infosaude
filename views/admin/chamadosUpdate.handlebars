@@ -89,9 +89,9 @@
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col">
-                                <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 3.5rem; resize: none"></textarea>
+                                <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 4rem; resize: none"></textarea>
                             </div>
-                            <div class="col-1">
+                            <div class="col-1 text center" style="min-width: 50px;">
                                 <button type="submit" class="btn text-white rounded-circle" style="background-color: #4784ba;"><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                 <form action="/admin/chamado/atendimento/transferir" method="post" onsubmit="javascript:spinner()">
                     <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
                     <label>E-mail</label>
-                        <select class="form-select mb-2" aria-label="Default select example" name="email">
+                        <select class="form-select mb-2" aria-label="Default select example" name="email" required>
                             <option selected>Selecione um contato</option>
                             {{#each contatos}}
                                 <option value={{dataValues.email}}>{{dataValues.email}}</option>
