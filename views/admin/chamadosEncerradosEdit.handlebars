@@ -1,0 +1,92 @@
+<div class="container p-0">
+    <div class="row">
+        <div class="col">
+            <h3>Chamado: {{chamado.dataValues.id}}</h3>        
+        </div>
+        <div class="col">
+            <form class="text-end" action="/usuarios/chamados/encerrar" method="post">
+                <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
+                <div class="web">
+                    <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
+                    <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="mb-2" style="height: 0.5rem; background-color: #C23F5C;"></div>
+
+<h4>Status: {{chamado.dataValues.status}}</h4>
+
+<div class="card border-0 bg-transparent mt-4">
+    <div class="card-body">
+        <div class="container p-0">
+            <div class="row p-0">
+                <div class="col">
+                    <label for="ocorrencia">Ocorrência: </label>
+                        <input type="text" name="ocorrencia" id="ocrr" value="{{chamado.dataValues.ocorrencia}}" class="form-control mb-2" readonly>
+                </div>
+                <div class="col" id="ptm" style="display: none;">
+                    <label for="patrimonio" id="ptmLabel">Patrimônio: </label>
+                        <input type="text" name="patrimonio" value="{{chamado.equipamentos.dataValues.patrimonio}}" class="form-control mb-2" readonly>
+                </div>
+            </div>
+        </div>
+        <label for="local">Local: </label>
+            <input type="text" name="local" value="{{chamado.dataValues.local}}" class="form-control mb-2" readonly>
+        <label for="nome">Solicitante: </label>
+            <input type="text" name="nome" value="{{chamado.dataValues.nome}}" class="form-control mb-2" readonly>
+        <label for="telefone">Telefone: </label>
+            <input type="text" name="telefone" value="{{chamado.dataValues.telefone}}" class="form-control mb-2" readonly>
+        <label for="descricao">Descrição: </label>
+        <textarea name="descricao" class="form-control" id="floatingTextarea" style="height: 7rem; resize: none;" readonly>{{chamado.dataValues.descricao}}</textarea>
+    </div>
+    <form action="/admin/chamado/atendimento/encerrar" method="post" class="mt-4">
+        <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
+        <button type="submit" class="btn text-white" style="background-color: #236192;"><i class="fa-solid fa-xmark"></i> Reabrir chamado</button>
+    </form>
+</div>
+
+
+    
+<div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Observações</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-0" style="min-height: 25rem;">
+                <div class="overflow-auto p-3 bg-0" style="max-height: 25rem;">
+                    {{#each chamado.obs}}
+                        <div class="bg-light p-2 mb-4 rounded">
+                            <h6>{{dataValues.user}}</h6>
+                            <p class="text-justify" style="word-wrap: break-word">{{dataValues.obs}}</p>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.onload(mostrarPatrimonio())
+    function mostrarPatrimonio(){
+        let ocrr = document.getElementById('ocrr') 
+        if(ocrr.value == 'impressora'){
+            if(ocrr.value == 'impressora'){
+                document.getElementById('ptmLabel').innerHTML = 'Selb:'
+            }else{
+                document.getElementById('ptmLabel').innerHTML = 'Patrimônio:'
+            }
+            document.getElementById('ptm').style.display = 'block'
+
+        }else{
+            console.log(ocrr.value)
+            document.getElementById('ptm').style.display = 'none'
+        }
+    }
+</script>
+

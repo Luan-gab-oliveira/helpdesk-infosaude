@@ -1,15 +1,14 @@
-const nodemailer = require('nodemailer')
-const config = require('../config/settings.json')
-const Usuario = require('../models/Usuarios')
+const nodemailer = require('nodemailer');
+const Usuario = require('../models/Usuarios');
 const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Materiais = require('../models/Materiais');
 const LogEmails = require('../models/LogEmails');
-const bcrypt = require('bcryptjs')
-const { Op, where, and } = require("sequelize");
 const Saidas = require('../models/Saidas');
 const Contatos = require('../models/Contatos');
 const Equipamentos = require('../models/Equipamentos');
+const bcrypt = require('bcryptjs');
+const { Op, where, and } = require("sequelize");
 
 module.exports = {
     async loadChamados(req, res){
@@ -275,5 +274,16 @@ module.exports = {
         }).then((chamados) =>{
             res.render('admin/chamadosEncerrados', {chamados: chamados})
         })
-    }
+    },
+
+    async encerradosEdit(req, res){
+        const acesso = req.user.acesso
+        console.log('#########',acesso)
+        await Chamados.findByPk(req.params.id, {include: {model: Usuario, as: 'user',model: Equipamentos, as: 'equipamentos', model: Observacoes, as: 'obs'}}).then((chamado) => {
+            res.render('admin/chamadosEncerradosEdit', {chamado: chamado, acesso:acesso})
+        }).catch((err) =>{
+            req.flash('error_msg', 'Erro ao abrir chamado')
+            res.redirect('/usuarios/chamados')
+        })
+    },
 };

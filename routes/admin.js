@@ -45,5 +45,6 @@ router.post('/chamado/atendimento/material/delete', ChamadosController.deleteMat
 router.post('/chamado/atendimento/transferir',ChamadosController.sendEmail)
 router.post('/chamado/atendimento/encerrar', ChamadosController.encerrarChamado);
 router.get('/chamados/encerrados' ,ChamadosController.encerrados);
+router.get('/chamado/encerrado/:id' ,ChamadosController.encerradosEdit);
 
 module.exports = router;

@@ -19,7 +19,7 @@ class Chamados extends Model{
         this.belongsTo(models.Usuario, { foreignKey: 'user_id', as: 'user' });
         this.belongsTo(models.Equipamentos, { foreignKey: 'eqp_id', as: 'equipamentos' });
         this.hasMany(models.Saidas, { foreignKey: 'item_id', as: 'saidas' });
-        this.hasMany(models.Observacoes, {foreignKey: 'chamado_id', as: 'observacoes'})
+        this.hasMany(models.Observacoes, {foreignKey: 'chamado_id', as: 'obs'})
     }
 }
 
