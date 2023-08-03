@@ -1,5 +1,5 @@
-<div class="container p-0">
-    <div class="row">
+<div class="container p-0" style="margin-top: 2.5rem;">
+    <div class="row mt-4">
         <div class="col">
             <h3>Chamado: {{chamado.dataValues.id}}</h3>        
         </div>
@@ -7,6 +7,7 @@
             <form class="text-end" action="/usuarios/chamados/encerrar" method="post">
                 <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
                 <div class="web">
+                    <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" style="background-color: #4784ba;"><i class="fa-solid fa-share-from-square"></i> Trasnferido</button>
                     <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
                     <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
                 </div>
@@ -15,12 +16,12 @@
     </div>
 </div>
 
-<div class="mb-2" style="height: 0.5rem; background-color: #C23F5C;"></div>
+<div class="mb-4" style="height: 0.5rem; background-color: #C23F5C;"></div>
 
 <h4>Status: {{chamado.dataValues.status}}</h4>
 
 <div class="card border-0 bg-transparent mt-4">
-    <div class="card-body">
+    <div class="card-body p-0">
         <div class="container p-0">
             <div class="row p-0">
                 <div class="col">
@@ -42,9 +43,9 @@
         <label for="descricao">Descrição: </label>
         <textarea name="descricao" class="form-control" id="floatingTextarea" style="height: 7rem; resize: none;" readonly>{{chamado.dataValues.descricao}}</textarea>
     </div>
-    <form action="/admin/chamado/atendimento/encerrar" method="post" class="mt-4">
+    <form action="#" method="post" class="mt-4">
         <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
-        <button type="submit" class="btn text-white" style="background-color: #236192;"><i class="fa-solid fa-xmark"></i> Reabrir chamado</button>
+        <button type="submit" class="btn text-white" style="background-color: #4784ba;"><i class="fa-solid fa-up-right-from-square"></i> Reabrir chamado</button>
     </form>
 </div>
 
