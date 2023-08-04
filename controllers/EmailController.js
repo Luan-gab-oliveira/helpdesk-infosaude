@@ -33,9 +33,21 @@ module.exports = {
             res.redirect('/admin/contatos')
         })
     },
+
     async caixadesaida(req, res){
         await LogEmails.findAll().then((emails) => {
             res.render('admin/caixadesaida', {emails: emails})
+        })
+    },
+
+    async visualizarEmail(req, res){
+        const idEmail = req.params.id
+        await LogEmails.findByPk(idEmail).then((email) =>{
+            const dataEnvio = email.createdAt.toLocaleString('pt-BR', { timezone: 'UTC' })
+            res.render('admin/emailVisualizar', {email:email, dataEnvio:dataEnvio})
+        }).catch((err) =>{
+            req.flash('error_msg', 'Desculpe, houve um erro carregar este e-mail!')
+            res.redirect('/admin/email/enviados')
         })
     }
 }

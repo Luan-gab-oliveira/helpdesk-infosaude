@@ -7,7 +7,7 @@
             <form class="text-end" action="/usuarios/chamados/encerrar" method="post">
                 <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
                 <div class="web">
-                    <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" style="background-color: #4784ba;"><i class="fa-solid fa-share-from-square"></i> Trasnferido</button>
+                    <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#transferirModal" id="transfer" style="background-color: #4784ba;"><i class="fa-solid fa-share-from-square"></i> Transferido</button>
                     <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;"><i class="fa-solid fa-comment"></i> Observações</button>
                     <button class="btn text-white" type="button" data-bs-toggle="modal" data-bs-target="#materiasModal" style="background-color: #4784ba;"><i class="fa-solid fa-screwdriver-wrench"></i> Materiais</button>
                 </div>
@@ -43,14 +43,9 @@
         <label for="descricao">Descrição: </label>
         <textarea name="descricao" class="form-control" id="floatingTextarea" style="height: 7rem; resize: none;" readonly>{{chamado.dataValues.descricao}}</textarea>
     </div>
-    <form action="#" method="post" class="mt-4">
-        <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
-        <button type="submit" class="btn text-white" style="background-color: #4784ba;"><i class="fa-solid fa-up-right-from-square"></i> Reabrir chamado</button>
-    </form>
 </div>
 
-
-    
+{{!-- Modal Obsevações --}}
 <div class="modal fade modal-centerd" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -60,10 +55,75 @@
             </div>
             <div class="modal-body bg-0" style="min-height: 25rem;">
                 <div class="overflow-auto p-3 bg-0" style="max-height: 25rem;">
-                    {{#each chamado.obs}}
+                    {{#each obs}}
                         <div class="bg-light p-2 mb-4 rounded">
                             <h6>{{dataValues.user}}</h6>
                             <p class="text-justify" style="word-wrap: break-word">{{dataValues.obs}}</p>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Modal Materiais --}}
+<div class="modal fade modal-centerd" id="materiasModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Materiais Utilizados</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-0">
+                <div class="overflow-auto p-3 bg-0" style="max-height: 22rem; height: 22rem;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Item</th>
+                                <th scope="col" class="text-center">quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each saidaMateriais}}
+                                <tr class="align-middle">
+                                    <td>{{dataValues.id}}</td>
+                                    <td>{{item.dataValues.item}}</td>
+                                    <td class="text-center">{{dataValues.quantidade}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Modal Transferir --}}
+<div class="modal fade modal-centerd" id="transferirModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Chamado transferido</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-0">
+                <div class="overflow-auto p-3 bg-0" style="max-height: 25rem; min-height: 25rem;">
+                    {{#each email}}
+                        <div class="row bg-light rounded mb-2">
+                            <a href="" style="text-decoration: none;">
+                                <div class="row align-items-center">
+                                    <div class="col-1 text-center" style="min-width: 60px;">
+                                        <h1 class="text-secondary"><i class="fa-solid fa-envelope-circle-check"></i></h1>
+                                    </div>
+                                    <div class='col text-truncate'>
+                                        <h5 class="mt-2" style="color: #236192;">E-mail: {{dataValues.to}}</h5>
+                                        <p class="text-secondary text-truncate">{{dataValues.text}}</p>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     {{/each}}
                 </div>

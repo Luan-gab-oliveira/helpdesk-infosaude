@@ -17,13 +17,15 @@ router.get('/cadastro/usuario/edit/:id',  AdminController.loadEditSolicitante);
 router.post('/cadastro/usuario/edit',  AdminController.editSolicitante);
 router.post('/cadastro/usuario/delete',  AdminController.deleteSolicitante);
 
-// Contatos
+// Email
 router.get('/contatos', EmailController.loadContatos);
 router.post('/contatos', EmailController.addContato);
 router.post('/contatos/delete', EmailController.deleteContato);
 
 // Caixa de saída
-router.get('/caixadesaida', EmailController.caixadesaida);
+router.get('/email/enviados', EmailController.caixadesaida);
+router.get('/email/enviados/:id', EmailController.visualizarEmail)
+
 
 // Equipamentos
 router.get('/equipamentos', EquipamentosController.loadEquipamentos);
