@@ -49,14 +49,29 @@
             </div>
         </div>
         <input type="hidden" id="idChamado" value="{{chamado.dataValues.id}}">
+        
         <label class="mt-2">Solicitante:</label>
-            <input type="text" id="solicitante" placeholder="Solicitante" class="form-control mb-2" value="{{chamado.dataValues.nome}}">
+        <input type="text" id="solicitante" placeholder="Solicitante" class="form-control mb-2" value="{{chamado.dataValues.nome}}">
+        
         <label class="mt-2">Local:</label>
-            <input type="text" id="local" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.local}}">
-        <label class="mt-2">Ocorrência:</label>
-            <input type="text" id="ocorrencia" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.ocorrencia}}">
+        <input type="text" id="local" placeholder="ocorrência/chamado" class="form-control mb-2" value="{{chamado.dataValues.local}}">
+        
+        <div class="container p-0">
+            <div class="row p-0">
+                <div class="col">
+                    <label for="ocorrencia">Ocorrência: </label>
+                        <input type="text" name="ocorrencia" id="ocrr" value="{{chamado.dataValues.ocorrencia}}" class="form-control mb-2" readonly>
+                </div>
+                <div class="col" id="ptm" style="display: none;">
+                    <label for="patrimonio" id="ptmLabel">Selb: </label>
+                        <input type="text" name="patrimonio" value="{{equipamento.dataValues.patrimonio}}" class="form-control mb-2" readonly>
+                </div>
+            </div>
+        </div>
+        
         <label for="dsc">Descrição: </label>
-            <textarea id="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
+        <textarea id="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;">{{chamado.dataValues.descricao}}</textarea>
+        
         <form action="/admin/chamado/atendimento/encerrar" method="post" class="mt-4">
             <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
             <button type="submit" class="btn text-white" style="background-color: #C23F5C;"><i class="fa-solid fa-xmark"></i> Encerrar chamado</button>
@@ -208,4 +223,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.onload(mostrarPatrimonio())
+    function mostrarPatrimonio(){
+        let ocrr = document.getElementById('ocrr') 
+        if(ocrr.value == 'impressora'){
+            if(ocrr.value == 'impressora'){
+                document.getElementById('ptmLabel').innerHTML = 'Selb:'
+            }else{
+                document.getElementById('ptmLabel').innerHTML = 'Patrimônio:'
+            }
+            document.getElementById('ptm').style.display = 'block'
+
+        }else{
+            console.log(ocrr.value)
+            document.getElementById('ptm').style.display = 'none'
+        }
+    }
+</script>
 

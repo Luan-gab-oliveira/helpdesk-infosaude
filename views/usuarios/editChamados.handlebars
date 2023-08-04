@@ -35,28 +35,26 @@
 
 <div class="card border-0 bg-transparent mt-4">
     <div class="card-body">
-        <form action="/usuarios/chamados/edit" method="post">
-            <div class="container p-0">
-                <div class="row p-0">
-                    <div class="col">
-                        <label for="ocorrencia">Ocorrência: </label>
-                            <input type="text" name="ocorrencia" id="ocrr" value="{{chamado.dataValues.ocorrencia}}" class="form-control mb-2" readonly>
-                    </div>
-                    <div class="col" id="ptm" style="display: none;">
-                        <label for="patrimonio" id="ptmLabel">Patrimônio: </label>
-                            <input type="text" name="patrimonio" value="{{chamado.equipamentos.dataValues.patrimonio}}" class="form-control mb-2" readonly>
-                    </div>
+        <div class="container p-0">
+            <div class="row p-0">
+                <div class="col">
+                    <label for="ocorrencia">Ocorrência: </label>
+                        <input type="text" name="ocorrencia" id="ocrr" value="{{chamado.dataValues.ocorrencia}}" class="form-control mb-2" readonly>
+                </div>
+                <div class="col" id="ptm" style="display: none;">
+                    <label for="patrimonio" id="ptmLabel">Patrimônio: </label>
+                        <input type="text" name="patrimonio" value="{{chamado.equipamentos.dataValues.patrimonio}}" class="form-control mb-2" readonly>
                 </div>
             </div>
-            <label for="local">Local: </label>
-                <input type="text" name="local" value="{{chamado.dataValues.local}}" class="form-control mb-2" readonly>
-            <label for="nome">Solicitante: </label>
-                <input type="text" name="nome" value="{{chamado.dataValues.nome}}" class="form-control mb-2" readonly>
-            <label for="telefone">Telefone: </label>
-                <input type="text" name="telefone" value="{{chamado.dataValues.telefone}}" class="form-control mb-2" readonly>
-            <label for="descricao">Descrição: </label>
-                <textarea name="descricao" class="form-control" id="floatingTextarea" style="height: 7rem; resize: none;" readonly>{{chamado.dataValues.descricao}}</textarea>
-        </form>
+        </div>
+        <label for="local">Local: </label>
+            <input type="text" name="local" value="{{chamado.dataValues.local}}" class="form-control mb-2" readonly>
+        <label for="nome">Solicitante: </label>
+            <input type="text" name="nome" value="{{chamado.dataValues.nome}}" class="form-control mb-2" readonly>
+        <label for="telefone">Telefone: </label>
+            <input type="text" name="telefone" value="{{chamado.dataValues.telefone}}" class="form-control mb-2" readonly>
+        <label for="descricao">Descrição: </label>
+            <textarea name="descricao" class="form-control" id="floatingTextarea" style="height: 7rem; resize: none;" readonly>{{chamado.dataValues.descricao}}</textarea>
     </div>
 </div>
     
@@ -85,7 +83,7 @@
                             <div class="col">
                                 <textarea class="form-control" name="obs" required placeholder="Mensagem" style="height: 3.5rem; resize: none"></textarea>
                             </div>
-                            <div class="col-1">
+                            <div class="col-1 text-center" style="min-width: 50px;">
                                 <button type="submit" class="btn text-white rounded-circle" style="background-color: #4784ba;"><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         </div>

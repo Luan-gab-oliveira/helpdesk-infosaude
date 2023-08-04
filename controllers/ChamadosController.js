@@ -103,10 +103,12 @@ module.exports = {
 
     async loadUpdateChamado(req, res){
         try{ 
+            const id = req.params.id
+            const chamado = await Chamados.findByPk(id, {include: {model: Usuario, as: 'user'}})
+            const equipamento = await Equipamentos.findByPk(chamado.eqp_id)
+            const obs = await Observacoes.findAll({where: {chamado_id: id}})
             const materiais = await Materiais.findAll()
             const contatos = await Contatos.findAll()
-            const chamado = await Chamados.findByPk(req.params.id,{include: {model: Usuario, as: 'user'}})
-            const obs = await Observacoes.findAll({where: {chamado_id: req.params.id}})
             const saidaMateriais = await Saidas.findAll({where: {chamado_id: req.params.id},include: {model: Materiais, as: 'item'}})
 
             if(chamado.status == 'pendente'){
@@ -119,7 +121,7 @@ module.exports = {
                 chamSis = true
             }
 
-            res.render('admin/chamadosUpdate', {chamado: chamado, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, contatos:contatos, chamSis:chamSis})
+            res.render('admin/chamadosUpdate', {chamado: chamado, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, contatos:contatos, chamSis:chamSis, equipamento:equipamento})
         }catch(err){
             console.log('Error: ' + err)
             req.flash('error_msg', 'Erro ao carregar chamado')

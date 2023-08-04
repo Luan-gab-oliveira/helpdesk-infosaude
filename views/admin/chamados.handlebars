@@ -24,15 +24,18 @@
         <div class="card-header border-light" style="background-color: #f6f7f9;">
           <h5 class="card-title">Chamado: <label>{{dataValues.id}}</label></h5>
         </div>
-        <div class="card-body">
+        <div class="card-body text-truncate">
           <span class="mt-2" style="color: #646E78;">Unidade</span>
-            <h6>{{user.dataValues.user}}</h6>
+          <h6>{{user.dataValues.user}}</h6>
+          
           <span class="mt-2" style="color: #646E78;">Ocorrência</span>
-            <h6>{{dataValues.ocorrencia}}</h6>
+          <h6>{{dataValues.ocorrencia}}</h6>
+          
           <span class="mt-2" style="color: #646E78;">Solicitante</span>
-            <h6>{{dataValues.nome}}</h6>
+          <h6>{{dataValues.nome}}</h6>
+          
           <span class="mt-2" style="color: #646E78;">Data de abertura:</span>
-            <h6>{{dataAbertura}}</h6>
+          <h6>{{dataAbertura}}</h6>
 
           {{#if inOpen}}
             <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #C23F5C;"></div>
@@ -43,7 +46,7 @@
           {{else closed}}
             <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #32A071;"></div>
           {{/if}}
-          <h5 class="mb-4">Status: <label>{{dataValues.status}}</label></h5>
+          <h5 class="mb-4 text-truncate">Status: <label>{{dataValues.status}}</label></h5>
           <form action="" method="post">
             <input type="hidden" name="id" value="{{dataValues.id}}">
             <a href="/admin/chamado/atendimento/{{dataValues.id}}"><button type="button" class="btn text-white form-control" style="background-color: #4784ba;">Visualizar</button></a>
