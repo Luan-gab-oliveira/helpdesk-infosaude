@@ -92,7 +92,7 @@
           <label for="nome">Solicitante: </label>
             <input type="text" name="nome" placeholder="Nome do solicitante" class="form-control mb-2" required>
           <label for="telefone">Telefone: </label>
-            <input type="text" name="telefone" placeholder="Telefone para contato" class="form-control mb-2">
+            <input type="text" name="telefone" id="tel" placeholder="Telefone para contato" class="form-control mb-2">
           <label for="descricao">Descrição: </label>
             <textarea name="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;" required></textarea>
         </div>
@@ -104,3 +104,17 @@
     </div>
   </div>
 </div>
+
+<script>
+    const tel = document.getElementById('tel') // Seletor do campo de telefone
+
+    tel.addEventListener('keypress', (e) => mascaraTelefone(e.target.value)) // Dispara quando digitado no campo
+    tel.addEventListener('change', (e) => mascaraTelefone(e.target.value)) // Dispara quando autocompletado o campo
+
+    const mascaraTelefone = (valor) => {
+        valor = valor.replace(/\D/g, "")
+        valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2")
+        valor = valor.replace(/(\d)(\d{3})$/, "$1-$2")
+        tel.value = valor // Insere o(s) valor(es) no campo
+    }
+</script>

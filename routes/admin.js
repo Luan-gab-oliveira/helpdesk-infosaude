@@ -40,7 +40,7 @@ router.post('/materiais/delete',  MateriaisController.deleteItem);
 // Chamados informática
 router.get('/chamados', ChamadosController.loadChamados);
 router.post('/chamados', ChamadosController.novoChamado);
-router.get('/chamado/atendimento/:id', ChamadosController.loadUpdateChamado);
+router.get('/chamado/atendimento/:id', ChamadosController.loadChamadoEdit);
 router.post('/chamado/atendimento/observacao', ChamadosController.novaObservacao);
 router.post('/chamado/atendimento/material', ChamadosController.saidaMaterial);
 router.post('/chamado/atendimento/material/delete', ChamadosController.deleteMateriaisChamado);

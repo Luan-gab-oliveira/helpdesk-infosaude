@@ -57,9 +57,9 @@
                     <label>E-mail:</label>
                         <input type="text" name="email" placeholder="E-mail do setor" class="form-control mb-2" required>
                     <label>Telefone:</label>
-                        <input type="text" name="telefone" placeholder="Telefone para contato" class="form-control mb-2" required>
+                        <input type="text" name="telefone" id="tel" maxlength="15" placeholder="Telefone para contato" class="form-control mb-2" required>
                     <label>Senha:</label>
-                        <input type="text" name="password" placeholder="Defina uma senha" class="form-control mb-2" required>
+                        <input type="password" name="password" placeholder="Defina uma senha" class="form-control mb-2" required>
                     <label>Acesso:</label>
                     <select class="form-select mb-4" name="acesso" id="acesso" required>
                         <option value="0" selected>Solicitante</option>
@@ -71,3 +71,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    const tel = document.getElementById('tel') // Seletor do campo de telefone
+
+    tel.addEventListener('keypress', (e) => mascaraTelefone(e.target.value)) // Dispara quando digitado no campo
+    tel.addEventListener('change', (e) => mascaraTelefone(e.target.value)) // Dispara quando autocompletado o campo
+
+    const mascaraTelefone = (valor) => {
+        valor = valor.replace(/\D/g, "")
+        valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2")
+        valor = valor.replace(/(\d)(\d{3})$/, "$1-$2")
+        tel.value = valor // Insere o(s) valor(es) no campo
+    }
+</script>

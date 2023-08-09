@@ -9,6 +9,8 @@ const Contatos = require('../models/Contatos');
 const Equipamentos = require('../models/Equipamentos');
 const bcrypt = require('bcryptjs');
 const { Op, where, and } = require("sequelize");
+const config = require('../config/settings.json');
+
 
 module.exports = {
     async loadChamados(req, res){
@@ -101,15 +103,15 @@ module.exports = {
 
     },
 
-    async loadUpdateChamado(req, res){
+    async loadChamadoEdit(req, res){
         try{ 
             const id = req.params.id
             const chamado = await Chamados.findByPk(id, {include: {model: Usuario, as: 'user'}})
             const equipamento = await Equipamentos.findByPk(chamado.eqp_id)
-            const obs = await Observacoes.findAll({where: {chamado_id: id}})
             const materiais = await Materiais.findAll()
             const contatos = await Contatos.findAll()
             const saidaMateriais = await Saidas.findAll({where: {chamado_id: req.params.id},include: {model: Materiais, as: 'item'}})
+            var obs = await Observacoes.findAll({where: {chamado_id: id}})
 
             if(chamado.status == 'pendente'){
                 chamado.status = 'processando';
@@ -121,7 +123,15 @@ module.exports = {
                 chamSis = true
             }
 
-            res.render('admin/chamadosUpdate', {chamado: chamado, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, contatos:contatos, chamSis:chamSis, equipamento:equipamento})
+            for(var i = 0; i < obs.length; i++){
+                var data = obs[i].createdAt
+                Object.defineProperty(obs[i], 'dataAbertura',{
+                    value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
+                    writable: false,
+                });
+            }
+
+            res.render('admin/chamadosEdit', {chamado: chamado, obs: obs, materiais: materiais, saidaMateriais:saidaMateriais, contatos:contatos, chamSis:chamSis, equipamento:equipamento})
         }catch(err){
             console.log('Error: ' + err)
             req.flash('error_msg', 'Erro ao carregar chamado')
