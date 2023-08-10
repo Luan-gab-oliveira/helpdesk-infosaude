@@ -57,7 +57,7 @@
                 <div class="overflow-auto p-3 bg-0" style="max-height: 25rem;">
                     {{#each obs}}
                         <div class="bg-light p-2 mb-4 rounded">
-                            <h6>{{dataValues.user}}</h6>
+                            <h6>{{dataValues.user}} - {{dataObs}}</h6>
                             <p class="text-justify" style="word-wrap: break-word">{{dataValues.obs}}</p>
                         </div>
                     {{/each}}
@@ -86,7 +86,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each saidaMateriais}}
+                            {{#each materiais}}
                                 <tr class="align-middle">
                                     <td>{{dataValues.id}}</td>
                                     <td>{{item.dataValues.item}}</td>

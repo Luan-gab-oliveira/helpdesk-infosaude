@@ -285,19 +285,42 @@ module.exports = {
             include: {model: Usuario, as: 'user'},
             order: [['updated_at', 'ASC']],
         }).then((chamados) =>{
-            res.render('admin/chamadosEncerrados', {chamados: chamados})
+            var list = chamados
+            for(var i = 0; i < list.length; i++){
+                var data = list[i].createdAt
+                Object.defineProperty(list[i], 'dataAbertura',{
+                    value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
+                    writable: false,
+                });
+
+                data = list[i].updatedAt
+                Object.defineProperty(list[i], 'dataFinal',{
+                    value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
+                    writable: false,
+                });
+            }
+            
+            res.render('admin/chamadosEncerrados', {chamados: list})
         })
     },
 
     async encerradosEdit(req, res){
         try{
             const id = req.params.id
-            const chamado = await Chamados.findByPk(id, {include: {model: Usuario, as: 'user',model: Equipamentos, as: 'equipamentos'}})
-            const obs = await Observacoes.findAll({where: {chamado_id: id}})
+            const chamado = await Chamados.findByPk(id, {include: {model: Usuario, as: 'user'}})
+            const materiais = await Saidas.findAll({where: {chamado_id: req.params.id}, include: {model: Materiais, as: 'item'}})
             const email = await LogEmails.findAll({where: {chamado_id: id}})
+            var obs = await Observacoes.findAll({where: {chamado_id: id}})
 
-            res.render('admin/chamadosEncerradosEdit', {chamado: chamado, obs:obs, email:email})
+            for(var i = 0; i < obs.length; i++){
+                var data = obs[i].createdAt
+                Object.defineProperty(obs[i], 'dataObs',{
+                    value: data.toLocaleString('pt-BR', { timezone: 'UTC' }),
+                    writable: false,
+                });
+            }
 
+            res.render('admin/chamadosEncerradosEdit', {chamado: chamado, obs:obs, email:email, materiais: materiais})
         }catch(err){
             req.flash('error_msg', 'Erro ao abrir chamado')
             res.redirect('/usuarios/chamados')

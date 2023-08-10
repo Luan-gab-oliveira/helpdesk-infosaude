@@ -1,4 +1,4 @@
-<script src="/js/chamados.js"></script>
+<script src="/js/validarCampos.js"></script>
 
 <div class="web" class="container p-0">
   <div class="row align-bottom">
@@ -102,13 +102,13 @@
           <label for="nome">Solicitante: </label>
             <input type="text" name="nome" placeholder="Nome do solicitante" class="form-control mb-2" required>
           <label for="telefone">Telefone: </label>
-            <input type="text" name="telefone" placeholder="Telefone para contato" class="form-control mb-2">
+            <input type="tel" name="telefone" placeholder="Telefone para contato" class="form-control mb-2" onkeyup="handlePhone(event)">
           <label for="descricao">Descrição: </label>
             <textarea name="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;" required></textarea>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn text-white" style="background-color: #4784ba;">Enviar</button>
-          <a href="/usuarios/chamados" ><button type="button" class="btn text-white" style="background-color: #C23F5C;">Cancelar</button></a>
+          <a href="/admin/chamados" ><button type="button" class="btn text-white" style="background-color: #C23F5C;">Cancelar</button></a>
         </div>
       </form>
     </div>

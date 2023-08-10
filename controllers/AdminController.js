@@ -55,7 +55,7 @@ module.exports = {
 
     async loadEditSolicitante(req, res){
         Usuario.findByPk(req.params.id).then((usuario) => {
-            res.render('admin/editUsuarios', {usuario: usuario})
+            res.render('admin/usuariosEdit', {usuario: usuario})
         }).catch((err) =>{
             req.flash('error_msg', 'Erro ao abrir cadastro do usuário')
             res.redirect('/admin/cadastro/usuario')
