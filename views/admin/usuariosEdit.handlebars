@@ -22,7 +22,7 @@
             <label>E-mail:</label>
                 <input value="{{usuario.dataValues.email}}" type="text" name="email" placeholder="E-mail do setor" class="form-control mb-2">
             <label>Telefone:</label>
-                <input value="{{usuario.dataValues.telefone}}" type="tel" id="telefone" name="telefone" placeholder="Telefone para contato" class="form-control mb-2" onkeyup="handlePhone(event)">
+                <input value="{{usuario.dataValues.telefone}}" type="tel" id="telefone" name="telefone" placeholder="Telefone para contato" class="form-control mb-2" onkeyup="handlePhone(event)" maxlength="15">
             <label>Senha:</label>
             <input value="" type="text" name="password" placeholder="Defina uma senha" class="form-control mb-2">
             <label for="tpaAcesso">Tipo de acesso:</label>

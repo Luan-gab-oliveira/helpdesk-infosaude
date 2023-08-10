@@ -92,7 +92,7 @@
           <label for="nome">Solicitante: </label>
             <input type="text" name="nome" placeholder="Nome do solicitante" class="form-control mb-2" required>
           <label for="telefone">Telefone: </label>
-            <input type="tel" name="telefone" id="tel" placeholder="Telefone para contato" class="form-control mb-2" onkeyup="handlePhone(event)">
+            <input type="tel" name="telefone" id="tel" placeholder="Telefone para contato" class="form-control mb-2" onkeyup="handlePhone(event)" maxlength="15">
           <label for="descricao">Descrição: </label>
             <textarea name="descricao" class="form-control" placeholder="Descrição do chamado" id="floatingTextarea" style="height: 7rem; resize: none;" required></textarea>
         </div>
