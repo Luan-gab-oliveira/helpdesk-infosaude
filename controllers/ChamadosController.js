@@ -283,7 +283,7 @@ module.exports = {
                 status: 'encerrado'
             },
             include: {model: Usuario, as: 'user'},
-            order: [['updated_at', 'ASC']],
+            order: [['updated_at', 'DESC']],
         }).then((chamados) =>{
             var list = chamados
             for(var i = 0; i < list.length; i++){
