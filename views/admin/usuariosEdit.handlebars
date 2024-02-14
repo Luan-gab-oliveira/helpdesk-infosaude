@@ -7,13 +7,22 @@
 
 {{/each}}
 
-<h3>Editar Usuário: {{usuario.dataValues.user}}</h3>
+<div class="container">
+    <div class="row">
+        <div class="col mt-4 p-0">
+            <h3>Editar usuário: {{usuario.dataValues.user}}</h3>
+        </div>
+        <div class="col mt-4 p-0 text-end">
+            <form class="text-end" action="/admin/cadastro/usuario/delete" method="post">
+                <input type="hidden" name="id" value="{{usuario.dataValues.id}}">
+                <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;"><i class="fa-solid fa-trash"></i> Excluir</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <hr>
 <div class="card border-0 bg-transparent">
-    <form class="text-end" action="/admin/cadastro/usuario/delete" method="post">
-        <input type="hidden" name="id" value="{{usuario.dataValues.id}}">
-        <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Excluir</button>
-    </form>
     <form action="/admin/cadastro/usuario/edit" method="post">
         <div class="card-body">
             <input type="hidden" name="id" value="{{usuario.dataValues.id}}">
@@ -40,8 +49,8 @@
             </select>
         </div>
         <div class="card-footer mt-2 border-0 bg-transparent">
-            <button type="submit" class="btn text-white" style="background-color: #236192;">Salvar</button>
-            <a href="/admin/cadastro/usuario"><button type="button" class="btn text-white" style="background-color: #8D98A7;">Cancelar</button></a>
+            <button type="submit" class="btn text-white" style="background-color: #4784ba;">Salvar</button>
+            <a href="/admin/cadastro/usuario"><button type="button" class="btn text-white" style="background-color: #C23F5C;">Cancelar</button></a>
         </div>
     </form>
 </div>

@@ -11782,6 +11782,10 @@ textarea.form-control-lg {
 
 /*=============== Minhas alterações ================*/
 
+#btn-close:hover{
+  color: #C23F5C;
+}
+
 @media (min-width: 1000px) {
   .mobile{
     display: none;

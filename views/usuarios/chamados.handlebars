@@ -43,10 +43,19 @@
             <div class="mt-4 mb-2" style="height: 0.5rem; background-color: #32A071;"></div>
           {{/if}}
           <h5 class="mb-4">Status: <label>{{dataValues.status}}</label></h5>
+          
           <form action="/usuarios/chamados/encerrar" method="post">
             <input type="hidden" name="id" value="{{dataValues.id}}">
-            <a href="/usuarios/chamados/edit/{{dataValues.id}}"><button type="button" class="btn text-white" style="background-color: #4784ba;">Visualizar</button></a>
-            <button type="submit" class="btn btn-danger" style="background-color: #C23F5C;">Encerrar</button>
+            <div class="container">
+              <div class="row">
+                <div class="col p-0">
+                  <a href="/usuarios/chamados/edit/{{dataValues.id}}"><button type="button" class="btn text-white form-control" style="background-color: #4784ba;">Visualizar</button></a>
+                </div>
+                <div class="col p-0">
+                  <button type="submit" class="btn text-white form-control" style="background-color: #C23F5C;">Encerrar</button>
+                </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>

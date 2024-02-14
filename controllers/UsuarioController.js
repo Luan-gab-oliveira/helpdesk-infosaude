@@ -2,14 +2,41 @@ const passport = require('passport');
 const Chamados = require('../models/Chamados');
 const Observacoes = require('../models/Observacoes');
 const Usuario = require('../models/Usuarios');
+const bcrypt = require('bcryptjs')
 const Equipamentos = require('../models/Equipamentos')
 const { Op } = require("sequelize");
 
 module.exports = {
     // Login 
     async loadLogin(req, res){
-        res.render('usuarios/login')
+
+        const users = await Usuario.findAll()
+
+        if(users <= 0){
+            const newUser = ({ user:'infosaude', email:'infosaude@saofranciscodosul.sc.gov.br', telefone:'', password:'123', acesso:1, categoria:1})
+            await bcrypt.genSalt(10,(erro,salt)=>{
+                bcrypt.hash(newUser.password, salt,(erro, hash) =>{
+                    if(erro){
+                        req.flash('error_msg','Houve um erro ao criar o admin')
+                        res.redirect('/usuarios/login')
+                    }
+                    newUser.password = hash
+                    Usuario.create(newUser).then(() => {
+                        req.flash('success_msg','Usuário registrado com sucesso!')
+                        res.redirect('/usuarios/login')
+                    }).catch((err) =>{
+                        req.flash('error_msg','Houve um durante o salvamento do usuário')
+                        res.redirect('/usuarios/login')
+                    })
+                })
+            })
+        }else{
+            res.render('usuarios/login')
+        }
+
+        // res.render('usuarios/login')
     },
+
     async login(req, res, next){
         passport.authenticate('local', {
             successRedirect: '/',

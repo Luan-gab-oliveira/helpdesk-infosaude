@@ -87,7 +87,7 @@ module.exports = {
 
                 if(erros.length > 0){
                 
-                    res.render('admin/editUsuarios', {erros: erros, usuario: usuario})
+                    res.render('admin/usuariosEdit', {erros: erros, usuario: usuario})
                 
                 }else{
                     

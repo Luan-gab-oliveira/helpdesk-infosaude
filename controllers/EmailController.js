@@ -2,7 +2,7 @@ const Contatos = require('../models/Contatos')
 const LogEmails = require('../models/LogEmails')
 module.exports = {
     async loadContatos(req, res){
-        await Contatos.findAll().then((contatos) =>{
+        await Contatos.findAll({order: [['email', 'ASC']]}).then((contatos) =>{
                 res.render('admin/contatos', {contatos})
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao carregar a pagina!')
@@ -35,7 +35,7 @@ module.exports = {
     },
 
     async caixadesaida(req, res){
-        await LogEmails.findAll().then((emails) => {
+        await LogEmails.findAll({order: [['created_at', 'DESC']]}).then((emails) => {
             res.render('admin/caixadesaida', {emails: emails})
         })
     },

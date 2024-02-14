@@ -15,7 +15,7 @@ const config = require('../config/settings.json');
 module.exports = {
     async loadChamados(req, res){
         try{
-            const usuarios = await Usuario.findAll()
+            const usuarios = await Usuario.findAll({order: [['user', 'ASC']]})
             const equipamentos = await Equipamentos.findAll()
             const adminCtg = req.user.categoria
             let chamados;
