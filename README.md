@@ -1,4 +1,4 @@
-<h1 align="center">Helpdesk infosaude</h1>
+<h1 align="center">Helpdesk infosaude <img src="public/img/4712009.png" height="40em" alt="helpdesk"></h1>
 
 <p align="justify">Helpdesk infosaude é um sistema web desenvolvido para fornecer suporte técnico aos usuários internos da Secretaria Municipal de Saúde. Projetado para simplificar a comunicação entre os usuários e a equipe de suporte. O sistema de helpdesk permite que os funcionários da Secretaria Municipal de Saúde solicitem suporte técnico, e acompanhem o status de suas solicitações. Além disso, oferece aos administradores ferramentas para atribuir tickets, monitorar o progresso das soluções e gerar relatórios para análise e melhoria contínua dos serviços de TI.</p>
 
@@ -12,7 +12,7 @@
 
 <h3>Autenticação e Controle de Acesso:</h3>
 Utiliza autenticação de usuário com Passport.js e Express Session para garantir que apenas usuários autorizados possam acessar o sistema.
-Controle de acesso entre usuários comuns e administradores, garantindo que apenas administradores possam o painel administrativo.
+Controle de acesso entre usuários comuns e administradores, garantindo que apenas administradores possam acessar o painel administrativo.
 
 <h3>Gestão de chamados:</h3>
 Permite a abertura, acompanhamento e fechamento de chamados de suporte técnico.
