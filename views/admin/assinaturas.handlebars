@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col p-0 mt-4">
+            <h2>Assinaturas</h2>
+        </div>
+        <div class="col p-0 mt-4 text-end">
+            <button type="button" class="btn text-white" data-bs-toggle="modal" data-bs-target="#modal-assinatura" style="background-color: #4784ba;">Novo assinatura</button>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nome</th>
+            <th scope="col" class="text-center">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each assinaturas}}
+            <tr class="align-middle">
+                <td>{{dataValues.id}}</td>
+                <td>{{dataValues.nome}}</td>
+                <td class="text-center">
+                    <form action="/admin/assinaturas/delete" method="post">
+                        <input type="hidden" name="id" value="{{dataValues.id}}">
+                        <button type="submit" class="btn btn-danger mt-2" style="background-color: #C23F5C;"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<div class="modal fade modal-centerd" id="modal-assinatura" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #236192;">Cadastro de assinatura</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form action="/admin/assinaturas" method="post">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" class="form-control mb-2">
+                
+                <label for="assinatura">Assinatura</label>
+                <textarea name="assinatura" class="form-control" id="floatingTextarea" style="height: 14rem; resize: none;" required></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn text-white" style="background-color: #4784ba;">Enviar</button>
+                <a href="/admin/chamados" ><button type="button" class="btn text-white" style="background-color: #C23F5C;">Cancelar</button></a>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

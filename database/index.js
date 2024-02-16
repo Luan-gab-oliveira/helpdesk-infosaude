@@ -8,6 +8,7 @@ const Saidas = require('../models/Saidas');
 const Equipamentos = require('../models/Equipamentos');
 const LogEmails = require('../models/LogEmails');
 const Contatos = require('../models/Contatos');
+const Assinaturas = require('../models/Assinaturas');
 const connection = new Sequelize(dbConfig);
 
 // Conexões
@@ -19,6 +20,7 @@ Materiais.init(connection);
 Saidas.init(connection);
 LogEmails.init(connection);
 Contatos.init(connection);
+Assinaturas.init(connection);
 
 // Relacionamentos
 Usuario.associate(connection.models);

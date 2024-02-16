@@ -1,21 +1,29 @@
 <h3>Chamados Encerrados</h3>
 <hr>
-<div class="container">
-    {{#each chamados}}
-    <div class="row bg-light rounded mt-2">
-        <a href="/admin/chamado/encerrado/{{dataValues.id}}" style="text-decoration: none;">
-            <div class="row align-items-center">
-                <div class="col-1 text-center" style="min-width: 60px;">
-                    <h1 class="text-secondary"><i class="fa-solid fa-hashtag"></i></h1>
-                </div>
-                <div class="col text-truncate">
-                    <h5 class="mt-2 text truncate" style="color: #236192;">Chamado: {{dataValues.id}} - {{dataValues.ocorrencia}}/{{user.dataValues.user}}</h5>
-                    <h6 class="text-secondary text-truncate">Solicitante: {{dataValues.nome}} / Local: {{dataValues.local}}</h6>
-                    <h6 class="text-secondary text-truncate">Atendimento: {{dataValues.atendimento}}</h6>
-                    <h6 class="text-secondary text-truncate">Periodo: {{dataAbertura}} - {{dataFinal}}</h6>
-                </div>
-            </div>
-        </a>
-    </div>
-    {{/each}}
-</div>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Chamado</th>
+                <th scope="col">Local</th>
+                <th scope="col">Ocorrencia</th>
+                <th scope="col">Atendimento</th>
+                <th scope="col" class="text-center">Alterado</th>
+                <th scope="col" class="text-center">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each chamados}}
+                <tr class="align-middle">
+                    <td>{{dataValues.id}}</td>
+                    <td>{{user.dataValues.user}}</td>
+                    <td>{{dataValues.ocorrencia}}</td>
+                    <td>{{dataValues.atendimento}}</td>
+                    <td class="text-center">{{dataFinal}}</td>
+                    <td class="text-center">
+                        <a href="/admin/chamado/encerrado/{{dataValues.id}}"><button type="button" class="btn btn-secondary text-white mt-2" ><i class="fa-solid fa-circle-info" style="margin-right: 8px;"></i>Detalhar</button></a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>

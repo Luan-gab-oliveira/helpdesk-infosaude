@@ -190,19 +190,27 @@
             <div class="modal-body bg-0">
                 <form action="/admin/chamado/atendimento/transferir" method="post" onsubmit="javascript:spinner()">
                     <input type="hidden" name="id" value="{{chamado.dataValues.id}}">
-                    <label>E-mail</label>
-                        <select class="form-select mb-2" aria-label="Default select example" name="email" required>
-                            <option selected>Selecione um contato</option>
-                            {{#each contatos}}
-                                <option value={{dataValues.email}}>{{dataValues.email}}</option>
-                            {{/each}}
-                        </select>
+                    <label>Enviar para</label>
+                    <select class="form-select mb-2" aria-label="Default select example" name="email" required>
+                        <option selected>Selecione um contato</option>
+                        {{#each contatos}}
+                            <option value={{dataValues.email}}>{{dataValues.email}}</option>
+                        {{/each}}
+                    </select>
 
-                    <label>Corpo do e-mail</label>
-                        <textarea class="form-control mb-4" name="message" id="corpoemail" style="height: 16rem; resize: none" readonly></textarea>
+                    <label>Descrição do chamado</label>
+                        <textarea class="form-control mb-4" name="message" id="corpoemail" style="height: 12rem; resize: none" readonly></textarea>
+
+                    <label>Técnico</label>
+                    <select class="form-select mb-2" aria-label="Default select example" name="assinatura">
+                        <option selected>Selecione uma identificação</option>
+                        {{#each assinaturas}}
+                            <option value="{{dataValues.assinatura}}">{{dataValues.nome}}</option>
+                        {{/each}}
+                    </select>
 
                     <label>Observações técnicas</label>
-                        <textarea class="form-control mb-4" name="obsTech" placeholder="Observações" style="height: 6rem; resize: none"></textarea>
+                        <textarea class="form-control mb-4" name="obsTech" placeholder="Observações" style="height: 10rem; resize: none"></textarea>
 
                     <button type="submit" class="btn text-white" style="background-color: #4784ba;">enviar</button>
                 </form>

@@ -21,6 +21,11 @@ router.post('/cadastro/usuario/delete',  AdminController.deleteSolicitante);
 router.get('/contatos', EmailController.loadContatos);
 router.post('/contatos', EmailController.addContato);
 router.post('/contatos/delete', EmailController.deleteContato);
+router.get('/assinaturas', EmailController.loadAssinaturas);
+router.post('/assinaturas', EmailController.addAssinatura);
+router.post('/assinaturas/delete', EmailController.deleteAssinatura);
+
+
 
 // Caixa de saída
 router.get('/email/enviados', EmailController.caixadesaida);
