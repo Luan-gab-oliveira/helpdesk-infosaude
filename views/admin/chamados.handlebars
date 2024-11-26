@@ -3,68 +3,85 @@
 <div class="web" class="container p-0">
   <div class="row align-bottom">
     <div class="col-8 align-self-end">
-      <h3 class="m-0">Chamados: {{user.dataValues.user}}</h3>
+      <h3 class="m-0">Tickets abertos</h3>
     </div>
     <div class="col text-end">
-      <button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo chamado</button>
+      <button type="button" class="btn btn-sm text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo chamado</button>
     </div>
   </div>
 </div>
 
 <div class="mobile">
   <h3 class="m-0">Chamados em aberto</h3>
-  <button type="button" class="btn text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo chamado</button>
+  <button type="button" class="btn btn-sm text-white mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #4784ba;">Novo chamado</button>
 </div>
 <hr>
 
-<div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 mt-4">
   {{#each listchamados}}
     <div class="col">
-      <div class="card shadow-sm">
-        <div class="card-header border-light" style="background-color: #f6f7f9;">
-          <h5 class="card-title">Chamado: <label>{{dataValues.id}}</label></h5>
-        </div>
+      <div class="card shadow-sm" style="height: 20rem;">
         <div class="card-body text-truncate">
-          <h5 class="text-truncate mb-2">Status: <label>{{dataValues.status}}</label></h5>
-          {{#if inOpen}}
-            <div class="mb-2" style="height: 0.5rem; background-color: #C23F5C;"></div>
-          {{else if inProcess}}
-            <div class="mb-2" style="height: 0.5rem; background-color: #FFC145;"></div>
-          {{else if transfer}}
-            <div class="mb-2" style="height: 0.5rem; background-color: #fb8500;"></div>
-          {{else closed}}
-            <div class="mb-2" style="height: 0.5rem; background-color: #32A071;"></div>
-          {{/if}}
-
-          <span class="mt-2" style="color: #646E78;">Unidade</span>
-          <h6>{{user.dataValues.user}}</h6>
-          
-          <span class="mt-2" style="color: #646E78;">Ocorrência</span>
-          <h6>{{dataValues.ocorrencia}}</h6>
-          
-          <span class="mt-2" style="color: #646E78;">Solicitante</span>
-          <h6>{{dataValues.nome}}</h6>
-          
-          <span class="mt-2" style="color: #646E78;">Data de abertura:</span>
-          <h6 class="mb-4">{{dataAbertura}}</h6>
-          
-          <div class="container">
-            <div class="row">
-              <div class="col p-0">
-                <form action="" method="post">
-                  <input type="hidden" name="id" value="{{dataValues.id}}">
-                  <a href="/admin/chamado/atendimento/{{dataValues.id}}"><button type="button" class="btn text-white form-control" style="background-color: #4784ba;">Visualizar</button></a>
-                </form>
-              </div>
-              <div class="col p-0">
-                <form action="/admin/chamado/atendimento/encerrar" method="post">
-                  <input type="hidden" name="id" value="{{dataValues.id}}">
-                  <button type="submit" class="btn text-white form-control" style="background-color: #C23F5C;">Encerrar</button>
-                </form>
-              </div>
+          <div class="row p-0 m-0 mb-3 align-items-center">
+            <div class="col p-0 m-0">
+              <h5 class="card-title m-0 fs-6">Chamado: {{dataValues.id}}</h5>
+            </div>
+            <div class="col p-0 m-0 text-end">
+              {{!-- Display: none --}}
+              <button type="button"  class="btn p-0" ><span class="badge rounded-pill badge-notification bg-danger">1</span><i class="fas fa-bell"></i></button>
             </div>
           </div>
+          {{#if inOpen}}
+            <div class="mb-2 p-2 rounded align-items-center" style="background-color: #eef0f3;">
+              <h6 class="fs-6 m-0 text-uppercase"><i class="fa-solid fa-circle-exclamation" style="margin-right: 10px;"></i>{{dataValues.status}}</h6>
+            </div>
+          {{else if inProcess}}
+            <div class="mb-2 p-2 rounded align-items-center" style="background-color: #eef0f3;">
+              <h6 class="fs-6 m-0 text-uppercase"><i class="fa-solid fa-spinner" style="margin-right: 10px;"></i>{{dataValues.status}}</h6>
+            </div>
+          {{else if transfer}}
+            <div class="mb-2 p-2 rounded align-items-center" style="background-color: #eef0f3;">
+              <h6 class="fs-6 m-0 text-uppercase"><i class="fa-solid fa-share-from-square" style="margin-right: 10px;"></i>{{dataValues.status}}</h6>
+            </div>
+          {{else closed}}
+            <div class="mb-2" style="height: 0.3rem; background-color: #32A071;"></div>
+          {{/if}}
 
+          <div class="row m-0 p-0">
+            <div class="col m-0 p-0">
+              <span class="mt-2 fs-7" style="color: #646E78;">Unidade</span>
+              <h6 class="fs-7">{{user.dataValues.user}}</h6>
+            </div>
+            <div class="col m-0 p-0">
+              <span class="mt-2 fs-7" style="color: #646E78;">Solicitante</span>
+              <h6 class="fs-7">{{dataValues.nome}}</h6>
+            </div>
+          </div>
+          <span class="mt-2 fs-7" style="color: #646E78;">Ocorrência</span>
+          <h6 class="fs-7">{{dataValues.ocorrencia}}</h6>
+          {{!-- <span class="mt-2 fs-7" style="color: #646E78;">Status</span>
+          <h6 class="text-truncate fs-7 mb-2">{{dataValues.status}}</h6> --}}
+
+          <span class="mt-2 fs-7" style="color: #646E78;">Data de abertura:</span>
+          <h6 class="fs-7 mb-4">{{dataAbertura}}</h6>
+        </div>
+        <div class="card-footer p-0">
+          <div class="container">
+              <div class="row">
+                <div class="col p-0">
+                  <form action="" method="post">
+                    <input type="hidden" name="id" value="{{dataValues.id}}">
+                    <a href="/admin/chamado/atendimento/{{dataValues.id}}"><button type="button" class="btn btn-light btn-md form-control" style="border-radius: 0 0 0 0.25rem;">Visualizar</button></a>
+                  </form>
+                </div>
+                <div class="col p-0">
+                  <form action="/admin/chamado/atendimento/encerrar" method="post">
+                    <input type="hidden" name="id" value="{{dataValues.id}}">
+                    <button type="submit" class="btn btn-light btn-md form-control" style="border-radius: 0 0 0.25rem 0;">Encerrar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     </div>
